@@ -9,10 +9,10 @@ export function MedalMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={cn("size-8", className)} aria-hidden>
       <rect width="64" height="64" rx="15" fill="#0A3A2C" />
-      <g stroke="#86DCB2" strokeWidth="2.8" strokeLinecap="round">
+      <g stroke="#F6C445" strokeWidth="2.8" strokeLinecap="round">
         <path d="M12.6 17.8l3.4 3.1M51.4 17.8l-3.4 3.1M6.8 33.5h4.6M52.6 33.5h4.6" />
       </g>
-      <path d="M12.5 38a19.5 19.5 0 0 1 39 0z" fill="#86DCB2" />
+      <path d="M12.5 38a19.5 19.5 0 0 1 39 0z" fill="#F6C445" />
       <path d="M32 6.5l1.5 9.5h-3z" fill="#fff" />
       <circle cx="32" cy="16.8" r="1.9" fill="#fff" />
       <path d="M24 32.4c0-6.6 3.5-11.2 8-12.8 4.5 1.6 8 6.2 8 12.8z" fill="#fff" />
