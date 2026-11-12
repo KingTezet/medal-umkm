@@ -18,6 +18,9 @@ export async function saveOrganizerProfileAction(_: ActionState, fd: FormData): 
     address: fd.get("address"),
     district: fd.get("district") || null,
     contact_phone: fd.get("contact_phone"),
+    bank_name: fd.get("bank_name") ?? undefined,
+    bank_account_number: fd.get("bank_account_number") ?? undefined,
+    bank_account_holder: fd.get("bank_account_holder") ?? undefined,
   });
   if (!parsed.success) return fail("Periksa kembali isian.", zodFieldErrors(parsed.error));
   const legal = fd.get("legal_document_path") ? String(fd.get("legal_document_path")) : null;
@@ -44,7 +47,7 @@ export async function saveEventAction(_: ActionState, fd: FormData): Promise<Act
   if (!session) return fail("Sesi berakhir atau akses ditolak.");
   const { supabase, user } = session;
 
-  const parsed = eventSchema.safeParse({ ...Object.fromEntries(fd), criteria: parseList(fd.get("criteria")) });
+  const parsed = eventSchema.safeParse({ ...Object.fromEntries(fd), stand_fee: String(fd.get("stand_fee") ?? "0").replace(/[^0-9]/g, "") || "0", criteria: parseList(fd.get("criteria")) });
   if (!parsed.success) return fail("Periksa kembali isian event.", zodFieldErrors(parsed.error));
   const d = parsed.data;
 
@@ -56,8 +59,11 @@ export async function saveEventAction(_: ActionState, fd: FormData): Promise<Act
   } catch {}
   for (const p of [cover, proposal, ...gallery]) if (!isOwnedPath(p, user.id)) return fail("File tidak valid.");
 
-  const { data: org } = await supabase.from("organizer_profiles").select("id").eq("user_id", user.id).single();
+  const { data: org } = await supabase.from("organizer_profiles").select("id, bank_account_number").eq("user_id", user.id).single();
   if (!org) return fail("Lengkapi profil organisasi terlebih dahulu.");
+  if (d.stand_fee > 0 && !org.bank_account_number) {
+    return fail("Isi rekening pembayaran di Profil Penyelenggara sebelum memasang biaya stand.", { stand_fee: ["Rekening pembayaran belum diisi di Profil Penyelenggara."] });
+  }
 
   const { data: cats } = await supabase.from("event_categories").select("name").eq("kind", "event").eq("is_active", true);
   if (!cats?.some((c) => c.name === d.category)) return fail("Kategori tidak valid.", { category: ["Pilih kategori yang tersedia."] });
@@ -75,6 +81,7 @@ export async function saveEventAction(_: ActionState, fd: FormData): Promise<Act
     registration_opens_at: fromJakartaInput(d.registration_opens_at),
     registration_closes_at: fromJakartaInput(d.registration_closes_at),
     stand_capacity: d.stand_capacity,
+    stand_fee: d.stand_fee,
     criteria: d.criteria,
     contact_name: d.contact_name,
     contact_phone: d.contact_phone,
@@ -149,4 +156,17 @@ export async function decideApplicationAction(_: ActionState, fd: FormData): Pro
   const label = { select: "dipilih", waitlist: "dimasukkan daftar tunggu", reject: "ditolak" }[decision.data];
   revalidatePath("/", "layout");
   return success(`Peserta ${label}.`);
+}
+
+export async function verifyPaymentAction(_: ActionState, fd: FormData): Promise<ActionState> {
+  const session = await getActionSession("organizer");
+  if (!session) return fail("Sesi berakhir atau akses ditolak.");
+  const id = z.uuid().safeParse(fd.get("application_id"));
+  const action = z.enum(["verify", "reject"]).safeParse(fd.get("action"));
+  const note = reviewNoteSchema.safeParse(fd.get("note") ?? undefined);
+  if (!id.success || !action.success || !note.success) return fail("Permintaan tidak valid.");
+  const { error } = await session.supabase.rpc("organizer_verify_payment", { p_application_id: id.data, p_action: action.data, p_note: note.data ?? undefined });
+  if (error) return fail(friendlyError(error));
+  revalidatePath("/", "layout");
+  return success(action.data === "verify" ? "Pembayaran diverifikasi." : "Bukti transfer ditolak.");
 }

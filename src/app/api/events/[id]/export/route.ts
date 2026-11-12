@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentProfile } from "@/lib/auth";
-import { APPLICATION_STATUS } from "@/lib/constants";
+import { APPLICATION_STATUS, PAYMENT_STATUS } from "@/lib/constants";
 import { toCsv } from "@/lib/domain";
 
 interface Snapshot { business_name?: string; category?: string; owner_name?: string; whatsapp?: string; district?: string }
@@ -19,15 +19,15 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
 
   const { data: apps } = await supabase
     .from("stand_applications")
-    .select("application_code, status, business_snapshot, products_offered, stand_number")
+    .select("application_code, status, payment_status, payment_amount, business_snapshot, products_offered, stand_number")
     .eq("event_id", id)
     .in("status", ["verified", "selected_by_organizer", "waitlisted", "confirmed", "rejected"])
     .order("stand_number", { ascending: true, nullsFirst: false });
 
-  const rows: unknown[][] = [["No", "Kode", "Nama Usaha", "Kategori", "Penanggung Jawab", "WhatsApp", "Kecamatan", "Produk", "Status Seleksi", "Nomor Stand"]];
+  const rows: unknown[][] = [["No", "Kode", "Nama Usaha", "Kategori", "Penanggung Jawab", "WhatsApp", "Kecamatan", "Produk", "Status Seleksi", "Pembayaran", "Nominal", "Nomor Stand"]];
   (apps ?? []).forEach((a, i) => {
     const s = (a.business_snapshot ?? {}) as Snapshot;
-    rows.push([i + 1, a.application_code, s.business_name, s.category, s.owner_name, s.whatsapp, s.district, a.products_offered, APPLICATION_STATUS[a.status].label, a.stand_number ?? ""]);
+    rows.push([i + 1, a.application_code, s.business_name, s.category, s.owner_name, s.whatsapp, s.district, a.products_offered, APPLICATION_STATUS[a.status].label, PAYMENT_STATUS[a.payment_status].label, a.payment_amount ?? 0, a.stand_number ?? ""]);
   });
 
   return new NextResponse(toCsv(rows), {

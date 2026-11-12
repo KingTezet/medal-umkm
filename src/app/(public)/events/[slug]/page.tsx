@@ -6,7 +6,7 @@ import { getPublicEvent } from "@/lib/queries";
 import { availableStands, registrationState, REGISTRATION_LABEL } from "@/lib/domain";
 import { formatDateTime, formatPhone, waLink } from "@/lib/format";
 import { asStringArray, eventCover, publicMediaUrl } from "@/lib/storage";
-import { BUCKETS, ORGANIZATION_TYPES } from "@/lib/constants";
+import { BUCKETS, ORGANIZATION_TYPES, formatRupiah } from "@/lib/constants";
 import { Badge, Breadcrumb } from "@/components/ui/misc";
 import { ButtonLink } from "@/components/ui/button";
 import { Reveal } from "@/components/motion";
@@ -110,6 +110,11 @@ export default async function EventDetailPage({ params }: { params: Params }) {
               <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
             </div>
             <p className="mt-2 text-xs text-muted">{e.confirmed_count ?? 0} stand dikonfirmasi Disperindag</p>
+            <div className="mt-4 flex items-center justify-between rounded-2xl bg-brand-50 px-4 py-3 ring-1 ring-brand-300/50">
+              <span className="text-[13px] text-brand-900">Biaya stand</span>
+              <span className="display text-[18px] font-semibold text-brand-950">{formatRupiah(e.stand_fee)}</span>
+            </div>
+            {e.stand_fee > 0 && <p className="mt-2 text-xs text-muted">Dibayar via transfer ke rekening penyelenggara setelah pendaftaran Anda diterima.</p>}
             <div className="mt-5 hidden lg:block">
               {state === "open" ? (
                 <ButtonLink href={applyHref} size="lg" className="w-full"><Store className="size-4" aria-hidden /> Daftar Stand</ButtonLink>

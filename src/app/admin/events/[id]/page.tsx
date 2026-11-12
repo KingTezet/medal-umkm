@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth";
 import { BUCKETS, EVENT_STATUS, ORGANIZATION_TYPES, VERIFICATION_STATUS } from "@/lib/constants";
+import { formatRupiah } from "@/lib/constants";
 import { formatDateTime, formatPhone } from "@/lib/format";
 import { asStringArray, eventCover } from "@/lib/storage";
 import { Breadcrumb, Card, DefinitionList, Notice, PageHeader, StatusBadge } from "@/components/ui/misc";
@@ -62,6 +63,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             { label: "Pendaftaran", value: `${formatDateTime(e.registration_opens_at)} — ${formatDateTime(e.registration_closes_at)}` },
             { label: "Lokasi", value: `${e.venue_name}, ${e.address}${e.district ? `, ${e.district}` : ""}` },
             { label: "Kapasitas", value: `${e.stand_capacity} stand` },
+            { label: "Biaya stand", value: formatRupiah(e.stand_fee) },
             { label: "Kriteria", value: asStringArray(e.criteria).join(" · ") },
             { label: "Kontak publik", value: [e.contact_name, formatPhone(e.contact_phone)].filter(Boolean).join(" · ") },
             { label: "Proposal", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.proposals} path={e.proposal_path} label="Buka proposal" /> },

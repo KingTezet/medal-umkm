@@ -106,14 +106,29 @@ export const businessProfileSchema = z.object({
   show_whatsapp: z.boolean(),
 });
 
-export const organizerProfileSchema = z.object({
-  organization_name: trimmed(2, 120, "Nama organisasi"),
-  organization_type: z.enum(["community", "eo", "village", "agency", "other"]),
-  description: optionalText(2000),
-  address: trimmed(5, 300, "Alamat organisasi"),
-  district: districtSchema.nullable(),
-  contact_phone: phoneSchema,
-});
+const optionalTrim = (max: number) =>
+  z.string().trim().max(max).optional().transform((v) => (v ? v : null));
+
+export const organizerProfileSchema = z
+  .object({
+    organization_name: trimmed(2, 120, "Nama organisasi"),
+    organization_type: z.enum(["community", "eo", "village", "agency", "other"]),
+    description: optionalText(2000),
+    address: trimmed(5, 300, "Alamat organisasi"),
+    district: districtSchema.nullable(),
+    contact_phone: phoneSchema,
+    bank_name: optionalTrim(60),
+    bank_account_number: z
+      .string()
+      .optional()
+      .transform((v) => (v ? v.replace(/[^0-9]/g, "") : null))
+      .refine((v) => v === null || /^[0-9]{5,30}$/.test(v), "Nomor rekening harus 5–30 digit angka."),
+    bank_account_holder: optionalTrim(120),
+  })
+  .refine((d) => [d.bank_name, d.bank_account_number, d.bank_account_holder].every(Boolean) || [d.bank_name, d.bank_account_number, d.bank_account_holder].every((x) => !x), {
+    path: ["bank_account_number"],
+    message: "Lengkapi nama bank, nomor rekening, dan nama pemilik rekening (atau kosongkan ketiganya).",
+  });
 
 const dateTimeLocal = (label: string) =>
   z
@@ -138,6 +153,12 @@ export const eventSchema = z
       .int("Kapasitas harus bilangan bulat.")
       .min(1, "Kapasitas stand harus lebih dari 0.")
       .max(5000, "Kapasitas maksimal 5000 stand."),
+    stand_fee: z.coerce
+      .number({ error: "Biaya stand harus berupa angka." })
+      .int("Biaya stand harus bilangan bulat.")
+      .min(0, "Biaya stand tidak boleh negatif.")
+      .max(100000000, "Biaya stand terlalu besar.")
+      .default(0),
     criteria: z.array(z.string().trim().min(3).max(200)).max(15, "Maksimal 15 kriteria."),
     contact_name: optionalText(120),
     contact_phone: z

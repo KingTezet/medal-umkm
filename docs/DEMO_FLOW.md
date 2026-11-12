@@ -38,3 +38,15 @@ Perekamnya berupa skrip lokal (puppeteer + CDP screencast dengan timestamp asli,
 1. Kembalikan data demo ke kondisi awal: penyelenggara3 → `pending`, dan pendaftaran di event Rancakalong dihapus.
 2. Rekam scene 01–07.
 3. Encode hasilnya.
+
+## Biaya stand & pembayaran manual (tambahan 12 Nov 2026)
+
+1. **Penyelenggara** mengisi rekening di Profil Penyelenggara dan memasang **Biaya stand** di form event. Isi 0 bila gratis.
+2. UMKM mendaftar → admin memverifikasi berkas → penyelenggara **Terima**. Status pembayaran berubah menjadi **Belum dibayar** dan UMKM mendapat notifikasi.
+3. **UMKM** melihat nominal dan rekening tujuan (hanya terlihat oleh pemohon yang diterima), mentransfer manual, lalu mengunggah **bukti transfer**.
+4. **Penyelenggara** membuka bukti tersebut, lalu memilih **Verifikasi pembayaran** (→ Lunas) atau **Tolak bukti** (UMKM unggah ulang).
+5. **Admin** baru bisa mengesahkan dan memberi nomor stand setelah pembayaran **Lunas**. Ketentuan ini dikunci di database.
+
+Contoh data: penyelenggara **NATA Space** (`nataspace@demo.medal-sumedang.id`), event *Pasar Kreatif NATA Space (DEMO)* dengan biaya stand Rp100.000, rekening BRI. UMKM `umkm2` sudah diterima dan menunggu pembayaran.
+
+MEDAL tidak memproses uang. Pembayaran dilakukan langsung antara UMKM dan penyelenggara.

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth";
-import { APPLICATION_STATUS, BUCKETS, VERIFICATION_STATUS } from "@/lib/constants";
+import { APPLICATION_STATUS, BUCKETS, PAYMENT_STATUS, VERIFICATION_STATUS, formatRupiah } from "@/lib/constants";
 import { formatDateTime, formatPhone } from "@/lib/format";
 import { asProducts } from "@/lib/storage";
 import { Breadcrumb, Card, DefinitionList, Notice, PageHeader, StatusBadge } from "@/components/ui/misc";
@@ -67,6 +67,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </>}
         </>}
       />
+      {canFinalize && !["not_required", "verified"].includes(a.payment_status) && <div className="mb-6"><Notice tone="warning" title="Menunggu pembayaran">Peserta belum melunasi biaya stand ({formatRupiah(a.payment_amount)}). Pengesahan dapat dilakukan setelah penyelenggara memverifikasi bukti transfer.</Notice></div>}
       {canFinalize && confirmedCount >= cap && <div className="mb-6"><Notice tone="danger">Kapasitas event sudah penuh ({confirmedCount}/{cap}). Konfirmasi akan ditolak sistem.</Notice></div>}
       <Card className="mb-6"><ApplicationTimeline status={a.status} history={history ?? []} /></Card>
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
@@ -90,6 +91,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               { label: "NIB", value: bp?.nib ?? "-" },
               { label: "NIB / SKU", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.verificationDocs} path={bp?.business_license_path ?? null} label="Buka dokumen" /> },
               { label: "Dokumen tambahan", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.applicationDocs} path={a.additional_document_path} label="Buka dokumen" /> },
+              { label: "Pembayaran stand", value: a.payment_status === "not_required" ? "Gratis" : <span className="flex flex-wrap items-center gap-2">{formatRupiah(a.payment_amount)} <StatusBadge map={PAYMENT_STATUS} status={a.payment_status} /></span> },
+              { label: "Bukti transfer", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.paymentProofs} path={a.payment_proof_path} label="Buka bukti" /> },
               { label: "Status profil usaha", value: bp ? <Link href={`/admin/umkm/${bp.id}`} className="inline-flex"><StatusBadge map={VERIFICATION_STATUS} status={bp.verification_status} /></Link> : "-" },
             ]} />
           </Card>

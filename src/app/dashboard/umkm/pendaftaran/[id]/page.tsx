@@ -7,6 +7,7 @@ import { formatDateRange, formatDateTime } from "@/lib/format";
 import { Breadcrumb, Card, DefinitionList, Notice, PageHeader, StatusBadge } from "@/components/ui/misc";
 import { ApplicationTimeline, HistoryList, PrivateDocLink } from "@/components/dashboard/shared";
 import { ApplicationForm } from "@/components/forms/application-form";
+import { UmkmPaymentPanel } from "@/components/dashboard/payment";
 import { ActionDialog } from "@/components/action-form";
 import { withdrawApplicationAction } from "@/app/actions/umkm";
 
@@ -53,6 +54,8 @@ export default async function ApplicationDetailPage({ params, searchParams }: { 
           <p className="shrink-0 rounded-lg bg-primary px-4 py-2.5 text-center text-[22px] font-semibold tabular-nums text-white">Stand {a.stand_number}</p>
         </div>
       )}
+
+      <UmkmPaymentPanel supabase={supabase} app={a} userId={user.id} />
 
       <Card className="mb-6">
         <h2 className="mb-6 display text-[20px] font-semibold leading-tight text-brand-950">Progres pendaftaran</h2>

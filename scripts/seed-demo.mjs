@@ -42,11 +42,13 @@ async function uploadPublic(bucket, userId, file) {
 const organizers = [
   { local: "penyelenggara1", full_name: "Rina Kusumawati", phone: "081200000001", organization_name: "Komunitas Kreatif Sumedang (DEMO)", organization_type: "community", district: "Sumedang Utara", address: "Jl. Prabu Geusan Ulun No. 10, Sumedang (DEMO)" },
   { local: "penyelenggara2", full_name: "Dedi Mulyana", phone: "081200000002", organization_name: "Karya Event Organizer (DEMO)", organization_type: "eo", district: "Jatinangor", address: "Jl. Raya Jatinangor No. 21 (DEMO)" },
+  { local: "nataspace", full_name: "Moch Sugih Nugraha", phone: "081200000004", organization_name: "NATA Space", organization_type: "eo", district: "Sumedang Utara", address: "Sumedang (contoh penyelenggara dengan biaya stand)",
+    bank: { bank_name: "BRI", bank_account_number: "009401100754508", bank_account_holder: "MOCH SUGIH NUGRAHA" } },
 ];
 const orgIds = [];
 for (const o of organizers) {
   const uid = await ensureUser(o.local, { role: "organizer", ...o });
-  const { data } = await sb.from("organizer_profiles").update({ verification_status: "verified", verified_at: new Date().toISOString(), description: "Akun contoh untuk demonstrasi platform MEDAL. Bukan data resmi." }).eq("user_id", uid).select("id, user_id").single();
+  const { data } = await sb.from("organizer_profiles").update({ verification_status: "verified", verified_at: new Date().toISOString(), description: "Akun contoh untuk demonstrasi platform MEDAL. Bukan data resmi.", ...(o.bank ?? {}) }).eq("user_id", uid).select("id, user_id").single();
   orgIds.push(data);
 }
 
@@ -85,6 +87,7 @@ const events = [
   { org: 1, title: "Bazar UMKM Jatinangor Akhir Tahun (DEMO)", category: "Bazar", img: "pasar-malam-1.jpg", venue: "Lapangan Jatinangor", district: "Jatinangor", start: 30, end: 31, open: -2, close: 20, cap: 25, status: "published" },
   { org: 0, title: "Pameran Batik & Kriya Kasumedangan (DEMO)", category: "Pameran", img: "batik.jpg", venue: "Gedung Negara Sumedang", district: "Sumedang Selatan", start: 45, end: 47, open: 10, close: 35, cap: 30, status: "published" },
   { org: 1, title: "Pasar Malam Rancakalong (DEMO)", category: "Pasar Malam", img: "pasar-malam-6.jpg", venue: "Desa Wisata Rancakalong", district: "Rancakalong", start: 14, end: 15, open: -10, close: 7, cap: 3, status: "published" },
+  { org: 2, title: "Pasar Kreatif NATA Space (DEMO)", category: "Bazar", img: "p-gerabah.jpg", venue: "NATA Space", district: "Sumedang Utara", start: 25, end: 26, open: -1, close: 18, cap: 25, fee: 100000, status: "published" },
   { org: 0, title: "Expo Produk Olahan Pangan (DEMO)", category: "Expo & Business Matching", img: "rempah.jpg", venue: "Gedung PKK Sumedang", district: "Sumedang Utara", start: 60, end: 61, open: 15, close: 50, cap: 20, status: "pending_review" },
 ];
 const eventRows = [];
@@ -98,7 +101,7 @@ for (const e of events) {
     description: `${e.title} adalah event fiktif untuk demonstrasi alur MEDAL: pendaftaran stand, verifikasi Disperindag, seleksi penyelenggara, hingga penetapan nomor stand.\n\nBukan pengumuman resmi Disperindag Kabupaten Sumedang.`,
     category: e.category, cover_path: cover, venue_name: e.venue, address: `${e.venue}, Kabupaten Sumedang`, district: e.district,
     starts_at: at(e.start, 9), ends_at: at(e.end, 21), registration_opens_at: at(e.open, 8), registration_closes_at: at(e.close, 23),
-    stand_capacity: e.cap, criteria: ["Usaha berdomisili di Kabupaten Sumedang", "Memiliki NIB atau surat keterangan usaha", "Produk sesuai tema event"],
+    stand_capacity: e.cap, stand_fee: e.fee ?? 0, criteria: ["Usaha berdomisili di Kabupaten Sumedang", "Memiliki NIB atau surat keterangan usaha", "Produk sesuai tema event"],
     contact_name: "Panitia (DEMO)", contact_phone: "081200000099", status: e.status,
     published_at: e.status === "published" ? new Date().toISOString() : null,
   };

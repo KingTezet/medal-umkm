@@ -5,6 +5,7 @@ import { CalendarDays, MapPin } from "lucide-react";
 import { requireRole } from "@/lib/auth";
 import { createPublicClient } from "@/lib/supabase/server";
 import { availableStands, registrationState, REGISTRATION_LABEL } from "@/lib/domain";
+import { formatRupiah } from "@/lib/constants";
 import { formatDateRange, formatDateTime } from "@/lib/format";
 import { Breadcrumb, Card, Notice, PageHeader } from "@/components/ui/misc";
 import { ButtonLink } from "@/components/ui/button";
@@ -58,6 +59,7 @@ export default async function ApplyPage({ params }: { params: Promise<{ id: stri
             <p className="flex gap-2"><MapPin className="size-4 text-primary" />{event.venue_name}</p>
             <p>Pendaftaran ditutup <strong>{formatDateTime(event.registration_closes_at)}</strong></p>
             <p>Sisa stand: <strong>{availableStands(event.stand_capacity, event.confirmed_count)}</strong> dari {event.stand_capacity}</p>
+            <p>Biaya stand: <strong>{formatRupiah(event.stand_fee)}</strong>{(event.stand_fee ?? 0) > 0 && <span className="block text-xs text-muted">Dibayar via transfer setelah diterima penyelenggara.</span>}</p>
             <Link href={`/events/${event.slug}`} className="inline-block font-semibold text-emerald hover:underline" target="_blank">Lihat detail & syarat →</Link>
           </Card>
           {bp && (

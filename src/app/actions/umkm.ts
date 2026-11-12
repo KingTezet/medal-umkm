@@ -114,3 +114,17 @@ export async function withdrawApplicationAction(_: ActionState, fd: FormData): P
   revalidatePath("/", "layout");
   return success("Pendaftaran dibatalkan.");
 }
+
+export async function submitPaymentProofAction(_: ActionState, fd: FormData): Promise<ActionState> {
+  const session = await getActionSession("umkm");
+  if (!session) return fail("Sesi berakhir. Silakan masuk kembali.");
+  const id = z.uuid().safeParse(fd.get("application_id"));
+  const path = String(fd.get("payment_proof_path") ?? "");
+  if (!id.success) return fail("Pendaftaran tidak valid.");
+  if (!path) return fail("Unggah bukti transfer terlebih dahulu.", { payment_proof_path: ["Unggah bukti transfer."] });
+  if (!isOwnedPath(path, session.user.id)) return fail("File tidak valid.");
+  const { error } = await session.supabase.rpc("submit_payment_proof", { p_application_id: id.data, p_proof_path: path });
+  if (error) return fail(friendlyError(error));
+  revalidatePath("/", "layout");
+  return success("Bukti transfer terkirim. Menunggu verifikasi penyelenggara.");
+}

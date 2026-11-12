@@ -6,6 +6,7 @@ export type ApplicationStatus = Database["public"]["Enums"]["application_status"
 export type VerificationStatus = Database["public"]["Enums"]["verification_status"];
 export type OrganizationType = Database["public"]["Enums"]["organization_type"];
 export type AccountStatus = Database["public"]["Enums"]["account_status"];
+export type PaymentStatus = Database["public"]["Enums"]["payment_status"];
 
 export const APP_NAME = "MEDAL";
 export const APP_LONG_NAME = "Media, Event, Dagang & Lapak";
@@ -64,6 +65,21 @@ export const VERIFICATION_STATUS: Record<VerificationStatus, { label: string; to
   rejected: { label: "Ditolak", tone: "danger" },
 };
 
+export const PAYMENT_STATUS: Record<PaymentStatus, { label: string; tone: Tone }> = {
+  not_required: { label: "Gratis", tone: "neutral" },
+  unpaid: { label: "Belum dibayar", tone: "warning" },
+  submitted: { label: "Bukti dikirim", tone: "info" },
+  verified: { label: "Lunas", tone: "verified" },
+  rejected: { label: "Bukti ditolak", tone: "danger" },
+};
+
+export const BANKS = ["BRI", "BCA", "BNI", "Mandiri", "BSI", "BJB", "BTN", "CIMB Niaga", "Permata", "Danamon", "SeaBank", "Bank Jago", "Lainnya"] as const;
+
+export function formatRupiah(n: number | null | undefined): string {
+  if (!n) return "Gratis";
+  return "Rp" + n.toLocaleString("id-ID");
+}
+
 export const ACCOUNT_STATUS: Record<AccountStatus, { label: string; tone: Tone }> = {
   pending: { label: "Menunggu", tone: "info" },
   active: { label: "Aktif", tone: "success" },
@@ -76,6 +92,7 @@ export const BUCKETS = {
   verificationDocs: "private-verification-documents",
   proposals: "private-event-proposals",
   applicationDocs: "private-application-documents",
+  paymentProofs: "private-payment-proofs",
 } as const;
 export type BucketName = (typeof BUCKETS)[keyof typeof BUCKETS];
 
@@ -84,6 +101,7 @@ export const FILE_RULES = {
   pdf: { mimes: ["application/pdf"], maxBytes: 10 * 1024 * 1024, label: "PDF · maks 10 MB" },
   pdfSmall: { mimes: ["application/pdf"], maxBytes: 5 * 1024 * 1024, label: "PDF · maks 5 MB" },
   legal: { mimes: ["application/pdf", "image/jpeg", "image/png"], maxBytes: 5 * 1024 * 1024, label: "PDF, JPG, atau PNG · maks 5 MB" },
+  proof: { mimes: ["application/pdf", "image/jpeg", "image/png", "image/webp"], maxBytes: 5 * 1024 * 1024, label: "Foto/screenshot (JPG, PNG, WebP) atau PDF · maks 5 MB" },
 } as const;
 export type FileRuleKey = keyof typeof FILE_RULES;
 

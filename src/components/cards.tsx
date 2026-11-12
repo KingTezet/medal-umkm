@@ -6,6 +6,7 @@ import { availableStands, registrationState, REGISTRATION_LABEL } from "@/lib/do
 import { dayParts, formatDateRange } from "@/lib/format";
 import { eventCover, umkmImage } from "@/lib/storage";
 import { VerifiedIcon } from "@/components/icons";
+import { formatRupiah } from "@/lib/constants";
 import { cn } from "@/lib/cn";
 
 export function EventCard({ event, priority }: { event: PublicEvent; priority?: boolean }) {
@@ -28,7 +29,7 @@ export function EventCard({ event, priority }: { event: PublicEvent; priority?: 
         </span>
       </div>
       <div className="px-3 pb-3 pt-4">
-        <p className="text-[12px] font-medium text-brand-700">{event.category}</p>
+        <p className="flex items-center justify-between gap-2 text-[12px] font-medium text-brand-700"><span>{event.category}</span><span className="rounded-full bg-brand-50 px-2 py-0.5 text-brand-800 ring-1 ring-brand-300/50">{event.stand_fee ? `Stand ${formatRupiah(event.stand_fee)}` : "Stand gratis"}</span></p>
         <h3 className="display mt-1 line-clamp-2 text-[19px] font-semibold leading-snug text-brand-950">{event.title}</h3>
         <div className="mt-3 space-y-1 text-[13px] text-[#5b6b63]">
           <p className="flex items-center gap-2"><CalendarDays className="size-4 shrink-0" aria-hidden />{formatDateRange(event.starts_at, event.ends_at)}</p>

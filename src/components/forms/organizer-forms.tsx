@@ -5,7 +5,7 @@ import { Checkbox, Field, FormMessage, Input, Select, SubmitButton, Textarea, us
 import { GalleryField, UploadField } from "@/components/upload-field";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/misc";
-import { BUCKETS, ORGANIZATION_TYPES, SUMEDANG_DISTRICTS } from "@/lib/constants";
+import { BANKS, BUCKETS, ORGANIZATION_TYPES, SUMEDANG_DISTRICTS } from "@/lib/constants";
 import { toJakartaInput } from "@/lib/format";
 import type { Database } from "@/types/database";
 
@@ -49,6 +49,29 @@ export function OrganizerProfileForm({ profile, userId }: { profile: OP; userId:
           </Field>
         </div>
         <UploadField name="legal_document_path" label="Dokumen legal organisasi" bucket={BUCKETS.verificationDocs} userId={userId} folder="organization" rule="legal" defaultPath={profile.legal_document_path} hint="Akta/SK/surat keterangan · PDF, JPG, PNG · maks 5 MB" />
+      </Card>
+      <Card className="space-y-5">
+        <div>
+          <h2 className="display text-[20px] font-semibold text-brand-950">Rekening pembayaran stand</h2>
+          <p className="mt-1 text-sm text-muted">Dipakai bila event Anda memasang biaya stand. Rekening hanya ditampilkan kepada UMKM yang sudah Anda terima — tidak tampil publik. MEDAL tidak memproses pembayaran; UMKM mentransfer langsung lalu mengunggah bukti untuk Anda verifikasi.</p>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-3">
+          <Field label="Bank" name="bank_name" errors={fe.bank_name}>
+            {(p) => (
+              <Select {...p} name="bank_name" defaultValue={profile.bank_name ?? ""}>
+                <option value="">Pilih bank</option>
+                {BANKS.map((b) => <option key={b} value={b}>{b}</option>)}
+                {profile.bank_name && !(BANKS as readonly string[]).includes(profile.bank_name) && <option value={profile.bank_name}>{profile.bank_name}</option>}
+              </Select>
+            )}
+          </Field>
+          <Field label="Nomor rekening" name="bank_account_number" errors={fe.bank_account_number}>
+            {(p) => <Input {...p} name="bank_account_number" inputMode="numeric" defaultValue={profile.bank_account_number ?? ""} placeholder="Hanya angka" />}
+          </Field>
+          <Field label="Atas nama" name="bank_account_holder" errors={fe.bank_account_holder}>
+            {(p) => <Input {...p} name="bank_account_holder" defaultValue={profile.bank_account_holder ?? ""} />}
+          </Field>
+        </div>
       </Card>
       <FormMessage state={state} />
       <SubmitButton pending={pending} size="lg">Simpan profil</SubmitButton>
@@ -103,6 +126,9 @@ export function EventForm({ event, categories, userId, canSubmit }: { event?: EV
           </Field>
           <Field label="Kapasitas stand" name="stand_capacity" errors={fe.stand_capacity} required>
             {(p) => <Input {...p} name="stand_capacity" type="number" min={1} max={5000} defaultValue={event?.stand_capacity ?? 20} required />}
+          </Field>
+          <Field label="Biaya stand (Rp)" name="stand_fee" errors={fe.stand_fee} hint="Isi 0 bila gratis. Dibayar UMKM via transfer ke rekening Anda setelah diterima.">
+            {(p) => <Input {...p} name="stand_fee" type="number" min={0} step={1000} defaultValue={event?.stand_fee ?? 0} />}
           </Field>
         </div>
         <Field label="Ringkasan" name="summary" errors={fe.summary} hint="1–2 kalimat untuk kartu event (maks 300 karakter)." required>

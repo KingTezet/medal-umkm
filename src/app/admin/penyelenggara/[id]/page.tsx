@@ -39,6 +39,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             { label: "Deskripsi", value: o.description },
             { label: "Alamat", value: [o.address, o.district].filter(Boolean).join(", ") },
             { label: "Kontak", value: formatPhone(o.contact_phone) },
+            { label: "Rekening stand", value: o.bank_account_number ? `${o.bank_name} · ${o.bank_account_number} · a.n. ${o.bank_account_holder}` : "Belum diisi" },
             { label: "Dokumen legal", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.verificationDocs} path={o.legal_document_path} label="Buka dokumen" /> },
             { label: "Diverifikasi", value: formatDateTime(o.verified_at) },
             { label: "Akun", value: `${o.profiles?.full_name ?? ""} · ${o.profiles?.email ?? ""}` },

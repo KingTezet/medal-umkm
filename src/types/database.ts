@@ -85,14 +85,14 @@ isOneToOne: true
                   ]
                 },"events": {
                   Row: {
-                    "address": string,"category": string,"contact_name": string | null,"contact_phone": string | null,"cover_path": string | null,"created_at": string,"criteria": NonNullable<Json>,"description": string,"district": string | null,"ends_at": string,"gallery_paths": NonNullable<Json>,"id": string,"organizer_id": string,"proposal_path": string | null,"published_at": string | null,"registration_closes_at": string,"registration_opens_at": string,"review_note": string | null,"reviewed_at": string | null,"reviewed_by": string | null,"slug": string,"stand_capacity": number,"starts_at": string,"status": Database["public"]['Enums']["event_status"],"summary": string,"title": string,"updated_at": string,"venue_name": string
+                    "address": string,"category": string,"contact_name": string | null,"contact_phone": string | null,"cover_path": string | null,"created_at": string,"criteria": NonNullable<Json>,"description": string,"district": string | null,"ends_at": string,"gallery_paths": NonNullable<Json>,"id": string,"organizer_id": string,"proposal_path": string | null,"published_at": string | null,"registration_closes_at": string,"registration_opens_at": string,"review_note": string | null,"reviewed_at": string | null,"reviewed_by": string | null,"slug": string,"stand_capacity": number,"stand_fee": number,"starts_at": string,"status": Database["public"]['Enums']["event_status"],"summary": string,"title": string,"updated_at": string,"venue_name": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "address": string,"category": string,"contact_name"?: string | null,"contact_phone"?: string | null,"cover_path"?: string | null,"created_at"?: string,"criteria"?: NonNullable<Json>,"description": string,"district"?: string | null,"ends_at": string,"gallery_paths"?: NonNullable<Json>,"id"?: string,"organizer_id": string,"proposal_path"?: string | null,"published_at"?: string | null,"registration_closes_at": string,"registration_opens_at": string,"review_note"?: string | null,"reviewed_at"?: string | null,"reviewed_by"?: string | null,"slug": string,"stand_capacity": number,"starts_at": string,"status"?: Database["public"]['Enums']["event_status"],"summary": string,"title": string,"updated_at"?: string,"venue_name": string
+                    "address": string,"category": string,"contact_name"?: string | null,"contact_phone"?: string | null,"cover_path"?: string | null,"created_at"?: string,"criteria"?: NonNullable<Json>,"description": string,"district"?: string | null,"ends_at": string,"gallery_paths"?: NonNullable<Json>,"id"?: string,"organizer_id": string,"proposal_path"?: string | null,"published_at"?: string | null,"registration_closes_at": string,"registration_opens_at": string,"review_note"?: string | null,"reviewed_at"?: string | null,"reviewed_by"?: string | null,"slug": string,"stand_capacity": number,"stand_fee"?: number,"starts_at": string,"status"?: Database["public"]['Enums']["event_status"],"summary": string,"title": string,"updated_at"?: string,"venue_name": string
                   }
                   Update: {
-                    "address"?: string,"category"?: string,"contact_name"?: string | null,"contact_phone"?: string | null,"cover_path"?: string | null,"created_at"?: string,"criteria"?: NonNullable<Json>,"description"?: string,"district"?: string | null,"ends_at"?: string,"gallery_paths"?: NonNullable<Json>,"id"?: string,"organizer_id"?: string,"proposal_path"?: string | null,"published_at"?: string | null,"registration_closes_at"?: string,"registration_opens_at"?: string,"review_note"?: string | null,"reviewed_at"?: string | null,"reviewed_by"?: string | null,"slug"?: string,"stand_capacity"?: number,"starts_at"?: string,"status"?: Database["public"]['Enums']["event_status"],"summary"?: string,"title"?: string,"updated_at"?: string,"venue_name"?: string
+                    "address"?: string,"category"?: string,"contact_name"?: string | null,"contact_phone"?: string | null,"cover_path"?: string | null,"created_at"?: string,"criteria"?: NonNullable<Json>,"description"?: string,"district"?: string | null,"ends_at"?: string,"gallery_paths"?: NonNullable<Json>,"id"?: string,"organizer_id"?: string,"proposal_path"?: string | null,"published_at"?: string | null,"registration_closes_at"?: string,"registration_opens_at"?: string,"review_note"?: string | null,"reviewed_at"?: string | null,"reviewed_by"?: string | null,"slug"?: string,"stand_capacity"?: number,"stand_fee"?: number,"starts_at"?: string,"status"?: Database["public"]['Enums']["event_status"],"summary"?: string,"title"?: string,"updated_at"?: string,"venue_name"?: string
                   }
                   Relationships: [
                     {
@@ -131,14 +131,14 @@ isOneToOne: false
                   ]
                 },"organizer_profiles": {
                   Row: {
-                    "address": string,"contact_phone": string,"created_at": string,"description": string | null,"district": string | null,"id": string,"legal_document_path": string | null,"organization_name": string,"organization_type": Database["public"]['Enums']["organization_type"],"updated_at": string,"user_id": string,"verification_note": string | null,"verification_status": Database["public"]['Enums']["verification_status"],"verified_at": string | null
+                    "address": string,"bank_account_holder": string | null,"bank_account_number": string | null,"bank_name": string | null,"contact_phone": string,"created_at": string,"description": string | null,"district": string | null,"id": string,"legal_document_path": string | null,"organization_name": string,"organization_type": Database["public"]['Enums']["organization_type"],"updated_at": string,"user_id": string,"verification_note": string | null,"verification_status": Database["public"]['Enums']["verification_status"],"verified_at": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "address"?: string,"contact_phone"?: string,"created_at"?: string,"description"?: string | null,"district"?: string | null,"id"?: string,"legal_document_path"?: string | null,"organization_name": string,"organization_type"?: Database["public"]['Enums']["organization_type"],"updated_at"?: string,"user_id": string,"verification_note"?: string | null,"verification_status"?: Database["public"]['Enums']["verification_status"],"verified_at"?: string | null
+                    "address"?: string,"bank_account_holder"?: string | null,"bank_account_number"?: string | null,"bank_name"?: string | null,"contact_phone"?: string,"created_at"?: string,"description"?: string | null,"district"?: string | null,"id"?: string,"legal_document_path"?: string | null,"organization_name": string,"organization_type"?: Database["public"]['Enums']["organization_type"],"updated_at"?: string,"user_id": string,"verification_note"?: string | null,"verification_status"?: Database["public"]['Enums']["verification_status"],"verified_at"?: string | null
                   }
                   Update: {
-                    "address"?: string,"contact_phone"?: string,"created_at"?: string,"description"?: string | null,"district"?: string | null,"id"?: string,"legal_document_path"?: string | null,"organization_name"?: string,"organization_type"?: Database["public"]['Enums']["organization_type"],"updated_at"?: string,"user_id"?: string,"verification_note"?: string | null,"verification_status"?: Database["public"]['Enums']["verification_status"],"verified_at"?: string | null
+                    "address"?: string,"bank_account_holder"?: string | null,"bank_account_number"?: string | null,"bank_name"?: string | null,"contact_phone"?: string,"created_at"?: string,"description"?: string | null,"district"?: string | null,"id"?: string,"legal_document_path"?: string | null,"organization_name"?: string,"organization_type"?: Database["public"]['Enums']["organization_type"],"updated_at"?: string,"user_id"?: string,"verification_note"?: string | null,"verification_status"?: Database["public"]['Enums']["verification_status"],"verified_at"?: string | null
                   }
                   Relationships: [
                     {
@@ -185,14 +185,14 @@ isOneToOne: false
                   ]
                 },"stand_applications": {
                   Row: {
-                    "additional_document_path": string | null,"admin_note": string | null,"application_code": string,"application_note": string | null,"business_profile_id": string,"business_snapshot": NonNullable<Json>,"confirmed_at": string | null,"confirmed_by": string | null,"created_at": string,"event_id": string,"id": string,"organizer_decided_at": string | null,"organizer_decided_by": string | null,"organizer_note": string | null,"products_offered": string,"stand_number": string | null,"status": Database["public"]['Enums']["application_status"],"submitted_at": string,"submitted_by": string,"updated_at": string,"verified_at": string | null,"verified_by": string | null
+                    "additional_document_path": string | null,"admin_note": string | null,"application_code": string,"application_note": string | null,"business_profile_id": string,"business_snapshot": NonNullable<Json>,"confirmed_at": string | null,"confirmed_by": string | null,"created_at": string,"event_id": string,"id": string,"organizer_decided_at": string | null,"organizer_decided_by": string | null,"organizer_note": string | null,"payment_amount": number | null,"payment_note": string | null,"payment_proof_path": string | null,"payment_status": Database["public"]['Enums']["payment_status"],"payment_submitted_at": string | null,"payment_verified_at": string | null,"payment_verified_by": string | null,"products_offered": string,"stand_number": string | null,"status": Database["public"]['Enums']["application_status"],"submitted_at": string,"submitted_by": string,"updated_at": string,"verified_at": string | null,"verified_by": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "additional_document_path"?: string | null,"admin_note"?: string | null,"application_code": string,"application_note"?: string | null,"business_profile_id": string,"business_snapshot"?: NonNullable<Json>,"confirmed_at"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"event_id": string,"id"?: string,"organizer_decided_at"?: string | null,"organizer_decided_by"?: string | null,"organizer_note"?: string | null,"products_offered": string,"stand_number"?: string | null,"status"?: Database["public"]['Enums']["application_status"],"submitted_at"?: string,"submitted_by": string,"updated_at"?: string,"verified_at"?: string | null,"verified_by"?: string | null
+                    "additional_document_path"?: string | null,"admin_note"?: string | null,"application_code": string,"application_note"?: string | null,"business_profile_id": string,"business_snapshot"?: NonNullable<Json>,"confirmed_at"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"event_id": string,"id"?: string,"organizer_decided_at"?: string | null,"organizer_decided_by"?: string | null,"organizer_note"?: string | null,"payment_amount"?: number | null,"payment_note"?: string | null,"payment_proof_path"?: string | null,"payment_status"?: Database["public"]['Enums']["payment_status"],"payment_submitted_at"?: string | null,"payment_verified_at"?: string | null,"payment_verified_by"?: string | null,"products_offered": string,"stand_number"?: string | null,"status"?: Database["public"]['Enums']["application_status"],"submitted_at"?: string,"submitted_by": string,"updated_at"?: string,"verified_at"?: string | null,"verified_by"?: string | null
                   }
                   Update: {
-                    "additional_document_path"?: string | null,"admin_note"?: string | null,"application_code"?: string,"application_note"?: string | null,"business_profile_id"?: string,"business_snapshot"?: NonNullable<Json>,"confirmed_at"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"event_id"?: string,"id"?: string,"organizer_decided_at"?: string | null,"organizer_decided_by"?: string | null,"organizer_note"?: string | null,"products_offered"?: string,"stand_number"?: string | null,"status"?: Database["public"]['Enums']["application_status"],"submitted_at"?: string,"submitted_by"?: string,"updated_at"?: string,"verified_at"?: string | null,"verified_by"?: string | null
+                    "additional_document_path"?: string | null,"admin_note"?: string | null,"application_code"?: string,"application_note"?: string | null,"business_profile_id"?: string,"business_snapshot"?: NonNullable<Json>,"confirmed_at"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"event_id"?: string,"id"?: string,"organizer_decided_at"?: string | null,"organizer_decided_by"?: string | null,"organizer_note"?: string | null,"payment_amount"?: number | null,"payment_note"?: string | null,"payment_proof_path"?: string | null,"payment_status"?: Database["public"]['Enums']["payment_status"],"payment_submitted_at"?: string | null,"payment_verified_at"?: string | null,"payment_verified_by"?: string | null,"products_offered"?: string,"stand_number"?: string | null,"status"?: Database["public"]['Enums']["application_status"],"submitted_at"?: string,"submitted_by"?: string,"updated_at"?: string,"verified_at"?: string | null,"verified_by"?: string | null
                   }
                   Relationships: [
                     {
@@ -232,6 +232,12 @@ isOneToOne: false
       referencedRelation: "profiles"
       referencedColumns: ["id"]
     },{
+      foreignKeyName: "stand_applications_payment_verified_by_fkey"
+      columns: ["payment_verified_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "stand_applications_submitted_by_fkey"
       columns: ["submitted_by"]
 isOneToOne: false
@@ -258,7 +264,7 @@ isOneToOne: false
                   ]
                 },"public_events": {
                   Row: {
-                    "address": string,"category": string,"confirmed_count": number | null,"contact_name": string | null,"contact_phone": string | null,"cover_path": string | null,"criteria": NonNullable<Json>,"description": string,"district": string | null,"ends_at": string,"gallery_paths": NonNullable<Json>,"id": string,"organization_name": string,"organization_type": Database["public"]['Enums']["organization_type"],"published_at": string | null,"registration_closes_at": string,"registration_opens_at": string,"slug": string,"stand_capacity": number,"starts_at": string,"status": Database["public"]['Enums']["event_status"],"summary": string,"title": string,"venue_name": string
+                    "address": string,"category": string,"confirmed_count": number | null,"contact_name": string | null,"contact_phone": string | null,"cover_path": string | null,"criteria": NonNullable<Json>,"description": string,"district": string | null,"ends_at": string,"gallery_paths": NonNullable<Json>,"id": string,"organization_name": string,"organization_type": Database["public"]['Enums']["organization_type"],"published_at": string | null,"registration_closes_at": string,"registration_opens_at": string,"slug": string,"stand_capacity": number,"stand_fee": number,"starts_at": string,"status": Database["public"]['Enums']["event_status"],"summary": string,"title": string,"venue_name": string
                   }
                   ComputedFields: never
                   Relationships: [
@@ -303,12 +309,20 @@ isOneToOne: false
 "admin_verify_application":
 { Args: { "p_action": string,"p_application_id": string,"p_note"?: string }; Returns: undefined
                            },
+"can_read_payment_proof":
+{ Args: { "p_name": string }; Returns: boolean
+                           },
 "current_user_role":
 { Args: Record<PropertyKey, never>; Returns: Database["public"]['Enums']["user_role"]
                            },
 "get_event_application_counts":
 { Args: { "p_event_id": string }; Returns: {
               "status": Database["public"]['Enums']["application_status"],"total": number
+            }[]
+                           },
+"get_payment_instructions":
+{ Args: { "p_application_id": string }; Returns: {
+              "amount": number,"bank_account_holder": string,"bank_account_number": string,"bank_name": string,"event_title": string,"organization_name": string
             }[]
                            },
 "get_public_stats":
@@ -329,6 +343,9 @@ isOneToOne: false
 "organizer_decide_application":
 { Args: { "p_application_id": string,"p_decision": string,"p_note"?: string }; Returns: undefined
                            },
+"organizer_verify_payment":
+{ Args: { "p_action": string,"p_application_id": string,"p_note"?: string }; Returns: undefined
+                           },
 "owns_event":
 { Args: { "p_event_id": string }; Returns: boolean
                            },
@@ -347,6 +364,9 @@ isOneToOne: false
 "submit_event":
 { Args: { "p_event_id": string }; Returns: undefined
                            },
+"submit_payment_proof":
+{ Args: { "p_application_id": string,"p_proof_path": string }; Returns: undefined
+                           },
 "unique_business_slug":
 { Args: { "p_base": string,"p_exclude"?: string }; Returns: string
                            },
@@ -358,7 +378,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "account_status": "pending"|"active"|"suspended","application_status": "submitted"|"under_verification"|"revision_required"|"verified"|"selected_by_organizer"|"waitlisted"|"rejected"|"confirmed"|"withdrawn","category_kind": "event"|"umkm","event_status": "draft"|"pending_review"|"revision_required"|"published"|"rejected"|"cancelled"|"completed","organization_type": "community"|"eo"|"village"|"agency"|"other","user_role": "umkm"|"organizer"|"admin","verification_status": "pending"|"verified"|"revision_required"|"rejected"
+            "account_status": "pending"|"active"|"suspended","application_status": "submitted"|"under_verification"|"revision_required"|"verified"|"selected_by_organizer"|"waitlisted"|"rejected"|"confirmed"|"withdrawn","category_kind": "event"|"umkm","event_status": "draft"|"pending_review"|"revision_required"|"published"|"rejected"|"cancelled"|"completed","organization_type": "community"|"eo"|"village"|"agency"|"other","payment_status": "not_required"|"unpaid"|"submitted"|"verified"|"rejected","user_role": "umkm"|"organizer"|"admin","verification_status": "pending"|"verified"|"revision_required"|"rejected"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -474,7 +494,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "account_status": ["pending", "active", "suspended"],"application_status": ["submitted", "under_verification", "revision_required", "verified", "selected_by_organizer", "waitlisted", "rejected", "confirmed", "withdrawn"],"category_kind": ["event", "umkm"],"event_status": ["draft", "pending_review", "revision_required", "published", "rejected", "cancelled", "completed"],"organization_type": ["community", "eo", "village", "agency", "other"],"user_role": ["umkm", "organizer", "admin"],"verification_status": ["pending", "verified", "revision_required", "rejected"]
+            "account_status": ["pending", "active", "suspended"],"application_status": ["submitted", "under_verification", "revision_required", "verified", "selected_by_organizer", "waitlisted", "rejected", "confirmed", "withdrawn"],"category_kind": ["event", "umkm"],"event_status": ["draft", "pending_review", "revision_required", "published", "rejected", "cancelled", "completed"],"organization_type": ["community", "eo", "village", "agency", "other"],"payment_status": ["not_required", "unpaid", "submitted", "verified", "rejected"],"user_role": ["umkm", "organizer", "admin"],"verification_status": ["pending", "verified", "revision_required", "rejected"]
           }
         }
 } as const

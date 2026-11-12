@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth";
 import { getCategories } from "@/lib/queries";
 import { BUCKETS, EVENT_STATUS } from "@/lib/constants";
+import { formatRupiah } from "@/lib/constants";
 import { formatDateTime } from "@/lib/format";
 import { organizerCanEditEvent } from "@/lib/domain";
 import { asStringArray, eventCover } from "@/lib/storage";
@@ -80,6 +81,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
             <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Kuota & peserta</h2>
             <DefinitionList items={[
               { label: "Kapasitas", value: e.stand_capacity },
+              { label: "Biaya stand", value: formatRupiah(e.stand_fee) },
               { label: "Dikonfirmasi", value: c.confirmed ?? 0 },
               { label: "Dipilih (menunggu sah)", value: c.selected_by_organizer ?? 0 },
               { label: "Siap diseleksi", value: c.verified ?? 0 },
