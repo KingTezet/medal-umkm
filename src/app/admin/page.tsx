@@ -27,11 +27,12 @@ type Snap = { business_name?: string };
 
 export default async function AdminHome() {
   const { supabase } = await requireRole("admin");
-  const [{ data: stats }, { data: pendingEvents }, { data: toVerify }, { data: toConfirm }] = await Promise.all([
+  const [{ data: stats }, { data: pendingEvents }, { data: toVerify }, { data: toConfirm }, { data: pendingOrgs }] = await Promise.all([
     supabase.rpc("admin_dashboard_stats"),
     supabase.from("events").select("id, title, created_at, organizer_profiles(organization_name)").eq("status", "pending_review").order("updated_at").limit(5),
     supabase.from("stand_applications").select("id, application_code, business_snapshot, submitted_at, events(title)").in("status", ["submitted", "under_verification"]).order("submitted_at").limit(5),
     supabase.from("stand_applications").select("id, application_code, business_snapshot, events(title)").eq("status", "selected_by_organizer").order("organizer_decided_at").limit(5),
+    supabase.from("organizer_profiles").select("id, organization_name, organization_type, created_at").in("verification_status", ["pending", "revision_required"]).order("created_at").limit(5),
   ]);
   const s = (stats ?? {}) as Record<string, number> & { applications_by_status?: Record<string, number> };
   const byStatus = s.applications_by_status ?? {};
@@ -50,10 +51,11 @@ export default async function AdminHome() {
         <StatCard label="Penyelenggara" value={s.organizers_total ?? 0} hint={`${s.organizers_pending ?? 0} menunggu verifikasi`} icon={<Building2 className="size-5" />} />
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-3">
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <Queue title="Verifikasi penyelenggara" href="/admin/penyelenggara?status=pending" icon={Building2} empty="Tidak ada penyelenggara yang menunggu." items={(pendingOrgs ?? []).map((o) => ({ id: o.id, label: o.organization_name, sub: `Mendaftar ${formatShortDate(o.created_at)}`, link: `/admin/penyelenggara/${o.id}` }))} />
         <Queue title="Pengajuan event" href="/admin/events?status=pending_review" icon={CalendarClock} empty="Tidak ada event yang menunggu." items={(pendingEvents ?? []).map((e) => ({ id: e.id, label: e.title, sub: `${e.organizer_profiles?.organization_name ?? ""} · ${formatShortDate(e.created_at)}`, link: `/admin/events/${e.id}` }))} />
         <Queue title="Verifikasi berkas" href="/admin/pendaftaran?status=queue" icon={ClipboardCheck} empty="Antrean verifikasi kosong." items={(toVerify ?? []).map((a) => ({ id: a.id, label: (a.business_snapshot as Snap)?.business_name ?? a.application_code, sub: `${a.events?.title ?? ""} · ${formatShortDate(a.submitted_at)}`, link: `/admin/pendaftaran/${a.id}` }))} />
-        <Queue title="Pengesahan & nomor stand" href="/admin/pendaftaran?status=selected_by_organizer" icon={Stamp} empty="Tidak ada hasil seleksi yang menunggu." items={(toConfirm ?? []).map((a) => ({ id: a.id, label: (a.business_snapshot as Snap)?.business_name ?? a.application_code, sub: a.events?.title ?? "", link: `/admin/pendaftaran/${a.id}` }))} />
+        <Queue title="Pengesahan nomor stand" href="/admin/pendaftaran?status=selected_by_organizer" icon={Stamp} empty="Tidak ada hasil seleksi yang menunggu." items={(toConfirm ?? []).map((a) => ({ id: a.id, label: (a.business_snapshot as Snap)?.business_name ?? a.application_code, sub: a.events?.title ?? "", link: `/admin/pendaftaran/${a.id}` }))} />
       </div>
 
       <Card className="mt-8">

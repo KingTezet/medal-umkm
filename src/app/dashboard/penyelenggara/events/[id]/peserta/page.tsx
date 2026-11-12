@@ -15,7 +15,7 @@ export const metadata: Metadata = { title: "Kelola Peserta" };
 
 const TABS: { key: string; label: string; statuses: ApplicationStatus[] }[] = [
   { key: "ready", label: "Siap diseleksi", statuses: ["verified"] },
-  { key: "selected", label: "Dipilih", statuses: ["selected_by_organizer"] },
+  { key: "selected", label: "Diterima", statuses: ["selected_by_organizer"] },
   { key: "waitlist", label: "Daftar tunggu", statuses: ["waitlisted"] },
   { key: "final", label: "Final", statuses: ["confirmed"] },
   { key: "rejected", label: "Ditolak", statuses: ["rejected"] },
@@ -77,7 +77,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
                   </div>
                   {canDecide && (
                     <div className="flex flex-wrap gap-2">
-                      {a.status !== "selected_by_organizer" && <ActionDialog action={decideApplicationAction} hidden={{ application_id: a.id, decision: "select" }} trigger="Pilih" title="Pilih peserta?" description={`${s.business_name} akan diusulkan ke Disperindag untuk pengesahan.`} confirmLabel="Pilih" noteLabel="Catatan (opsional)" />}
+                      {a.status !== "selected_by_organizer" && <ActionDialog action={decideApplicationAction} hidden={{ application_id: a.id, decision: "select" }} trigger="Terima" title="Terima peserta?" description={`${s.business_name} akan diusulkan ke Disperindag untuk pengesahan.`} confirmLabel="Terima" noteLabel="Catatan (opsional)" />}
                       {a.status !== "waitlisted" && <ActionDialog action={decideApplicationAction} hidden={{ application_id: a.id, decision: "waitlist" }} trigger="Daftar tunggu" triggerVariant="outline" title="Masukkan daftar tunggu?" confirmLabel="Simpan" noteLabel="Catatan (opsional)" />}
                       <ActionDialog action={decideApplicationAction} hidden={{ application_id: a.id, decision: "reject" }} trigger="Tolak" triggerVariant="danger-outline" title="Tolak peserta?" confirmLabel="Tolak" confirmVariant="danger" noteLabel="Alasan penolakan" noteRequired />
                     </div>
