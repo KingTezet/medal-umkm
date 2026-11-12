@@ -1,0 +1,12 @@
+-- MEDAL seed (development/staging only).
+-- Reference data (categories, public settings) is created by migration
+-- 20261112000004_storage_reference.sql so every environment has it.
+--
+-- Demo users/events/applications need auth.users rows, so they are created
+-- through the Admin API instead of raw SQL:
+--   npm run seed:demo      # requires DEMO_PASSWORD in .env.local
+-- All demo rows are labelled "(DEMO)" and must never be presented as official data.
+--
+-- Admin accounts are NEVER seeded. Provision with:
+--   npm run admin:create   # requires ADMIN_EMAIL / ADMIN_PASSWORD in .env.local
+select 1;
