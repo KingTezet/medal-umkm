@@ -14,7 +14,7 @@ export async function SiteFooter() {
   const { contact } = await getPublicSettings();
   const wa = waLink(contact.whatsapp);
   return (
-    <footer className="border-t border-line bg-white">
+    <footer className="overflow-hidden border-t border-line bg-white">
       <div className="container-page py-12">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div className="max-w-xs">
@@ -38,7 +38,8 @@ export async function SiteFooter() {
             </div>
           ))}
         </div>
-        <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:justify-between">
+        <p aria-hidden className="display pointer-events-none mt-12 select-none text-center text-[22vw] font-semibold leading-[0.8] tracking-[-0.06em] text-brand-100 lg:text-[15rem]">MEDAL</p>
+        <div className="flex flex-col gap-2 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:justify-between">
           <p>© {new Date().getFullYear()} MEDAL — Media, Event, Dagang &amp; Lapak.</p>
           <p>Foto: Wikimedia Commons (CC BY/CC BY-SA) · <Link href="/tentang#kredit" className="underline hover:text-primary">kredit</Link></p>
         </div>

@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { LayoutDashboard, Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/brand";
-import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
 const NAV = [
@@ -15,12 +14,14 @@ const NAV = [
   { href: "/umkm", label: "Direktori UMKM" },
   { href: "/tentang", label: "Tentang" },
 ];
-
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export function SiteHeader({ session }: { session: { name: string; dashboard: string } | null }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 12));
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -33,94 +34,65 @@ export function SiteHeader({ session }: { session: { name: string; dashboard: st
   }, [open]);
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const cta = session ? { href: session.dashboard, label: "Dashboard" } : { href: "/daftar", label: "Daftar" };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-sm">
-      <div className="container-page flex h-16 items-center justify-between gap-4">
-        <Wordmark />
-        <nav aria-label="Navigasi utama" className="hidden items-center gap-1 md:flex">
+    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4">
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease }}
+        className={cn(
+          "mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-[background-color,box-shadow] duration-300 sm:h-16 sm:pl-5",
+          scrolled || open ? "bg-white/80 shadow-[0_10px_30px_-18px_rgba(5,35,26,.35)] ring-1 ring-black/[0.06] backdrop-blur-xl" : "bg-white/40 backdrop-blur-sm",
+        )}
+      >
+        <Wordmark compact />
+        <nav aria-label="Navigasi utama" className="hidden items-center rounded-full bg-black/[0.03] p-1 md:flex">
           {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              aria-current={isActive(n.href) ? "page" : undefined}
-              className={cn(
-                "relative px-3 py-2 text-sm font-medium transition-colors duration-150",
-                isActive(n.href) ? "text-primary" : "text-muted hover:text-ink",
-              )}
-            >
-              {n.label}
-              {isActive(n.href) && (
-                <motion.span layoutId="nav-underline" transition={{ duration: 0.25, ease }} className="absolute inset-x-3 -bottom-[13px] h-0.5 bg-primary" />
-              )}
+            <Link key={n.href} href={n.href} aria-current={isActive(n.href) ? "page" : undefined} className={cn("relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200", isActive(n.href) ? "text-brand-950" : "text-[#5b6b63] hover:text-brand-950")}>
+              {isActive(n.href) && <motion.span layoutId="nav-pill" transition={{ duration: 0.4, ease }} className="absolute inset-0 rounded-full bg-white shadow-sm ring-1 ring-black/[0.05]" />}
+              <span className="relative">{n.label}</span>
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-2 md:flex">
-          {session ? (
-            <ButtonLink href={session.dashboard} size="sm">
-              <LayoutDashboard className="size-4" aria-hidden /> Dashboard
-            </ButtonLink>
-          ) : (
-            <>
-              <ButtonLink href="/login" variant="ghost" size="sm">
-                Masuk
-              </ButtonLink>
-              <ButtonLink href="/daftar" size="sm">
-                Daftar
-              </ButtonLink>
-            </>
+        <div className="flex items-center gap-1.5">
+          {!session && (
+            <Link href="/login" className="hidden rounded-full px-4 py-2 text-sm font-medium text-brand-950 hover:bg-black/[0.04] sm:block">
+              Masuk
+            </Link>
           )}
+          <Link href={cta.href} className="group hidden h-10 items-center gap-2 rounded-full bg-brand-900 pl-4 pr-1.5 text-sm font-medium text-white transition-colors hover:bg-brand-800 sm:inline-flex">
+            {cta.label}
+            <span className="grid size-7 place-items-center rounded-full bg-brand-300 text-brand-950 transition-transform duration-300 group-hover:rotate-45"><ArrowUpRight className="size-3.5" aria-hidden /></span>
+          </Link>
+          <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Tutup menu" : "Buka menu"} className="grid size-10 place-items-center rounded-full text-brand-950 hover:bg-black/[0.04] md:hidden">
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Tutup menu" : "Buka menu"}
-          className="-mr-2 grid size-11 place-items-center rounded-lg text-ink hover:bg-surface-muted md:hidden"
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
-      </div>
+      </motion.div>
 
       <AnimatePresence>
         {open && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease }}
-            className="absolute inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-white md:hidden"
+            initial={{ opacity: 0, y: -10, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -10, filter: "blur(8px)" }}
+            transition={{ duration: 0.35, ease }}
+            className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-3xl bg-white/90 p-3 shadow-xl ring-1 ring-black/[0.06] backdrop-blur-xl md:hidden"
           >
-            <nav aria-label="Navigasi seluler" className="container-page flex flex-col py-4">
-              {NAV.map((n) => (
-                <Link
-                  key={n.href}
-                  href={n.href}
-                  onClick={() => setOpen(false)}
-                  aria-current={isActive(n.href) ? "page" : undefined}
-                  className={cn("flex h-12 items-center border-b border-line text-base font-medium", isActive(n.href) ? "text-primary" : "text-ink")}
-                >
-                  {n.label}
-                </Link>
+            <nav aria-label="Navigasi seluler" className="flex flex-col">
+              {NAV.map((n, i) => (
+                <motion.div key={n.href} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.04 * i, duration: 0.3, ease }}>
+                  <Link href={n.href} onClick={() => setOpen(false)} className={cn("display flex h-12 items-center rounded-2xl px-4 text-[18px] font-medium", isActive(n.href) ? "bg-brand-50 text-brand-800" : "text-brand-950")}>
+                    {n.label}
+                  </Link>
+                </motion.div>
               ))}
-              <div className="mt-6 grid gap-2">
-                {session ? (
-                  <ButtonLink href={session.dashboard} onClick={() => setOpen(false)} size="lg">
-                    Buka Dashboard
-                  </ButtonLink>
-                ) : (
-                  <>
-                    <ButtonLink href="/daftar" onClick={() => setOpen(false)} size="lg">
-                      Daftar
-                    </ButtonLink>
-                    <ButtonLink href="/login" onClick={() => setOpen(false)} variant="secondary" size="lg">
-                      Masuk
-                    </ButtonLink>
-                  </>
-                )}
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                {!session && <Link href="/login" onClick={() => setOpen(false)} className="grid h-12 place-items-center rounded-full bg-black/[0.04] text-[15px] font-medium">Masuk</Link>}
+                <Link href={cta.href} onClick={() => setOpen(false)} className={cn("grid h-12 place-items-center rounded-full bg-brand-900 text-[15px] font-medium text-white", session && "col-span-2")}>{cta.label}</Link>
               </div>
             </nav>
           </motion.div>

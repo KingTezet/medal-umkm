@@ -1,181 +1,117 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, CalendarCheck2, CalendarSearch, ClipboardCheck, FileCheck2, Megaphone, Store, Ticket, UserRoundPlus } from "lucide-react";
-import { Hero } from "@/components/home/hero";
-import { EventCard, UmkmCard } from "@/components/cards";
-import { CountUp, Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { ButtonLink } from "@/components/ui/button";
-import { EmptyState, Notice, SectionTitle } from "@/components/ui/misc";
-import { getPublicSettings, getPublicStats, listFeaturedEvents, listPublicUmkm } from "@/lib/queries";
+import { LandingHero } from "@/components/landing/hero";
+import { Bento, EventTile, FinalCta, Heading, Marquee, StatsBand, Steps, UmkmTiles, type LandingEvent } from "@/components/landing/sections";
+import { PillLink, Rise, RiseGroup, RiseItem, ScrollProgress } from "@/components/landing/kit";
+import { Notice } from "@/components/ui/misc";
+import { getCategories, getPublicSettings, getPublicStats, listFeaturedEvents, listPublicUmkm } from "@/lib/queries";
+import { availableStands, registrationState, REGISTRATION_LABEL } from "@/lib/domain";
+import { dayParts, formatDateRange } from "@/lib/format";
+import { eventCover, publicMediaUrl } from "@/lib/storage";
+import { BUCKETS, SUMEDANG_DISTRICTS } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
-const SHORTCUTS = [
-  { href: "/events", icon: CalendarSearch, title: "Cari event", body: "Bazar, festival, dan pameran yang membuka pendaftaran stand." },
-  { href: "/daftar/umkm", icon: Store, title: "Daftarkan usaha", body: "Buat profil usaha sekali, pakai untuk setiap pendaftaran." },
-  { href: "/cek-status", icon: ClipboardCheck, title: "Cek status", body: "Pantau berkas hingga nomor stand final." },
-];
-
-const STEPS = [
-  { icon: UserRoundPlus, title: "Buat akun & profil", body: "Isi data usaha dan dokumen legal satu kali." },
-  { icon: CalendarCheck2, title: "Pilih event", body: "Daftar stand pada event yang sedang dibuka." },
-  { icon: FileCheck2, title: "Verifikasi & seleksi", body: "Disperindag memeriksa berkas, penyelenggara menyeleksi." },
-  { icon: Ticket, title: "Terima nomor stand", body: "Hasil akhir dan nomor lapak tampil di dashboard." },
-];
-
 export default async function HomePage() {
-  const [settings, stats, events, umkm] = await Promise.all([getPublicSettings(), getPublicStats(), listFeaturedEvents(3), listPublicUmkm({ pageSize: 8 })]);
-  const hasStats = stats.events + stats.umkm + stats.stands + stats.organizers > 0;
+  const [settings, stats, events, umkm, cats] = await Promise.all([
+    getPublicSettings(),
+    getPublicStats(),
+    listFeaturedEvents(6),
+    listPublicUmkm({ pageSize: 5 }),
+    getCategories("umkm"),
+  ]);
+
+  const tiles: LandingEvent[] = events.map((e) => {
+    const st = registrationState(e);
+    const { day, month } = dayParts(e.starts_at);
+    return {
+      id: e.id!,
+      slug: e.slug!,
+      title: e.title!,
+      category: e.category!,
+      cover: eventCover(e.cover_path, e.slug ?? ""),
+      dateLabel: formatDateRange(e.starts_at, e.ends_at),
+      day,
+      month,
+      place: `${e.venue_name}${e.district ? `, ${e.district}` : ""}`,
+      remaining: availableStands(e.stand_capacity, e.confirmed_count),
+      capacity: e.stand_capacity,
+      stateLabel: REGISTRATION_LABEL[st],
+      open: st === "open",
+    };
+  });
+  const top = [...events].sort((a, b) => b.stand_capacity - a.stand_capacity)[0];
+  const thumbs = umkm.items.map((u) => publicMediaUrl(BUCKETS.umkmMedia, u.cover_path ?? u.logo_path)).filter((x): x is string => !!x);
 
   return (
     <>
-      <Hero headline={settings.hero.headline} subheadline={settings.hero.subheadline} />
+      <ScrollProgress />
+      <LandingHero headline={settings.hero.headline} subheadline={settings.hero.subheadline} stats={stats} thumbs={thumbs} />
 
       {settings.announcement.enabled && settings.announcement.text && (
-        <div className="container-page -mt-2 mb-6">
-          <Notice tone="info" title="Pengumuman">{settings.announcement.text}</Notice>
-        </div>
+        <div className="container-page mb-8"><Notice tone="info" title="Pengumuman">{settings.announcement.text}</Notice></div>
       )}
 
-      {/* 1. Akses cepat */}
-      <section aria-labelledby="akses-cepat" className="border-y border-line bg-surface-muted">
-        <div className="container-page py-8 sm:py-10">
-          <h2 id="akses-cepat" className="sr-only">Akses cepat</h2>
-          <Stagger className="grid gap-3 sm:grid-cols-3">
-            {SHORTCUTS.map((s) => (
-              <StaggerItem key={s.href}>
-                <Link href={s.href} className="group flex h-full items-start gap-3.5 rounded-xl border border-line bg-white p-4 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-primary-border sm:p-5">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary-soft text-primary"><s.icon className="size-5" aria-hidden /></span>
-                  <span className="min-w-0 flex-1">
-                    <span className="flex items-center justify-between gap-2 text-[15px] font-semibold text-ink">
-                      {s.title}
-                      <ArrowRight className="size-4 text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-primary" aria-hidden />
-                    </span>
-                    <span className="mt-0.5 block text-[13px] leading-relaxed text-muted">{s.body}</span>
-                  </span>
-                </Link>
-              </StaggerItem>
-            ))}
-          </Stagger>
+      <Marquee items={[...cats.map((c) => c.name), ...SUMEDANG_DISTRICTS.slice(0, 8)]} />
+
+      {/* Kenapa MEDAL */}
+      <section aria-labelledby="kenapa" className="bg-white py-20 sm:py-28">
+        <div className="container-page">
+          <Heading kicker="Kenapa MEDAL" title={<span id="kenapa">Lebih mudah tampil,<br className="hidden sm:block" /> lebih jelas prosesnya.</span>} sub="Dirancang untuk pelaku UMKM, penyelenggara, dan Disperindag dalam satu alur yang transparan." />
+          <Bento rows={tiles.slice(0, 3).map((t) => ({ title: t.title, state: t.stateLabel, open: t.open }))} confirmed={top?.confirmed_count ?? 0} capacity={top?.stand_capacity ?? 0} />
         </div>
       </section>
 
-      {/* 2. Ringkasan data nyata */}
-      {hasStats && (
-        <section aria-labelledby="ringkasan" className="section !pb-0">
-          <div className="container-page">
-            <Reveal>
-              <SectionTitle eyebrow="Ringkasan platform" title={<span id="ringkasan">Data langsung dari sistem MEDAL</span>} />
-            </Reveal>
-            <Stagger className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-4">
-              {[
-                { label: "Event terbit", value: stats.events },
-                { label: "UMKM di direktori", value: stats.umkm },
-                { label: "Stand dikonfirmasi", value: stats.stands },
-                { label: "Penyelenggara terverifikasi", value: stats.organizers },
-              ].map((s) => (
-                <StaggerItem key={s.label} className="bg-white p-5 sm:p-6">
-                  <CountUp value={s.value} className="text-[28px] font-semibold tracking-tight text-ink tabular-nums sm:text-[32px]" />
-                  <p className="mt-1 text-[13px] text-muted">{s.label}</p>
-                </StaggerItem>
+      {/* Angka */}
+      <section aria-labelledby="angka" className="bg-canvas py-20 sm:py-24">
+        <div className="container-page">
+          <Heading kicker="Dalam angka" title={<span id="angka">Tumbuh bersama, tercatat transparan.</span>} sub="Langsung dari database MEDAL — bukan angka karangan." />
+          <div className="mt-14"><StatsBand stats={stats} /></div>
+        </div>
+      </section>
+
+      {/* Event */}
+      <section aria-labelledby="event" className="bg-white py-20 sm:py-28">
+        <div className="container-page">
+          <Heading kicker="Event pilihan" title={<span id="event">Sedang membuka pendaftaran</span>} sub="Disetujui Disperindag. Sisa stand dihitung dari stand yang sudah dikonfirmasi." action={<PillLink href="/events" tone="light">Semua event</PillLink>} />
+          {tiles.length ? (
+            <RiseGroup className="-mx-4 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 lg:grid-cols-3">
+              {tiles.slice(0, 3).map((t) => (
+                <RiseItem key={t.id} className="w-[82%] shrink-0 snap-start sm:w-[60%] md:w-auto">
+                  <EventTile e={t} />
+                </RiseItem>
               ))}
-            </Stagger>
+            </RiseGroup>
+          ) : (
+            <Rise className="mt-12 rounded-[28px] bg-canvas p-10 text-center text-[#4c5c54]">Belum ada event yang membuka pendaftaran. Event baru tampil setelah disetujui Disperindag.</Rise>
+          )}
+        </div>
+      </section>
+
+      {/* Cara kerja */}
+      <section aria-labelledby="alur" className="bg-canvas py-20 sm:py-28">
+        <div className="container-page">
+          <Heading kicker="Cara kerja" title={<span id="alur">Empat langkah ke lapak final.</span>} />
+          <Steps />
+        </div>
+      </section>
+
+      {/* UMKM */}
+      {umkm.items.length > 0 && (
+        <section aria-labelledby="umkm" className="bg-white py-20 sm:py-28">
+          <div className="container-page">
+            <Heading kicker="Direktori UMKM" title={<span id="umkm">Kenali produk lokal Sumedang.</span>} sub="Hanya usaha terverifikasi yang setuju dipublikasikan." action={<PillLink href="/umkm" tone="light">Buka direktori</PillLink>} />
+            <div className="mt-12">
+              <UmkmTiles items={umkm.items.map((u) => ({ id: u.id!, slug: u.slug!, name: u.business_name!, category: u.category!, district: u.district || "Sumedang", img: publicMediaUrl(BUCKETS.umkmMedia, u.cover_path ?? u.logo_path) }))} />
+            </div>
           </div>
         </section>
       )}
 
-      {/* 3. Event */}
-      <section aria-labelledby="event-dibuka" className="section">
+      {/* CTA */}
+      <section className="bg-white pb-20 sm:pb-28">
         <div className="container-page">
-          <Reveal>
-            <SectionTitle
-              eyebrow="Event"
-              title={<span id="event-dibuka">Sedang membuka pendaftaran</span>}
-              description="Seluruh event telah disetujui Disperindag. Sisa stand dihitung dari stand yang sudah dikonfirmasi."
-              action={<ButtonLink href="/events" variant="secondary">Lihat semua event <ArrowRight className="size-4" aria-hidden /></ButtonLink>}
-            />
-          </Reveal>
-          <div className="mt-8">
-            {events.length ? (
-              <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {events.map((e, i) => (
-                  <StaggerItem key={e.id} className="h-full"><EventCard event={e} priority={i === 0} /></StaggerItem>
-                ))}
-              </Stagger>
-            ) : (
-              <EmptyState title="Belum ada event yang membuka pendaftaran" description="Event baru tampil setelah disetujui Disperindag." action={<ButtonLink href="/daftar/penyelenggara" variant="secondary">Ajukan event</ButtonLink>} />
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Direktori */}
-      <section aria-labelledby="direktori" className="section border-t border-line bg-surface-muted">
-        <div className="container-page">
-          <Reveal>
-            <SectionTitle
-              eyebrow="Direktori UMKM"
-              title={<span id="direktori">Produk lokal terverifikasi</span>}
-              description="Hanya usaha yang diverifikasi Disperindag dan setuju dipublikasikan."
-              action={<ButtonLink href="/umkm" variant="secondary">Buka direktori <ArrowRight className="size-4" aria-hidden /></ButtonLink>}
-            />
-          </Reveal>
-          <div className="mt-8">
-            {umkm.items.length ? (
-              <Stagger className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-                {umkm.items.map((u) => (
-                  <StaggerItem key={u.id} className="h-full"><UmkmCard item={u} /></StaggerItem>
-                ))}
-              </Stagger>
-            ) : (
-              <EmptyState title="Direktori sedang disiapkan" description="Profil UMKM tampil setelah diverifikasi." action={<ButtonLink href="/daftar/umkm" variant="secondary">Daftarkan usaha</ButtonLink>} />
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Alur */}
-      <section aria-labelledby="alur" className="section">
-        <div className="container-page">
-          <Reveal>
-            <SectionTitle eyebrow="Cara kerja" title={<span id="alur">Empat langkah, semuanya terpantau</span>} />
-          </Reveal>
-          <Stagger className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((s, i) => (
-              <StaggerItem key={s.title}>
-                <div className="h-full rounded-xl border border-line bg-white p-5">
-                  <div className="flex items-center justify-between">
-                    <span className="grid size-10 place-items-center rounded-lg bg-primary-soft text-primary"><s.icon className="size-5" aria-hidden /></span>
-                    <span className="text-[13px] font-medium text-muted tabular-nums">0{i + 1}</span>
-                  </div>
-                  <h3 className="mt-4 text-[16px] font-semibold text-ink">{s.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-muted">{s.body}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      {/* 6. CTA penyelenggara */}
-      <section aria-labelledby="cta-penyelenggara" className="pb-14 sm:pb-20">
-        <div className="container-page">
-          <Reveal>
-            <div className="grid overflow-hidden rounded-xl border border-line bg-white md:grid-cols-2">
-              <div className="relative aspect-[16/10] bg-surface-muted md:aspect-auto">
-                <Image src="/images/pasar-malam-1.jpg" alt="Suasana bazar malam dengan deretan stand UMKM" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
-              </div>
-              <div className="flex flex-col justify-center p-6 sm:p-10">
-                <span className="grid size-10 place-items-center rounded-lg bg-primary-soft text-primary"><Megaphone className="size-5" aria-hidden /></span>
-                <h2 id="cta-penyelenggara" className="mt-4 text-[22px] font-semibold leading-tight text-ink sm:text-[28px]">Punya event untuk UMKM?</h2>
-                <p className="mt-2 text-[15px] leading-relaxed text-muted">Komunitas, EO, desa, dan instansi dapat mengajukan event. Setelah diverifikasi Disperindag, event tampil publik dan Anda dapat menyeleksi peserta yang berkasnya sudah diperiksa.</p>
-                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
-                  <ButtonLink href="/daftar/penyelenggara">Ajukan Event</ButtonLink>
-                  <ButtonLink href="/tentang" variant="secondary">Pelajari alurnya</ButtonLink>
-                </div>
-              </div>
-            </div>
-          </Reveal>
+          <RiseGroup>
+            <RiseItem><FinalCta /></RiseItem>
+          </RiseGroup>
         </div>
       </section>
     </>
