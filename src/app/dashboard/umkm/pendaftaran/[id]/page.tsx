@@ -55,7 +55,7 @@ export default async function ApplicationDetailPage({ params, searchParams }: { 
       )}
 
       <Card className="mb-6">
-        <h2 className="mb-6 font-semibold text-lg">Progres pendaftaran</h2>
+        <h2 className="mb-6 display text-[20px] font-semibold leading-tight text-brand-950">Progres pendaftaran</h2>
         <ApplicationTimeline status={a.status} history={history ?? []} />
       </Card>
 
@@ -69,7 +69,7 @@ export default async function ApplicationDetailPage({ params, searchParams }: { 
 
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         <Card>
-          <h2 className="font-semibold text-lg">Data pendaftaran</h2>
+          <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Data pendaftaran</h2>
           <DefinitionList items={[
             { label: "Produk yang dijual", value: a.products_offered },
             { label: "Catatan pemohon", value: a.application_note },
@@ -81,7 +81,7 @@ export default async function ApplicationDetailPage({ params, searchParams }: { 
           {a.events?.slug && <Link href={`/events/${a.events.slug}`} className="mt-4 inline-block text-sm font-semibold text-emerald hover:underline">Lihat halaman event →</Link>}
         </Card>
         <Card>
-          <h2 className="mb-4 font-semibold text-lg">Riwayat status</h2>
+          <h2 className="mb-4 display text-[20px] font-semibold leading-tight text-brand-950">Riwayat status</h2>
           <HistoryList items={history ?? []} />
         </Card>
       </div>

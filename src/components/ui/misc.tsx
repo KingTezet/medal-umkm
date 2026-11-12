@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
 import { AlertCircle, CheckCircle2, ChevronRight, Circle, Clock, Inbox, Info, MinusCircle, XCircle } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { VerifiedIcon } from "@/components/icons";
 import type { Tone } from "@/lib/constants";
 
 const toneClass: Record<Tone, string> = {
@@ -10,7 +11,8 @@ const toneClass: Record<Tone, string> = {
   success: "bg-primary-soft text-primary border-primary-border",
   warning: "bg-[#fbf5ea] text-warning border-[#efe1c4]",
   danger: "bg-[#fbefef] text-danger border-[#f0d6d6]",
-  gold: "bg-primary text-white border-primary",
+  gold: "bg-brand-900 text-white border-brand-900",
+  verified: "bg-brand-100 text-brand-800 border-brand-300/60",
 };
 
 const toneIcon: Record<Tone, typeof Circle> = {
@@ -20,14 +22,15 @@ const toneIcon: Record<Tone, typeof Circle> = {
   warning: AlertCircle,
   danger: XCircle,
   gold: CheckCircle2,
+  verified: VerifiedIcon as unknown as typeof Circle,
 };
 
 /** Status label: text + icon, never colour alone. */
 export function Badge({ tone = "neutral", children, className, dot = true }: { tone?: Tone; children: ReactNode; className?: string; dot?: boolean }) {
   const Icon = toneIcon[tone];
   return (
-    <span className={cn("inline-flex items-center gap-1 whitespace-nowrap rounded-md border px-2 py-0.5 text-xs font-medium", toneClass[tone], className)}>
-      {dot && <Icon className="size-3.5" aria-hidden />}
+    <span className={cn("inline-flex items-center gap-1 whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-medium", toneClass[tone], className)}>
+      {dot && <Icon className={cn("size-3.5", tone === "verified" && "size-4 text-brand-700")} aria-hidden />}
       {children}
     </span>
   );
@@ -39,15 +42,15 @@ export function StatusBadge({ map, status }: { map: Record<string, { label: stri
 }
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn("rounded-xl border border-line bg-white p-5 sm:p-6", className)}>{children}</div>;
+  return <div className={cn("rounded-[22px] bg-white p-5 ring-1 ring-black/[0.06] sm:p-6", className)}>{children}</div>;
 }
 
 export function SectionTitle({ eyebrow, title, description, action, className }: { eyebrow?: string; title: ReactNode; description?: ReactNode; action?: ReactNode; className?: string }) {
   return (
     <div className={cn("flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between", className)}>
       <div className="max-w-2xl">
-        {eyebrow && <p className="mb-2 text-sm font-medium text-primary">{eyebrow}</p>}
-        <h2 className="text-[22px] font-semibold leading-tight text-ink sm:text-[28px]">{title}</h2>
+        {eyebrow && <p className="mb-2 inline-flex items-center gap-2 text-[13px] font-medium text-brand-700"><span className="h-px w-6 bg-brand-500" aria-hidden />{eyebrow}</p>}
+        <h2 className="display text-[26px] font-semibold leading-[1.08] text-brand-950 sm:text-[36px]">{title}</h2>
         {description && <p className="mt-2 text-[15px] leading-relaxed text-muted">{description}</p>}
       </div>
       {action}
@@ -57,9 +60,9 @@ export function SectionTitle({ eyebrow, title, description, action, className }:
 
 export function EmptyState({ title, description, action, icon }: { title: string; description?: string; action?: ReactNode; icon?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center rounded-xl border border-dashed border-line bg-white px-6 py-12 text-center">
-      <div className="mb-4 grid size-11 place-items-center rounded-lg bg-surface-muted text-muted">{icon ?? <Inbox className="size-5" aria-hidden />}</div>
-      <h3 className="text-base font-semibold text-ink">{title}</h3>
+    <div className="flex flex-col items-center rounded-[22px] border border-dashed border-brand-300/70 bg-brand-50/60 px-6 py-12 text-center">
+      <div className="mb-4 grid size-12 place-items-center rounded-2xl bg-white text-brand-700 ring-1 ring-brand-300/60">{icon ?? <Inbox className="size-5" aria-hidden />}</div>
+      <h3 className="display text-lg font-semibold text-brand-950">{title}</h3>
       {description && <p className="mt-1.5 max-w-md text-sm leading-relaxed text-muted">{description}</p>}
       {action && <div className="mt-5">{action}</div>}
     </div>
@@ -93,8 +96,8 @@ export function PageHeader({ title, description, action, eyebrow }: { title: str
   return (
     <div className="mb-6 flex flex-col gap-4 sm:mb-8 lg:flex-row lg:items-end lg:justify-between">
       <div className="min-w-0">
-        {eyebrow && <p className="mb-1 text-[13px] font-medium text-primary">{eyebrow}</p>}
-        <h1 className="text-[26px] font-semibold leading-tight text-ink sm:text-[30px]">{title}</h1>
+        {eyebrow && <p className="mb-1.5 inline-flex items-center gap-2 text-[13px] font-medium text-brand-700"><span className="h-px w-5 bg-brand-500" aria-hidden />{eyebrow}</p>}
+        <h1 className="display text-[28px] font-semibold leading-[1.08] text-brand-950 sm:text-[36px]">{title}</h1>
         {description && <p className="mt-1.5 max-w-2xl text-[15px] leading-relaxed text-muted">{description}</p>}
       </div>
       {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
@@ -104,13 +107,15 @@ export function PageHeader({ title, description, action, eyebrow }: { title: str
 
 export function StatCard({ label, value, hint, icon, accent = false }: { label: string; value: ReactNode; hint?: string; icon?: ReactNode; accent?: boolean }) {
   return (
-    <div className={cn("rounded-xl border bg-white p-4 sm:p-5", accent ? "border-primary-border" : "border-line")}>
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-[13px] font-medium text-muted">{label}</p>
-        {icon && <span className={cn("grid size-8 place-items-center rounded-lg", accent ? "bg-primary text-white" : "bg-primary-soft text-primary")}>{icon}</span>}
+    <div className={cn("relative overflow-hidden rounded-[22px] p-5 sm:p-6", accent ? "bg-brand-900 text-white" : "bg-white ring-1 ring-black/[0.06]")}>
+      {accent && <div className="bg-grid-light pointer-events-none absolute inset-0" aria-hidden />}
+      {accent && <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-brand-500/40 blur-3xl" aria-hidden />}
+      <div className="relative flex items-center justify-between gap-3">
+        <p className={cn("text-[12px] font-medium leading-snug sm:text-[13px]", accent ? "text-brand-300" : "text-muted")}>{label}</p>
+        {icon && <span className={cn("grid size-9 place-items-center rounded-xl", accent ? "bg-white/10 text-brand-300" : "bg-brand-100 text-brand-800")}>{icon}</span>}
       </div>
-      <p className="mt-2 text-[28px] font-semibold leading-none tracking-tight text-ink tabular-nums">{value}</p>
-      {hint && <p className="mt-2 text-xs text-muted">{hint}</p>}
+      <p className={cn("display relative mt-3 text-[34px] font-semibold leading-none tabular-nums", accent ? "text-white" : "text-brand-950")}>{value}</p>
+      {hint && <p className={cn("relative mt-2 text-xs", accent ? "text-white/60" : "text-muted")}>{hint}</p>}
     </div>
   );
 }
@@ -119,11 +124,11 @@ export function Notice({ tone = "info", title, children }: { tone?: "info" | "wa
   const map = {
     info: { c: "border-[#d9e4ee] bg-[#f5f8fb] text-[#24445e]", i: Info },
     warning: { c: "border-[#efe1c4] bg-[#fdf9f1] text-[#6e4b10]", i: AlertCircle },
-    success: { c: "border-primary-border bg-primary-soft text-primary-hover", i: CheckCircle2 },
+    success: { c: "border-brand-300/60 bg-brand-50 text-brand-900", i: CheckCircle2 },
     danger: { c: "border-[#f0d6d6] bg-[#fdf5f5] text-[#8a3030]", i: XCircle },
   }[tone];
   return (
-    <div role={tone === "danger" ? "alert" : "status"} className={cn("flex gap-3 rounded-lg border px-4 py-3 text-sm leading-relaxed", map.c)}>
+    <div role={tone === "danger" ? "alert" : "status"} className={cn("flex gap-3 rounded-2xl border px-4 py-3.5 text-sm leading-relaxed", map.c)}>
       <map.i className="mt-0.5 size-4 shrink-0" aria-hidden />
       <div className="min-w-0">
         {title && <p className="font-semibold">{title}</p>}
@@ -163,12 +168,12 @@ export function DataTable({ head, children, empty }: { head: string[]; children:
     return cloneElement(r, undefined, cells);
   });
   return (
-    <div className="overflow-hidden rounded-xl border border-line bg-white">
+    <div className="overflow-hidden rounded-[22px] bg-white ring-1 ring-black/[0.06]">
       <table className="w-full text-left text-sm max-md:block">
-        <thead className="border-b border-line bg-surface-muted text-[12px] font-medium text-muted max-md:hidden">
+        <thead className="border-b border-line bg-brand-50/70 text-[12px] font-medium text-brand-900/70 max-md:hidden">
           <tr>
             {head.map((h, i) => (
-              <th key={i} scope="col" className="px-4 py-2.5 font-medium">
+              <th key={i} scope="col" className="px-4 py-3 font-medium">
                 {h}
               </th>
             ))}

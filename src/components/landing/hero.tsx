@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useTransform } from "motion/react";
-import { ArrowRight, BadgeCheck, CalendarSearch, ClipboardCheck, Info, Megaphone, Store, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { EventIcon, InfoIcon, MegaphoneIcon, SearchStatusIcon, StoreIcon, UsersIcon, VerifiedIcon } from "@/components/icons";
 import { MedalMark } from "@/components/brand";
 import { BlurWords, Counter, EASE, PillLink, useParallax, useRange } from "@/components/landing/kit";
 import { cn } from "@/lib/cn";
@@ -18,12 +19,12 @@ export interface HeroStats {
 const STEPS = ["Berkas", "Verifikasi", "Seleksi", "Nomor stand"];
 
 const LINKS = [
-  { href: "/events", label: "Jelajahi event & bazar", sub: "Event yang sedang buka pendaftaran", icon: CalendarSearch, tint: "bg-brand-100 text-brand-800", featured: true },
-  { href: "/daftar/umkm", label: "Daftarkan usaha saya", sub: "Untuk pelaku UMKM Sumedang", icon: Store, tint: "bg-brand-100 text-brand-800" },
-  { href: "/daftar/penyelenggara", label: "Ajukan event", sub: "Komunitas, EO, desa & instansi", icon: Megaphone, tint: "bg-sky-tint text-sky-ink" },
-  { href: "/umkm", label: "Direktori UMKM", sub: "Produk lokal terverifikasi", icon: Users, tint: "bg-[#fdeee9] text-coral" },
-  { href: "/cek-status", label: "Cek status pendaftaran", sub: "Berkas hingga nomor stand", icon: ClipboardCheck, tint: "bg-brand-100 text-brand-800" },
-  { href: "/tentang", label: "Tentang MEDAL", sub: "Program & tim pengembang", icon: Info, tint: "bg-canvas text-brand-900" },
+  { href: "/events", label: "Jelajahi event & bazar", sub: "Event yang sedang buka pendaftaran", icon: EventIcon, tint: "bg-brand-100 text-brand-800", featured: true },
+  { href: "/daftar/umkm", label: "Daftarkan usaha saya", sub: "Untuk pelaku UMKM Sumedang", icon: StoreIcon, tint: "bg-brand-100 text-brand-800" },
+  { href: "/daftar/penyelenggara", label: "Ajukan event", sub: "Komunitas, EO, desa & instansi", icon: MegaphoneIcon, tint: "bg-sky-tint text-sky-ink" },
+  { href: "/umkm", label: "Direktori UMKM", sub: "Produk lokal terverifikasi", icon: UsersIcon, tint: "bg-[#fdeee9] text-coral" },
+  { href: "/cek-status", label: "Cek status pendaftaran", sub: "Berkas hingga nomor stand", icon: SearchStatusIcon, tint: "bg-brand-100 text-brand-800" },
+  { href: "/tentang", label: "Tentang MEDAL", sub: "Program & tim pengembang", icon: InfoIcon, tint: "bg-canvas text-brand-900" },
 ];
 
 function Blobs() {
@@ -217,7 +218,7 @@ function DesktopHero({ headline, subheadline, stats, thumbs }: { headline: strin
             <p className="text-left text-[13px] leading-tight text-[#4c5c54]">
               <Counter value={stats.umkm} className="display text-[18px] font-semibold text-brand-950" /> UMKM terverifikasi
               <br />
-              <span className="inline-flex items-center gap-1 text-brand-700"><BadgeCheck className="size-3.5" aria-hidden /> diperiksa Disperindag</span>
+              <span className="inline-flex items-center gap-1 text-brand-700"><VerifiedIcon className="size-4" /> diperiksa Disperindag</span>
             </p>
           </motion.div>
         </motion.div>

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { AtSign, BadgeCheck, MapPin, MessageCircle, Package, Store } from "lucide-react";
+import { AtSign, MapPin, MessageCircle, Package, Store } from "lucide-react";
 import { getPublicUmkm } from "@/lib/queries";
 import { asProducts, asStringArray, publicMediaUrl, umkmImage } from "@/lib/storage";
 import { BUCKETS } from "@/lib/constants";
 import { formatPhone, waLink } from "@/lib/format";
 import { Breadcrumb } from "@/components/ui/misc";
+import { VerifiedIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion";
 import { buttonClass } from "@/components/ui/button";
 
@@ -29,28 +30,34 @@ export default async function UmkmDetailPage({ params }: { params: Params }) {
   const hasImage = !!(u.cover_path || u.logo_path);
 
   return (
-    <article className="container-page py-6 sm:py-8">
+    <article className="relative isolate -mt-[68px] pt-[68px] sm:-mt-[76px] sm:pt-[76px]">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-100/70 via-brand-50/40 to-white" />
+        <div className="bg-grid fade-mask absolute inset-0" />
+        <div className="absolute -left-32 -top-40 size-[28rem] rounded-full bg-brand-300/40 blur-[100px]" />
+      </div>
+      <div className="container-page py-6 sm:py-8">
       <Breadcrumb items={[{ label: "Beranda", href: "/" }, { label: "Direktori UMKM", href: "/umkm" }, { label: u.business_name ?? "" }]} />
       <div className="grid gap-8 lg:grid-cols-[1fr_20rem] lg:gap-12">
         <div className="min-w-0">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-surface-muted">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] bg-brand-50 shadow-[0_30px_60px_-35px_rgba(5,35,26,.5)]">
             {hasImage ? <Image src={umkmImage(u.cover_path ?? u.logo_path, u.slug ?? "")} alt={`Foto usaha ${u.business_name}`} fill priority sizes="(min-width:1024px) 60vw, 100vw" className="object-cover" /> : <div className="grid size-full place-items-center text-muted"><Store className="size-10" aria-hidden /></div>}
           </div>
           <p className="mt-6 text-[13px] text-muted">{u.category}</p>
-          <h1 className="mt-1 text-[28px] font-semibold leading-tight sm:text-[36px]">{u.business_name}</h1>
+          <h1 className="mt-1 display text-[32px] font-semibold leading-[1.05] text-brand-950 sm:text-[44px]">{u.business_name}</h1>
           <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
             <span className="flex items-center gap-1.5"><MapPin className="size-4" aria-hidden />{[u.village, u.district, "Sumedang"].filter(Boolean).join(", ")}</span>
-            <span className="flex items-center gap-1.5 text-primary"><BadgeCheck className="size-4" aria-hidden />Terverifikasi Disperindag</span>
+            <span className="flex items-center gap-1.5 text-primary"><VerifiedIcon className="size-4" />Terverifikasi Disperindag</span>
           </p>
 
           <Reveal className="mt-8">
-            <h2 className="text-[20px] font-semibold">Tentang usaha</h2>
+            <h2 className="display text-[24px] font-semibold text-brand-950">Tentang usaha</h2>
             <p className="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-ink/85">{u.description || "Pemilik usaha belum menambahkan deskripsi."}</p>
           </Reveal>
           {products.length > 0 && (
             <Reveal className="mt-8">
-              <h2 className="text-[20px] font-semibold">Produk &amp; layanan</h2>
-              <ul className="mt-3 divide-y divide-line rounded-xl border border-line">
+              <h2 className="display text-[24px] font-semibold text-brand-950">Produk &amp; layanan</h2>
+              <ul className="mt-3 divide-y divide-line rounded-[22px] bg-white ring-1 ring-black/[0.06]">
                 {products.map((p) => (
                   <li key={p.name} className="flex gap-3 px-4 py-3">
                     <Package className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
@@ -62,7 +69,7 @@ export default async function UmkmDetailPage({ params }: { params: Params }) {
           )}
           {gallery.length > 0 && (
             <Reveal className="mt-8">
-              <h2 className="text-[20px] font-semibold">Galeri</h2>
+              <h2 className="display text-[24px] font-semibold text-brand-950">Galeri</h2>
               <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {gallery.map((g, i) => (
                   <div key={g} className="relative aspect-square overflow-hidden rounded-xl bg-surface-muted">
@@ -74,7 +81,7 @@ export default async function UmkmDetailPage({ params }: { params: Params }) {
           )}
         </div>
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-xl border border-line p-5">
+          <div className="rounded-[26px] bg-white p-6 shadow-[0_24px_50px_-30px_rgba(5,35,26,.35)] ring-1 ring-black/[0.06]">
             <p className="text-sm font-semibold">Hubungi usaha</p>
             {wa || u.instagram ? (
               <div className="mt-3 grid gap-2">
@@ -87,6 +94,7 @@ export default async function UmkmDetailPage({ params }: { params: Params }) {
             <p className="mt-4 text-xs leading-relaxed text-muted">MEDAL bukan marketplace. Transaksi dilakukan langsung dengan pelaku usaha.</p>
           </div>
         </aside>
+      </div>
       </div>
     </article>
   );

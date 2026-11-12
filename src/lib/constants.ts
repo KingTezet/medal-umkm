@@ -33,7 +33,7 @@ export const ROLE_LABEL: Record<UserRole, string> = {
   admin: "Admin Disperindag",
 };
 
-export type Tone = "neutral" | "info" | "success" | "warning" | "danger" | "gold";
+export type Tone = "neutral" | "info" | "success" | "warning" | "danger" | "gold" | "verified";
 
 export const EVENT_STATUS: Record<EventStatus, { label: string; tone: Tone }> = {
   draft: { label: "Draft", tone: "neutral" },
@@ -49,7 +49,7 @@ export const APPLICATION_STATUS: Record<ApplicationStatus, { label: string; tone
   submitted: { label: "Berkas Diterima", tone: "info" },
   under_verification: { label: "Diverifikasi", tone: "info" },
   revision_required: { label: "Perlu Revisi", tone: "warning" },
-  verified: { label: "Terverifikasi", tone: "success" },
+  verified: { label: "Terverifikasi", tone: "verified" },
   selected_by_organizer: { label: "Dipilih Penyelenggara", tone: "gold" },
   waitlisted: { label: "Daftar Tunggu", tone: "warning" },
   rejected: { label: "Ditolak", tone: "danger" },
@@ -59,7 +59,7 @@ export const APPLICATION_STATUS: Record<ApplicationStatus, { label: string; tone
 
 export const VERIFICATION_STATUS: Record<VerificationStatus, { label: string; tone: Tone }> = {
   pending: { label: "Menunggu Verifikasi", tone: "info" },
-  verified: { label: "Terverifikasi", tone: "success" },
+  verified: { label: "Terverifikasi", tone: "verified" },
   revision_required: { label: "Perlu Revisi", tone: "warning" },
   rejected: { label: "Ditolak", tone: "danger" },
 };
@@ -88,12 +88,12 @@ export const FILE_RULES = {
 export type FileRuleKey = keyof typeof FILE_RULES;
 
 export const FALLBACK_IMAGES = [
-  "/images/pasar-malam-1.jpg",
-  "/images/jajan-pasar.jpg",
-  "/images/batik.jpg",
-  "/images/tahu-bungseng.jpg",
-  "/images/rempah.jpg",
-  "/images/pasar-malam-6.jpg",
-  "/images/kue-lumpur.jpg",
-  "/images/canting.jpg",
+  "/images/p-keranjang-bambu.jpg",
+  "/images/p-kopi.jpg",
+  "/images/p-rempah.jpg",
+  "/images/p-gerabah.jpg",
+  "/images/p-sambal-sendok.jpg",
+  "/images/p-lampu-bambu.jpg",
+  "/images/p-nasi-daun.jpg",
+  "/images/p-batik-biru.jpg",
 ] as const;

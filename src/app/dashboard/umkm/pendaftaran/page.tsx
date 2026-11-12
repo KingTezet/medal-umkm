@@ -23,7 +23,7 @@ export default async function MyApplicationsPage() {
         <ul className="grid gap-4">
           {list.map((a) => (
             <li key={a.id}>
-              <Link href={`/dashboard/umkm/pendaftaran/${a.id}`} className="flex flex-col gap-4 rounded-xl border border-line bg-surface p-5 transition hover:border-emerald/40 sm:flex-row sm:items-center sm:justify-between">
+              <Link href={`/dashboard/umkm/pendaftaran/${a.id}`} className="flex flex-col gap-4 rounded-[22px] bg-white p-5 ring-1 ring-black/[0.06] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-25px_rgba(5,35,26,.4)] sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
                   <p className="font-mono text-xs text-muted">{a.application_code}</p>
                   <p className="mt-1 font-semibold text-xl">{a.events?.title}</p>

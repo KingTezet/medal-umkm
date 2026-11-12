@@ -9,7 +9,7 @@ function Queue({ title, href, items, icon: Icon, empty }: { title: string; href:
   return (
     <Card>
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="flex items-center gap-2 font-semibold text-xl"><Icon className="size-5 text-primary" />{title}</h2>
+        <h2 className="display flex items-center gap-2 text-[19px] font-semibold text-brand-950"><Icon className="size-5 text-primary" />{title}</h2>
         <Link href={href} className="text-sm font-semibold text-emerald hover:underline">Semua</Link>
       </div>
       {items.length ? (
@@ -57,7 +57,7 @@ export default async function AdminHome() {
       </div>
 
       <Card className="mt-8">
-        <h2 className="font-semibold text-xl">Pendaftaran stand per status</h2>
+        <h2 className="display text-[22px] font-semibold text-brand-950">Pendaftaran stand per status</h2>
         <p className="text-xs text-muted">Seluruh periode · total {total}</p>
         <div className="mt-5 space-y-3">
           {(Object.keys(APPLICATION_STATUS) as ApplicationStatus[]).map((k) => {

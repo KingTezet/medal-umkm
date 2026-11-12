@@ -114,7 +114,7 @@ export async function NotificationsView({ supabase, userId }: { supabase: SB; us
         )}
       </div>
       {items.length ? (
-        <ul className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
+        <ul className="divide-y divide-line overflow-hidden rounded-[22px] bg-white ring-1 ring-black/[0.06]">
           {items.map((n) => (
             <li key={n.id} className={cn("flex gap-3 p-4 sm:gap-4 sm:p-5", !n.read_at && "bg-primary-soft/40")}>
               <span className={cn("grid size-10 shrink-0 place-items-center rounded-full", n.read_at ? "bg-surface-muted text-muted" : "bg-primary-soft text-primary")}>

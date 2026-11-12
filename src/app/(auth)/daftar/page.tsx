@@ -18,7 +18,7 @@ export default function RegisterChoicePage() {
       <Stagger className="grid gap-4">
         {OPTIONS.map((o) => (
           <StaggerItem key={o.href}>
-            <Link href={o.href} className="group flex items-stretch overflow-hidden rounded-xl border border-line bg-surface transition hover:-translate-y-0.5 hover:border-emerald/40">
+            <Link href={o.href} className="group flex items-stretch overflow-hidden rounded-[22px] bg-white ring-1 ring-black/[0.06] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-25px_rgba(5,35,26,.4)]">
               <div className="relative w-28 shrink-0 sm:w-36">
                 <Image src={o.img} alt="" fill sizes="144px" className="object-cover transition duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-forest/30" aria-hidden />
@@ -26,7 +26,7 @@ export default function RegisterChoicePage() {
               </div>
               <div className="flex flex-1 items-center gap-3 p-5">
                 <div className="flex-1">
-                  <h2 className="font-semibold text-xl">{o.title}</h2>
+                  <h2 className="display text-[22px] font-semibold text-brand-950">{o.title}</h2>
                   <p className="mt-1 text-sm text-muted">{o.body}</p>
                 </div>
                 <ArrowRight className="size-5 shrink-0 text-emerald transition group-hover:translate-x-1" aria-hidden />

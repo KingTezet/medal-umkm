@@ -37,7 +37,7 @@ export default async function OrganizerHome() {
         <StatCard label="Peserta dikonfirmasi" value={confirmed} icon={<UsersRound className="size-5" />} />
       </div>
       <Card className="mt-8">
-        <h2 className="font-semibold text-lg">Agenda mendatang</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Agenda mendatang</h2>
         {upcoming.length ? (
           <ul className="mt-4 divide-y divide-line">
             {upcoming.map((e) => (

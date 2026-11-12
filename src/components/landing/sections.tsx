@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useTransform } from "motion/react";
-import { ArrowUpRight, BadgeCheck, CalendarDays, FileCheck2, Lock, MapPin, Store, Ticket, UserRoundPlus } from "lucide-react";
+import { ArrowUpRight, CalendarDays, MapPin, Store } from "lucide-react";
+import { DocCheckIcon, EventIcon, ShieldLockIcon, StandIcon, UserPlusIcon, VerifiedIcon } from "@/components/icons";
 import { Counter, EASE, FillBar, PillLink, Rise, RiseGroup, RiseItem, useParallax, useRange } from "@/components/landing/kit";
 import { cn } from "@/lib/cn";
 
@@ -123,7 +124,7 @@ export function Bento({ rows, confirmed, capacity }: { rows: { title: string; st
       {/* Verification */}
       <RiseItem className="md:col-span-2">
         <div className="flex h-full flex-col rounded-[28px] bg-white p-7 ring-1 ring-black/[0.06]">
-          <span className="grid size-12 place-items-center rounded-2xl bg-sky-tint text-sky-ink"><BadgeCheck className="size-6" aria-hidden /></span>
+          <span className="grid size-12 place-items-center rounded-2xl bg-sky-tint text-sky-ink"><VerifiedIcon className="size-6" /></span>
           <h3 className="display mt-6 text-[22px] font-semibold text-brand-950">Diverifikasi Disperindag</h3>
           <p className="mt-2 text-[15px] leading-relaxed text-[#4c5c54]">Event dan berkas diperiksa sebelum tampil atau diteruskan ke penyelenggara.</p>
         </div>
@@ -132,7 +133,7 @@ export function Bento({ rows, confirmed, capacity }: { rows: { title: string; st
       {/* Security */}
       <RiseItem className="md:col-span-2">
         <div className="flex h-full flex-col rounded-[28px] bg-white p-7 ring-1 ring-black/[0.06]">
-          <span className="grid size-12 place-items-center rounded-2xl bg-[#fdeee9] text-coral"><Lock className="size-6" aria-hidden /></span>
+          <span className="grid size-12 place-items-center rounded-2xl bg-[#fdeee9] text-coral"><ShieldLockIcon className="size-6" /></span>
           <h3 className="display mt-6 text-[22px] font-semibold text-brand-950">Dokumen tetap privat</h3>
           <p className="mt-2 text-[15px] leading-relaxed text-[#4c5c54]">NIB &amp; dokumen legal hanya dapat dibuka pemilik dan admin, lewat tautan sementara.</p>
         </div>
@@ -141,7 +142,7 @@ export function Bento({ rows, confirmed, capacity }: { rows: { title: string; st
       {/* Photo */}
       <RiseItem className="md:col-span-2">
         <Link href="/umkm" className="group relative block h-full min-h-64 overflow-hidden rounded-[28px]">
-          <Image src="/images/jajan-pasar.jpg" alt="Aneka jajanan pasar tradisional" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+          <Image src="/images/p-lampu-bambu.jpg" alt="Lampu anyaman bambu buatan perajin lokal" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent" aria-hidden />
           <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-3 text-white">
             <div>
@@ -227,10 +228,10 @@ export function EventTile({ e }: { e: LandingEvent }) {
 
 /* ------------------------------------------------------------ steps with drawn line */
 const STEPS = [
-  { icon: UserRoundPlus, t: "Buat akun & profil", b: "Isi data usaha dan dokumen legal sekali saja." },
-  { icon: CalendarDays, t: "Pilih event", b: "Daftar stand pada event yang sedang dibuka." },
-  { icon: FileCheck2, t: "Verifikasi & seleksi", b: "Disperindag memeriksa berkas, penyelenggara menyeleksi." },
-  { icon: Ticket, t: "Nomor stand", b: "Hasil akhir dan nomor lapak tampil di dashboard." },
+  { icon: UserPlusIcon, t: "Buat akun & profil", b: "Isi data usaha dan dokumen legal sekali saja." },
+  { icon: EventIcon, t: "Pilih event", b: "Daftar stand pada event yang sedang dibuka." },
+  { icon: DocCheckIcon, t: "Verifikasi & seleksi", b: "Disperindag memeriksa berkas, penyelenggara menyeleksi." },
+  { icon: StandIcon, t: "Nomor stand", b: "Hasil akhir dan nomor lapak tampil di dashboard." },
 ];
 
 export function Steps() {

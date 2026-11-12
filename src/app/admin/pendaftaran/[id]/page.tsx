@@ -71,7 +71,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <Card className="mb-6"><ApplicationTimeline status={a.status} history={history ?? []} /></Card>
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         <Card>
-          <h2 className="font-semibold text-lg">Data usaha (snapshot saat daftar)</h2>
+          <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Data usaha (snapshot saat daftar)</h2>
           <DefinitionList items={[
             { label: "Nama usaha", value: s.business_name },
             { label: "Kategori", value: s.category },
@@ -85,7 +85,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         </Card>
         <div className="space-y-6">
           <Card>
-            <h2 className="font-semibold text-lg">Dokumen</h2>
+            <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Dokumen</h2>
             <DefinitionList items={[
               { label: "NIB", value: bp?.nib ?? "-" },
               { label: "NIB / SKU", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.verificationDocs} path={bp?.business_license_path ?? null} label="Buka dokumen" /> },
@@ -94,7 +94,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             ]} />
           </Card>
           <Card>
-            <h2 className="mb-4 font-semibold text-lg">Riwayat</h2>
+            <h2 className="mb-4 display text-[20px] font-semibold leading-tight text-brand-950">Riwayat</h2>
             <HistoryList items={history ?? []} />
             <p className="mt-4 text-xs text-muted">Dikirim {formatDateTime(a.submitted_at)}</p>
           </Card>

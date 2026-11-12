@@ -48,14 +48,14 @@ export default async function UmkmHome() {
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
         <Card>
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-lg">Pendaftaran terbaru</h2>
+            <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Pendaftaran terbaru</h2>
             <Link href="/dashboard/umkm/pendaftaran" className="text-sm font-semibold text-emerald hover:underline">Semua</Link>
           </div>
           {list.length ? (
             <ul className="mt-4 divide-y divide-line">
               {list.slice(0, 5).map((a) => (
                 <li key={a.id}>
-                  <Link href={`/dashboard/umkm/pendaftaran/${a.id}`} className="flex items-center justify-between gap-3 py-3 hover:text-emerald">
+                  <Link href={`/dashboard/umkm/pendaftaran/${a.id}`} className="flex flex-col gap-2 py-3 hover:text-brand-700 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                     <div className="min-w-0">
                       <p className="truncate font-semibold">{a.events?.title}</p>
                       <p className="text-xs text-muted">{a.application_code} · {formatShortDate(a.submitted_at)}{a.stand_number ? ` · Stand ${a.stand_number}` : ""}</p>
@@ -70,7 +70,7 @@ export default async function UmkmHome() {
           )}
         </Card>
         <Card>
-          <h2 className="font-semibold text-lg">Kelengkapan profil</h2>
+          <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Kelengkapan profil</h2>
           <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-surface-muted"><div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} /></div>
           <p className="mt-2 text-sm text-muted">{pct}% lengkap</p>
           <ul className="mt-4 space-y-2.5">
@@ -87,7 +87,7 @@ export default async function UmkmHome() {
 
       {events.length > 0 && (
         <section className="mt-10">
-          <h2 className="mb-4 font-semibold text-lg">Event yang sedang dibuka</h2>
+          <h2 className="mb-4 display text-[20px] font-semibold leading-tight text-brand-950">Event yang sedang dibuka</h2>
           <div className="grid gap-5 sm:grid-cols-2">{events.map((e) => <EventCard key={e.id} event={e} />)}</div>
         </section>
       )}

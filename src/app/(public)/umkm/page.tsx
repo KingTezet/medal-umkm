@@ -31,10 +31,10 @@ export default async function UmkmDirectoryPage({ searchParams }: { searchParams
           <FilterSelect label="Kategori" name="category" defaultValue={params.category} options={[{ value: "", label: "Semua kategori" }, ...categories.map((c) => ({ value: c.name, label: c.name }))]} />
           <FilterSelect label="Kecamatan" name="district" defaultValue={params.district} options={[{ value: "", label: "Semua kecamatan" }, ...SUMEDANG_DISTRICTS.map((d) => ({ value: d, label: d }))]} />
         </FilterBar>
-        <p className="mt-6 border-b border-line pb-3 text-[13px] text-muted" aria-live="polite">{error ? "Gagal memuat direktori." : `${total} usaha terverifikasi`}</p>
+        <p className="mt-6 pb-1 text-[13px] text-muted" aria-live="polite">{error ? "Gagal memuat direktori." : `${total} usaha terverifikasi`}</p>
         <div className="mt-6">
           {items.length ? (
-            <Stagger className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+            <Stagger className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 [&>*]:min-w-0">
               {items.map((u) => (
                 <StaggerItem key={u.id} className="h-full"><UmkmCard item={u} /></StaggerItem>
               ))}

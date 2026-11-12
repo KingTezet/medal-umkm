@@ -77,7 +77,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
             ]} />
           </Card>
           <Card className="h-fit">
-            <h2 className="font-semibold text-lg">Kuota & peserta</h2>
+            <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Kuota & peserta</h2>
             <DefinitionList items={[
               { label: "Kapasitas", value: e.stand_capacity },
               { label: "Dikonfirmasi", value: c.confirmed ?? 0 },

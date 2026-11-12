@@ -9,7 +9,7 @@ import { Button, type ButtonVariant } from "@/components/ui/button";
 import { initialActionState, type ActionState } from "@/lib/action-result";
 
 const control =
-  "w-full rounded-[9px] border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/70 transition-[border-color,box-shadow] duration-150 focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/10 disabled:bg-surface-muted aria-[invalid=true]:border-danger";
+  "w-full rounded-xl border border-black/[0.08] bg-white px-3.5 py-2.5 text-[15px] text-ink shadow-[0_1px_2px_rgba(5,35,26,0.04)] placeholder:text-muted/70 transition-[border-color,box-shadow] duration-200 hover:border-brand-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-300/30 disabled:bg-surface-muted aria-[invalid=true]:border-danger";
 
 export function Field({
   label,
@@ -72,7 +72,7 @@ export function Select({ className, children, ...props }: ComponentProps<"select
 export function Checkbox({ label, className, ...props }: ComponentProps<"input"> & { label: ReactNode }) {
   return (
     <label className={cn("flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-ink", className)}>
-      <input type="checkbox" className="mt-0.5 size-[18px] shrink-0 rounded accent-[#174b3a]" {...props} />
+      <input type="checkbox" className="mt-0.5 size-[18px] shrink-0 rounded accent-[#0e4d3a]" {...props} />
       <span>{label}</span>
     </label>
   );
@@ -106,7 +106,7 @@ export function SubmitButton({
 export function FormMessage({ state }: { state: ActionState }) {
   if (!state.message || state.ok) return null;
   return (
-    <div role="alert" className="rounded-lg border border-danger/25 bg-danger/5 px-4 py-3 text-sm text-danger">
+    <div role="alert" className="rounded-2xl border border-danger/25 bg-danger/5 px-4 py-3 text-sm text-danger">
       {state.message}
     </div>
   );

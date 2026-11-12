@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         </Card>
         <div className="space-y-6">
           <Card>
-            <h2 className="font-semibold text-lg">Legalitas</h2>
+            <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Legalitas</h2>
             <DefinitionList items={[
               { label: "NIB", value: b.nib ?? "-" },
               { label: "NIB / SKU", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.verificationDocs} path={b.business_license_path} label="Buka dokumen" /> },
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             ]} />
           </Card>
           <Card>
-            <h2 className="font-semibold text-lg">Akun pemilik</h2>
+            <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Akun pemilik</h2>
             <DefinitionList items={[
               { label: "Nama", value: b.profiles?.full_name },
               { label: "Email", value: b.profiles?.email },
@@ -68,7 +68,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             ]} />
           </Card>
           <Card>
-            <h2 className="mb-3 font-semibold text-lg">Pendaftaran</h2>
+            <h2 className="mb-3 display text-[20px] font-semibold leading-tight text-brand-950">Pendaftaran</h2>
             {apps?.length ? <ul className="space-y-2 text-sm">{apps.map((x) => <li key={x.id} className="flex items-center justify-between gap-2"><Link href={`/admin/pendaftaran/${x.id}`} className="truncate hover:text-emerald">{x.events?.title}</Link><StatusBadge map={APPLICATION_STATUS} status={x.status} /></li>)}</ul> : <p className="text-sm text-muted">Belum ada.</p>}
           </Card>
         </div>

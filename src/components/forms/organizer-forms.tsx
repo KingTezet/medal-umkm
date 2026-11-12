@@ -59,9 +59,9 @@ export function OrganizerProfileForm({ profile, userId }: { profile: OP; userId:
 function SectionTitle({ n, title, desc }: { n: number; title: string; desc?: string }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-forest font-semibold text-white">{n}</span>
+      <span className="display grid size-9 shrink-0 place-items-center rounded-xl bg-brand-900 font-semibold text-brand-300">{n}</span>
       <div>
-        <h2 className="font-semibold text-lg leading-tight">{title}</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">{title}</h2>
         {desc && <p className="text-sm text-muted">{desc}</p>}
       </div>
     </div>
@@ -178,7 +178,7 @@ export function EventForm({ event, categories, userId, canSubmit }: { event?: EV
         {fe.agree && <p className="text-[13px] text-danger">{fe.agree[0]}</p>}
       </Card>
 
-      <div className="sticky bottom-20 z-10 lg:bottom-4 flex flex-col gap-3 rounded-xl border border-line bg-surface/95 p-4 shadow-xl backdrop-blur sm:flex-row sm:items-center sm:justify-end">
+      <div className="sticky bottom-20 z-10 lg:bottom-4 flex flex-col gap-3 rounded-[22px] bg-white/90 p-4 shadow-[0_20px_50px_-25px_rgba(5,35,26,.5)] ring-1 ring-black/[0.06] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-end">
         <FormMessage state={state} />
         <Button type="submit" name="intent" value="draft" variant="outline" disabled={pending}>Simpan draft</Button>
         <SubmitButton pending={pending} name="intent" value="submit" disabled={!canSubmit} title={canSubmit ? undefined : "Profil organisasi harus diverifikasi terlebih dahulu"}>

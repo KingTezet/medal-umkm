@@ -46,3 +46,12 @@ Kata judul muncul satu-satu dengan blur→tajam (60 ms/kata), section rise + unb
 - Overlay foto UMKM/bento lebih pekat + text-shadow halus; chip status event lebih kontras.
 - Baris event di bento ditumpuk di mobile (tidak terpotong).
 - Footer bergradasi putih → mint, wordmark lebih terlihat.
+
+## Revisi 2 — v3 diterapkan ke seluruh aplikasi (disetujui pemilik)
+
+- **Foto produk baru** (Wikimedia Commons, kredit di `/tentang#kredit`): kopi, keranjang & lampu bambu, keripik, batik, kotak/tas anyaman, gerabah, rendang, sambal, rempah, nasi daun → dipakai untuk sampul UMKM DEMO, fallback gambar, bento, Tentang, auth.
+- **Ikon brand** `src/components/icons.tsx` (grid 24px, stroke 1.6, isian duotone 12%): `VerifiedIcon` (segel bergerigi + centang), Event, Store, Stand, ShieldLock, DocCheck, Megaphone, UserPlus, SearchStatus, Info, Users. Status "Terverifikasi" memakai segel verified. Ikon lucide lain distandarkan stroke 1.75.
+- **Komponen bersama v3**: tombol pill (primer hijau tua, sekunder mint), kartu radius 22–28px dengan ring tipis, StatCard aksen hijau gelap + grid, badge pill, input radius 12px + fokus mint, tab segmented pill, filter pill, dialog/sheet radius 28px.
+- **Halaman publik**: PageHero mint + grid + blob di bawah header; kartu event bingkai & kartu UMKM foto penuh; detail event/UMKM dengan latar mint, banner radius 28px, kartu samping berbayang; Tentang dibangun ulang (section bergantian, tim 7 anggota, arti nama di section gelap); legal & 404 ikut gaya.
+- **Auth**: latar mint+grid, form dalam kartu, panel foto dengan kartu kaca "Diverifikasi Disperindag".
+- **Dashboard (UMKM/penyelenggara/admin)**: latar kanvas + gradasi mint, sidebar kartu melayang dengan item aktif pill hijau tua bergeser, label role, topbar pill kaca dengan sapaan + tanggal, drawer melayang, bottom-nav pill melayang di mobile, heading display.

@@ -59,7 +59,7 @@ export function ActionDialog({
       </Button>
       <dialog
         ref={ref}
-        className="m-0 mt-auto w-full max-w-none rounded-t-2xl border border-line bg-white p-0 text-ink shadow-xl backdrop:bg-ink/30 sm:m-auto sm:w-[min(92vw,30rem)] sm:rounded-xl open:animate-[sheet-in_.26s_cubic-bezier(.22,1,.36,1)]"
+        className="m-0 mt-auto w-full max-w-none rounded-t-[28px] border-0 bg-white p-0 text-ink shadow-xl backdrop:bg-brand-950/30 backdrop:backdrop-blur-[2px] sm:m-auto sm:w-[min(92vw,30rem)] sm:rounded-[28px] open:animate-[sheet-in_.26s_cubic-bezier(.22,1,.36,1)]"
         aria-labelledby={`dlg-${title}`}
       >
         <form ref={formRef} action={formAction} className="space-y-4 p-6">

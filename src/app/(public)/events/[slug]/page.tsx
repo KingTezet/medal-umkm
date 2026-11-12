@@ -41,10 +41,15 @@ export default async function EventDetailPage({ params }: { params: Params }) {
   ];
 
   return (
-    <article>
+    <article className="relative isolate -mt-[68px] pt-[68px] sm:-mt-[76px] sm:pt-[76px]">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-100/70 via-brand-50/40 to-white" />
+        <div className="bg-grid fade-mask absolute inset-0" />
+        <div className="absolute -left-32 -top-40 size-[28rem] rounded-full bg-brand-300/40 blur-[100px]" />
+      </div>
       <div className="container-page pt-6 sm:pt-8">
         <Breadcrumb items={[{ label: "Beranda", href: "/" }, { label: "Event", href: "/events" }, { label: e.title }]} />
-        <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-surface-muted sm:aspect-[21/9]">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] bg-brand-50 shadow-[0_30px_60px_-35px_rgba(5,35,26,.5)] sm:aspect-[21/9]">
           <Image src={eventCover(e.cover_path, e.slug)} alt={`Foto ${e.title}`} fill priority sizes="(min-width:1200px) 1150px, 100vw" className="object-cover" />
         </div>
       </div>
@@ -55,10 +60,10 @@ export default async function EventDetailPage({ params }: { params: Params }) {
             <Badge tone={state === "open" ? "success" : state === "upcoming" ? "info" : state === "full" ? "danger" : "neutral"}>{REGISTRATION_LABEL[state]}</Badge>
             <span className="text-[13px] text-muted">{e.category}</span>
           </div>
-          <h1 className="mt-3 text-[28px] font-semibold leading-tight text-ink sm:text-[36px]">{e.title}</h1>
+          <h1 className="mt-3 display text-[32px] font-semibold leading-[1.05] text-brand-950 sm:text-[44px]">{e.title}</h1>
           <p className="mt-3 text-base leading-relaxed text-muted">{e.summary}</p>
 
-          <dl className="mt-8 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
+          <dl className="mt-8 grid gap-px overflow-hidden rounded-[22px] border border-black/[0.06] bg-black/[0.06] sm:grid-cols-2">
             {facts.map((f) => (
               <div key={f.label} className="bg-white p-4">
                 <dt className="flex items-center gap-2 text-[13px] text-muted"><f.icon className="size-4 text-primary" aria-hidden />{f.label}</dt>
@@ -68,13 +73,13 @@ export default async function EventDetailPage({ params }: { params: Params }) {
           </dl>
 
           <Reveal className="mt-10">
-            <h2 className="text-[20px] font-semibold text-ink">Tentang event</h2>
+            <h2 className="display text-[24px] font-semibold text-brand-950">Tentang event</h2>
             <div className="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-ink/85">{e.description}</div>
           </Reveal>
 
           <Reveal className="mt-10">
-            <h2 className="text-[20px] font-semibold text-ink">Syarat peserta</h2>
-            <ul className="mt-3 divide-y divide-line rounded-xl border border-line">
+            <h2 className="display text-[24px] font-semibold text-brand-950">Syarat peserta</h2>
+            <ul className="mt-3 divide-y divide-line rounded-[22px] bg-white ring-1 ring-black/[0.06]">
               {[...criteria, "Usaha berdomisili di Kabupaten Sumedang dan memiliki NIB atau surat keterangan usaha."].map((c) => (
                 <li key={c} className="flex gap-3 px-4 py-3 text-sm">
                   <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden /> {c}
@@ -85,7 +90,7 @@ export default async function EventDetailPage({ params }: { params: Params }) {
 
           {gallery.length > 0 && (
             <Reveal className="mt-10">
-              <h2 className="text-[20px] font-semibold text-ink">Galeri</h2>
+              <h2 className="display text-[24px] font-semibold text-brand-950">Galeri</h2>
               <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {gallery.map((g, i) => (
                   <div key={g} className="relative aspect-[4/3] overflow-hidden rounded-xl bg-surface-muted">
@@ -98,9 +103,9 @@ export default async function EventDetailPage({ params }: { params: Params }) {
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-xl border border-line bg-white p-5">
+          <div className="rounded-[26px] bg-white p-6 shadow-[0_24px_50px_-30px_rgba(5,35,26,.35)] ring-1 ring-black/[0.06]">
             <p className="text-[13px] text-muted">Stand tersedia</p>
-            <p className="mt-1 text-[32px] font-semibold leading-none tabular-nums text-ink">{remaining}<span className="text-base font-normal text-muted"> / {e.stand_capacity}</span></p>
+            <p className="mt-1 display text-[40px] font-semibold leading-none tabular-nums text-brand-950">{remaining}<span className="text-base font-normal text-muted"> / {e.stand_capacity}</span></p>
             <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-surface-muted" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Stand terkonfirmasi">
               <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
             </div>

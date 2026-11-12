@@ -54,10 +54,10 @@ export default async function EventsPage({ searchParams }: { searchParams: SP })
           <FilterDate label="Sampai" name="to" defaultValue={params.to} />
         </FilterBar>
 
-        <div className="mt-6 flex items-center justify-between gap-4 border-b border-line">
-          <nav aria-label="Status pendaftaran" className="-mb-px flex gap-5 overflow-x-auto [scrollbar-width:none]">
+        <div className="mt-6 flex items-center justify-between gap-4">
+          <nav aria-label="Status pendaftaran" className="flex w-fit max-w-full gap-1 overflow-x-auto rounded-full bg-brand-900/[0.05] p-1 [scrollbar-width:none]">
             {FILTERS.map((f) => (
-              <Link key={f.key} href={linkFor(f.key)} aria-current={filter === f.key ? "page" : undefined} className={cn("whitespace-nowrap border-b-2 py-2.5 text-sm font-medium transition-colors duration-150", filter === f.key ? "border-primary text-primary" : "border-transparent text-muted hover:text-ink")}>
+              <Link key={f.key} href={linkFor(f.key)} aria-current={filter === f.key ? "page" : undefined} className={cn("flex h-9 items-center whitespace-nowrap rounded-full px-4 text-sm font-medium transition-colors duration-200", filter === f.key ? "bg-white text-brand-950 shadow-sm ring-1 ring-black/[0.05]" : "text-[#5b6b63] hover:text-brand-950")}>
                 {f.label}
               </Link>
             ))}
@@ -67,7 +67,7 @@ export default async function EventsPage({ searchParams }: { searchParams: SP })
 
         <div className="mt-6">
           {events.length ? (
-            <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0">
               {events.map((e, i) => (
                 <StaggerItem key={e.id} className="h-full"><EventCard event={e} priority={i < 3} /></StaggerItem>
               ))}

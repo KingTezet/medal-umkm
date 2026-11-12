@@ -52,14 +52,14 @@ for (const o of organizers) {
 
 // ---------------------------------------------------------------- UMKM
 const umkm = [
-  { local: "umkm1", full_name: "Euis Sumarni", business_name: "Tahu Bungkeng Bu Euis", category: "Kuliner", district: "Sumedang Selatan", img: "tahu-bungseng.jpg", products: [{ name: "Tahu Sumedang original", description: "Digoreng dadakan, renyah di luar" }, { name: "Tahu isi pedas", description: "" }] },
-  { local: "umkm2", full_name: "Asep Saepudin", business_name: "Batik Kasumedangan Asep", category: "Fesyen", district: "Sumedang Utara", img: "batik.jpg", products: [{ name: "Kain batik tulis motif Kasumedangan", description: "" }] },
-  { local: "umkm3", full_name: "Neng Siti", business_name: "Jajanan Pasar Neng Siti", category: "Kuliner", district: "Tanjungsari", img: "jajan-pasar.jpg", products: [{ name: "Kue serabi", description: "" }, { name: "Kue lumpur pandan", description: "" }] },
-  { local: "umkm4", full_name: "Ujang Hermawan", business_name: "Rempah Sehat Ujang", category: "Pertanian & Olahan", district: "Rancakalong", img: "rempah.jpg", products: [{ name: "Jahe merah bubuk", description: "" }, { name: "Kunyit kering", description: "" }] },
-  { local: "umkm5", full_name: "Lilis Suryani", business_name: "Canting Lilis Craft", category: "Kriya & Kerajinan", district: "Cimalaka", img: "canting.jpg", products: [{ name: "Workshop membatik", description: "Kelas singkat 2 jam" }] },
-  { local: "umkm6", full_name: "Dewi Lestari", business_name: "Kue Lumpur Dewi", category: "Kuliner", district: "Jatinangor", img: "kue-lumpur.jpg", products: [{ name: "Kue lumpur pandan", description: "" }] },
-  { local: "umkm7", full_name: "Hendra Gunawan", business_name: "Tahu Sumedang Hendra", category: "Kuliner", district: "Paseh", img: "tahu.jpg", products: [{ name: "Tahu goreng + cabai rawit", description: "" }] },
-  { local: "umkm8", full_name: "Yayan Sopyan", business_name: "Kopi Rancakalong Yayan", category: "Pertanian & Olahan", district: "Rancakalong", img: "sawah.jpg", products: [{ name: "Kopi arabika bubuk", description: "" }] },
+  { local: "umkm1", full_name: "Euis Sumarni", business_name: "Tahu Bungkeng Bu Euis", category: "Kuliner", district: "Sumedang Selatan", img: "p-sambal-sendok.jpg", products: [{ name: "Tahu Sumedang original", description: "Digoreng dadakan, renyah di luar" }, { name: "Tahu isi pedas", description: "" }] },
+  { local: "umkm2", full_name: "Asep Saepudin", business_name: "Batik Kasumedangan Asep", category: "Fesyen", district: "Sumedang Utara", img: "p-batik-biru.jpg", products: [{ name: "Kain batik tulis motif Kasumedangan", description: "" }] },
+  { local: "umkm3", full_name: "Neng Siti", business_name: "Jajanan Pasar Neng Siti", category: "Kuliner", district: "Tanjungsari", img: "p-nasi-daun.jpg", products: [{ name: "Kue serabi", description: "" }, { name: "Kue lumpur pandan", description: "" }] },
+  { local: "umkm4", full_name: "Ujang Hermawan", business_name: "Rempah Sehat Ujang", category: "Pertanian & Olahan", district: "Rancakalong", img: "p-rempah.jpg", products: [{ name: "Jahe merah bubuk", description: "" }, { name: "Kunyit kering", description: "" }] },
+  { local: "umkm5", full_name: "Lilis Suryani", business_name: "Canting Lilis Craft", category: "Kriya & Kerajinan", district: "Cimalaka", img: "p-keranjang-bambu.jpg", products: [{ name: "Workshop membatik", description: "Kelas singkat 2 jam" }] },
+  { local: "umkm6", full_name: "Dewi Lestari", business_name: "Kue Lumpur Dewi", category: "Kuliner", district: "Jatinangor", img: "p-keripik.jpg", products: [{ name: "Kue lumpur pandan", description: "" }] },
+  { local: "umkm7", full_name: "Hendra Gunawan", business_name: "Tahu Sumedang Hendra", category: "Kuliner", district: "Paseh", img: "p-sambal.jpg", products: [{ name: "Tahu goreng + cabai rawit", description: "" }] },
+  { local: "umkm8", full_name: "Yayan Sopyan", business_name: "Kopi Rancakalong Yayan", category: "Pertanian & Olahan", district: "Rancakalong", img: "p-kopi.jpg", products: [{ name: "Kopi arabika bubuk", description: "" }] },
 ];
 const bps = [];
 for (const [i, u] of umkm.entries()) {

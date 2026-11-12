@@ -21,7 +21,7 @@ export function BusinessProfileForm({ profile, categories, userId, products: ini
     <form onSubmit={onSubmit} className="space-y-6" noValidate>
       <input type="hidden" name="products" value={JSON.stringify(cleanProducts)} />
       <Card className="space-y-5">
-        <h2 className="font-semibold text-lg">Informasi usaha</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Informasi usaha</h2>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label="Nama usaha" name="business_name" errors={fe.business_name} required>
             {(p) => <Input {...p} name="business_name" defaultValue={profile.business_name} required />}
@@ -44,7 +44,7 @@ export function BusinessProfileForm({ profile, categories, userId, products: ini
       </Card>
 
       <Card className="space-y-5">
-        <h2 className="font-semibold text-lg">Lokasi &amp; kontak</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Lokasi &amp; kontak</h2>
         <Field label="Alamat usaha" name="address" errors={fe.address} required>
           {(p) => <Input {...p} name="address" defaultValue={profile.address} required />}
         </Field>
@@ -70,7 +70,7 @@ export function BusinessProfileForm({ profile, categories, userId, products: ini
       </Card>
 
       <Card className="space-y-5">
-        <h2 className="font-semibold text-lg">Legalitas</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Legalitas</h2>
         <p className="-mt-3 text-sm text-muted">Isi NIB dan/atau unggah surat keterangan usaha. Dokumen bersifat privat dan hanya dapat dilihat Anda serta Disperindag.</p>
         <Field label="NIB (13 digit)" name="nib" errors={fe.nib}>
           {(p) => <Input {...p} name="nib" inputMode="numeric" maxLength={13} defaultValue={profile.nib ?? ""} />}
@@ -79,10 +79,10 @@ export function BusinessProfileForm({ profile, categories, userId, products: ini
       </Card>
 
       <Card className="space-y-5">
-        <h2 className="font-semibold text-lg">Produk &amp; layanan</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Produk &amp; layanan</h2>
         <ul className="space-y-3">
           {products.map((p, i) => (
-            <li key={i} className="grid gap-2 rounded-xl border border-line p-3 sm:grid-cols-[1fr_1.6fr_auto] sm:items-center">
+            <li key={i} className="grid gap-2 rounded-2xl bg-brand-50/50 p-3 ring-1 ring-black/[0.05] sm:grid-cols-[1fr_1.6fr_auto] sm:items-center">
               <Input aria-label={`Nama produk ${i + 1}`} placeholder="Nama produk" value={p.name} maxLength={80} onChange={(e) => setProducts((x) => x.map((y, j) => (j === i ? { ...y, name: e.target.value } : y)))} />
               <Input aria-label={`Deskripsi produk ${i + 1}`} placeholder="Deskripsi singkat (opsional)" value={p.description ?? ""} maxLength={240} onChange={(e) => setProducts((x) => x.map((y, j) => (j === i ? { ...y, description: e.target.value } : y)))} />
               <button type="button" onClick={() => setProducts((x) => x.filter((_, j) => j !== i))} className="grid size-10 place-items-center justify-self-end rounded-full text-muted hover:bg-red-50 hover:text-danger" aria-label={`Hapus produk ${i + 1}`}>
@@ -100,7 +100,7 @@ export function BusinessProfileForm({ profile, categories, userId, products: ini
       </Card>
 
       <Card className="space-y-5">
-        <h2 className="font-semibold text-lg">Foto publik</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Foto publik</h2>
         <div className="grid gap-5 sm:grid-cols-2">
           <UploadField name="logo_path" label="Logo usaha" bucket={BUCKETS.umkmMedia} userId={userId} folder="logo" rule="image" variant="image" defaultPath={profile.logo_path} />
           <UploadField name="cover_path" label="Foto sampul" bucket={BUCKETS.umkmMedia} userId={userId} folder="cover" rule="image" variant="image" defaultPath={profile.cover_path} />
@@ -109,12 +109,12 @@ export function BusinessProfileForm({ profile, categories, userId, products: ini
       </Card>
 
       <Card className="space-y-4">
-        <h2 className="font-semibold text-lg">Privasi</h2>
+        <h2 className="display text-[20px] font-semibold leading-tight text-brand-950">Privasi</h2>
         <Checkbox name="is_public" defaultChecked={profile.is_public} label={<><strong>Tampilkan profil di direktori publik.</strong> Profil hanya tampil setelah diverifikasi Disperindag.</>} />
         <Checkbox name="show_whatsapp" defaultChecked={profile.show_whatsapp} label={<><strong>Tampilkan nomor WhatsApp</strong> pada profil publik agar calon pembeli dapat menghubungi.</>} />
       </Card>
 
-      <div className="sticky bottom-20 z-10 lg:bottom-4 flex flex-col gap-3 rounded-xl border border-line bg-surface/95 p-4 shadow-xl backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+      <div className="sticky bottom-20 z-10 lg:bottom-4 flex flex-col gap-3 rounded-[22px] bg-white/90 p-4 shadow-[0_20px_50px_-25px_rgba(5,35,26,.5)] ring-1 ring-black/[0.06] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
         <FormMessage state={state} />
         <p className="text-sm text-muted">{profile.verification_status === "revision_required" ? "Menyimpan akan mengirim ulang profil ke antrean verifikasi." : "Perubahan tersimpan setelah Anda menekan Simpan."}</p>
         <SubmitButton pending={pending} size="lg">Simpan profil</SubmitButton>
