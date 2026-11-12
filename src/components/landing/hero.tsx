@@ -30,11 +30,14 @@ const LINKS = [
 function Blobs() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-100/80 via-brand-50/40 to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-sky-50 via-white to-white md:from-brand-100/80 md:via-brand-50/40" />
       <div className="bg-grid fade-mask absolute inset-0" />
-      <div className="absolute -left-40 -top-48 size-[38rem] rounded-full bg-brand-300/50 blur-[110px]" />
-      <div className="absolute -right-32 top-0 size-[30rem] rounded-full bg-sky-200/70 blur-[100px]" />
-      <div className="absolute right-[18%] top-[42%] size-40 rounded-full bg-coral/15 blur-[60px]" />
+      {/* green: soft corner on mobile, large wash on desktop */}
+      <div className="absolute -left-24 -top-24 size-64 rounded-full bg-brand-300/35 blur-[80px] md:-left-40 md:-top-48 md:size-[38rem] md:bg-brand-300/50 md:blur-[110px]" />
+      {/* blue + coral highlights balance the green */}
+      <div className="absolute -right-20 top-6 size-72 rounded-full bg-sky-300/45 blur-[80px] md:-right-32 md:top-0 md:size-[30rem] md:bg-sky-200/70 md:blur-[100px]" />
+      <div className="absolute -left-16 top-[48%] size-56 rounded-full bg-sky-200/50 blur-[80px] md:hidden" />
+      <div className="absolute right-[10%] top-[30%] size-32 rounded-full bg-coral/15 blur-[60px] md:right-[18%] md:top-[42%] md:size-40" />
       <svg className="absolute left-1/2 top-[8%] hidden w-[1100px] -translate-x-1/2 text-brand-500/15 md:block" viewBox="0 0 1100 600" fill="none">
         <ellipse cx="550" cy="300" rx="540" ry="290" stroke="currentColor" />
         <ellipse cx="550" cy="300" rx="420" ry="220" stroke="currentColor" strokeDasharray="4 8" />
@@ -51,7 +54,7 @@ function MobileHero({ stats }: { stats: HeroStats }) {
     <div className="relative px-5 pb-12 pt-8 md:hidden">
       <div className="flex flex-col items-center text-center">
         <motion.div initial={reduce ? false : { scale: 0.7, opacity: 0, filter: "blur(10px)" }} animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.9, ease: EASE }} className="relative">
-          <div className="absolute -inset-1.5 rounded-[28px] bg-brand-300/40 blur-md" aria-hidden />
+          <div className="absolute -inset-2 rounded-[30px] bg-gradient-to-br from-sky-300/50 to-brand-300/40 blur-md" aria-hidden />
           <div className="relative grid size-20 place-items-center rounded-[24px] bg-white shadow-[0_12px_30px_-12px_rgba(5,35,26,.45)] ring-1 ring-black/5">
             <MedalMark className="size-12" />
           </div>
@@ -66,7 +69,7 @@ function MobileHero({ stats }: { stats: HeroStats }) {
           Portal event &amp; stand UMKM Kabupaten Sumedang, diverifikasi Disperindag.
         </motion.p>
 
-        <motion.div initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7, ease: EASE }} className="mt-5 flex w-full max-w-sm divide-x divide-black/[0.06] rounded-2xl bg-white/80 py-3 ring-1 ring-black/[0.05] backdrop-blur">
+        <motion.div initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7, ease: EASE }} className="mt-5 flex w-full max-w-sm divide-x divide-black/[0.06] rounded-2xl bg-white/90 py-3 shadow-[0_12px_30px_-20px_rgba(47,111,168,.5)] ring-1 ring-black/[0.05] backdrop-blur">
           {[
             { v: stats.events, l: "Event" },
             { v: stats.umkm, l: "UMKM" },

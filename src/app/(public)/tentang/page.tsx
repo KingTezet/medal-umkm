@@ -52,7 +52,7 @@ export default async function AboutPage() {
       <section className="relative isolate overflow-hidden py-20 sm:py-24">
         <SectionBg variant="dark" />
         <div className="container-page">
-          <Heading dark kicker="Arti nama" title="MEDAL — Media, Event, Dagang & Lapak" />
+          <Heading dark kicker="Arti nama" title="MEDAL — dari semboyan “Insun Medal”" sub="Diambil dari semboyan Kabupaten Sumedang, “Insun Medal Insun Madangan”. Logo memadukan matahari terbit, siluet Tugu Lingga, dan kanopi lapak UMKM. MEDAL juga dapat dibaca sebagai Media, Event, Dagang & Lapak." />
           <RiseGroup className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {LETTERS.map((x) => (
               <RiseItem key={x.word}>
