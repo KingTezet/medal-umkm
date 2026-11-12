@@ -8,6 +8,7 @@
 | Vercel project | `medal-umkm` (terhubung ke GitHub; push ke `main` = deploy production) |
 | Production | https://medal-umkm.vercel.app |
 | Supabase project | `medal-umkm` (ref `arrgfpznnwanltnrdqgj`, region ap-southeast-1) |
+| Region fungsi Vercel | `sin1` (`vercel.json`) — dekat Supabase; aksi admin ~0,5 s (sebelumnya ~4,5 s dari US) |
 | Migrations | `20261112000001` … `20261112000005` — semua applied |
 | Auth | Site URL production; redirect `https://medal-umkm.vercel.app/**`, preview `https://*-kingtezets-projects.vercel.app/**`, `http://localhost:3000/**`; konfirmasi email **off** (lihat DECISIONS #6) |
 
