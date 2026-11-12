@@ -117,12 +117,34 @@ p {
     letter-spacing: -0.035em;
     font-feature-settings: "ss01", "cv11";
   }
+  /* Frosted card that stays readable on busy photos */
   .glass {
-    background: rgb(255 255 255 / 0.72);
-    backdrop-filter: blur(16px) saturate(1.4);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-    border: 1px solid rgb(255 255 255 / 0.7);
-    box-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 18px 40px -20px rgb(5 35 26 / 0.35);
+    background: rgb(255 255 255 / 0.93);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border: 1px solid rgb(255 255 255 / 0.9);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 24px 48px -20px rgb(5 35 26 / 0.45), 0 2px 6px rgb(5 35 26 / 0.06);
+  }
+  /* Decorative backgrounds */
+  .bg-dots {
+    background-image: radial-gradient(rgb(18 102 75 / 0.16) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(rgb(18 102 75 / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(18 102 75 / 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-light {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .fade-mask {
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 80%);
   }
   .glass-dark {
     background: rgb(5 35 26 / 0.45);

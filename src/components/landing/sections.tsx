@@ -24,14 +24,47 @@ export function Heading({ kicker, title, sub, action, center = false, dark = fal
   );
 }
 
+/* ------------------------------------------------------------ backgrounds */
+export function SectionBg({ variant }: { variant: "dots-right" | "blob-left" | "mint" | "dark" }) {
+  if (variant === "dark")
+    return (
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-brand-900">
+        <div className="bg-grid-light absolute inset-0" />
+        <div className="absolute -left-32 top-0 size-[30rem] rounded-full bg-brand-500/35 blur-[110px]" />
+        <div className="absolute -right-24 bottom-0 size-[26rem] rounded-full bg-sky-400/15 blur-[110px]" />
+      </div>
+    );
+  if (variant === "mint")
+    return (
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-brand-50">
+        <div className="bg-dots absolute inset-0 [mask-image:linear-gradient(180deg,#000,transparent_70%)]" />
+        <div className="absolute -right-40 -top-20 size-[28rem] rounded-full bg-brand-300/35 blur-[110px]" />
+      </div>
+    );
+  if (variant === "blob-left")
+    return (
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-white">
+        <div className="absolute -left-48 top-10 size-[30rem] rounded-full bg-brand-100 blur-[100px]" />
+        <div className="absolute -right-20 bottom-0 size-72 rounded-full bg-sky-100 blur-[90px]" />
+      </div>
+    );
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-white">
+      <div className="bg-dots absolute right-0 top-0 h-80 w-[36rem] [mask-image:radial-gradient(ellipse_at_top_right,#000,transparent_70%)]" />
+      <div className="absolute -right-32 top-20 size-80 rounded-full bg-brand-100/80 blur-[100px]" />
+      <div className="absolute -left-20 bottom-10 size-64 rounded-full bg-[#fdeee9] blur-[90px]" />
+    </div>
+  );
+}
+
 /* ------------------------------------------------------------ marquee */
 export function Marquee({ items }: { items: string[] }) {
   const row = [...items, ...items];
   return (
-    <div className="relative overflow-hidden border-y border-black/[0.06] bg-white py-5 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]" aria-hidden>
+    <div className="relative overflow-hidden border-y border-brand-300/40 bg-white py-5 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]" aria-hidden>
       <div className="flex w-max animate-marquee gap-10 whitespace-nowrap">
         {row.map((m, i) => (
-          <span key={i} className="display flex items-center gap-10 text-[20px] font-medium text-[#9aa8a1]">
+          <span key={i} className="display flex items-center gap-10 text-[20px] font-medium text-brand-900/45">
             {m}
             <span className="size-1.5 rounded-full bg-brand-400" />
           </span>
@@ -57,7 +90,7 @@ export function Bento({ rows, confirmed, capacity }: { rows: { title: string; st
             {rows.map((r, i) => (
               <motion.div
                 key={r.title}
-                className="glass-dark flex items-center justify-between gap-3 rounded-2xl px-4 py-3"
+                className="glass-dark flex flex-col gap-0.5 rounded-2xl px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
                 initial={reduce ? false : { opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -67,7 +100,7 @@ export function Bento({ rows, confirmed, capacity }: { rows: { title: string; st
                   <span className={cn("size-2 shrink-0 rounded-full", r.open ? "bg-brand-300" : "bg-sky-300")} />
                   <span className="truncate">{r.title}</span>
                 </span>
-                <span className="shrink-0 text-[12px] text-white/60">{r.state}</span>
+                <span className="shrink-0 pl-5 text-[12px] text-brand-300 sm:pl-0">{r.state}</span>
               </motion.div>
             ))}
           </div>
@@ -109,7 +142,7 @@ export function Bento({ rows, confirmed, capacity }: { rows: { title: string; st
       <RiseItem className="md:col-span-2">
         <Link href="/umkm" className="group relative block h-full min-h-64 overflow-hidden rounded-[28px]">
           <Image src="/images/jajan-pasar.jpg" alt="Aneka jajanan pasar tradisional" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-brand-950/10 to-transparent" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent" aria-hidden />
           <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-3 text-white">
             <div>
               <p className="text-[13px] text-white/70">Direktori</p>
@@ -124,7 +157,7 @@ export function Bento({ rows, confirmed, capacity }: { rows: { title: string; st
 }
 
 /* ------------------------------------------------------------ stats */
-export function StatsBand({ stats }: { stats: { events: number; umkm: number; stands: number; organizers: number } }) {
+export function StatsBand({ stats, dark = false }: { stats: { events: number; umkm: number; stands: number; organizers: number }; dark?: boolean }) {
   const items = [
     { v: stats.events, l: "Event terbit", d: "Disetujui Disperindag" },
     { v: stats.umkm, l: "UMKM di direktori", d: "Terverifikasi & publik" },
@@ -134,10 +167,10 @@ export function StatsBand({ stats }: { stats: { events: number; umkm: number; st
   return (
     <RiseGroup className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 [&>*]:min-w-0">
       {items.map((s) => (
-        <RiseItem key={s.l} className="border-l border-black/[0.08] pl-5">
-          <Counter value={s.v} className="display block text-[52px] font-semibold leading-none text-brand-950 sm:text-[64px]" />
-          <p className="mt-3 text-[15px] font-medium text-brand-950">{s.l}</p>
-          <p className="text-[13px] text-[#5b6b63]">{s.d}</p>
+        <RiseItem key={s.l} className={cn("border-l pl-5", dark ? "border-white/15" : "border-black/[0.08]")}>
+          <Counter value={s.v} className={cn("display block text-[52px] font-semibold leading-none sm:text-[64px]", dark ? "text-white" : "text-brand-950")} />
+          <p className={cn("mt-3 text-[15px] font-medium", dark ? "text-white" : "text-brand-950")}>{s.l}</p>
+          <p className={cn("text-[13px]", dark ? "text-brand-300" : "text-[#5b6b63]")}>{s.d}</p>
         </RiseItem>
       ))}
     </RiseGroup>
@@ -171,7 +204,7 @@ export function EventTile({ e }: { e: LandingEvent }) {
           <p className="display text-[20px] font-semibold leading-none text-brand-950">{e.day}</p>
           <p className="text-[10px] font-semibold uppercase tracking-wide text-brand-700">{e.month}</p>
         </div>
-        <span className={cn("absolute right-3 top-3 rounded-full px-3 py-1 text-[12px] font-medium backdrop-blur", e.open ? "bg-brand-900/85 text-white" : "bg-white/85 text-brand-950")}>
+        <span className={cn("absolute right-3 top-3 rounded-full px-3 py-1 text-[12px] font-medium backdrop-blur", e.open ? "bg-brand-900/90 text-white" : "bg-white/95 text-brand-950 shadow-sm")}>
           {e.open && <span className="mr-1.5 inline-block size-1.5 animate-pulse rounded-full bg-brand-300 align-middle" />}
           {e.stateLabel}
         </span>
@@ -212,7 +245,7 @@ export function Steps() {
       <RiseGroup className="relative grid gap-10 md:grid-cols-4 md:gap-6 [&>*]:min-w-0">
         {STEPS.map((s, i) => (
           <RiseItem key={s.t} className="flex gap-5 md:block">
-            <span className="relative grid size-12 shrink-0 place-items-center rounded-full bg-white text-brand-700 ring-1 ring-black/[0.08]">
+            <span className="relative grid size-12 shrink-0 place-items-center rounded-full bg-white text-brand-700 shadow-[0_8px_20px_-10px_rgba(5,35,26,.4)] ring-1 ring-brand-300/60">
               <s.icon className="size-5" aria-hidden />
             </span>
             <div className="md:mt-6">
@@ -248,9 +281,9 @@ export function UmkmTiles({ items }: { items: LandingUmkm[] }) {
             ) : (
               <div className="grid size-full place-items-center text-[#9aa8a1]"><Store className="size-8" aria-hidden /></div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-transparent to-transparent" aria-hidden />
-            <div className="absolute inset-x-4 bottom-4 text-white">
-              <p className="text-[12px] text-white/75">{u.category} · {u.district}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/25 to-transparent" aria-hidden />
+            <div className="absolute inset-x-4 bottom-4 text-white [text-shadow:0_1px_12px_rgba(0,0,0,.35)]">
+              <p className="text-[12px] text-white/85">{u.category} · {u.district}</p>
               <h3 className={cn("display font-semibold leading-tight", i === 0 ? "text-[24px] sm:text-[30px]" : "text-[16px]")}>{u.name}</h3>
             </div>
           </Link>

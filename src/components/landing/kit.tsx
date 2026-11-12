@@ -16,7 +16,7 @@ export const EASE = [0.16, 1, 0.3, 1] as const;
 export function PillLink({ href, children, tone = "dark", className, ...rest }: ComponentProps<typeof Link> & { tone?: "dark" | "light" | "ghost"; children: ReactNode }) {
   const tones = {
     dark: "bg-brand-900 text-white hover:bg-brand-800 shadow-[0_10px_30px_-12px_rgba(5,35,26,.6)]",
-    light: "bg-white text-brand-950 ring-1 ring-black/[0.06] hover:ring-brand-300",
+    light: "bg-brand-100 text-brand-950 ring-1 ring-brand-300/60 hover:bg-brand-300/50",
     ghost: "bg-white/10 text-white ring-1 ring-white/25 hover:bg-white/20",
   }[tone];
   const dot = { dark: "bg-brand-300 text-brand-950", light: "bg-brand-900 text-white", ghost: "bg-white text-brand-950" }[tone];

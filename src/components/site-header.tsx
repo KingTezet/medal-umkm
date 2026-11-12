@@ -44,11 +44,11 @@ export function SiteHeader({ session }: { session: { name: string; dashboard: st
         transition={{ duration: 0.7, ease }}
         className={cn(
           "mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-[background-color,box-shadow] duration-300 sm:h-16 sm:pl-5",
-          scrolled || open ? "bg-white/80 shadow-[0_10px_30px_-18px_rgba(5,35,26,.35)] ring-1 ring-black/[0.06] backdrop-blur-xl" : "bg-white/40 backdrop-blur-sm",
+          scrolled || open ? "bg-white/85 shadow-[0_10px_30px_-18px_rgba(5,35,26,.35)] ring-1 ring-black/[0.06] backdrop-blur-xl" : "bg-transparent",
         )}
       >
         <Wordmark compact />
-        <nav aria-label="Navigasi utama" className="hidden items-center rounded-full bg-black/[0.03] p-1 md:flex">
+        <nav aria-label="Navigasi utama" className="hidden items-center rounded-full bg-brand-900/[0.05] p-1 md:flex">
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} aria-current={isActive(n.href) ? "page" : undefined} className={cn("relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200", isActive(n.href) ? "text-brand-950" : "text-[#5b6b63] hover:text-brand-950")}>
               {isActive(n.href) && <motion.span layoutId="nav-pill" transition={{ duration: 0.4, ease }} className="absolute inset-0 rounded-full bg-white shadow-sm ring-1 ring-black/[0.05]" />}

@@ -36,3 +36,13 @@ Kata judul muncul satu-satu dengan blur→tajam (60 ms/kata), section rise + unb
 ## File
 
 `src/components/landing/{kit,hero,sections}.tsx`, `src/app/(public)/page.tsx`, `src/components/site-header.tsx`, `src/components/site-footer.tsx`, token di `src/app/globals.css`.
+
+## Revisi 1 (feedback: "bg polos, tombol putih, teks di foto nyaru")
+
+- Latar hero: gradasi mint → putih, grid tipis ber-mask, blob mint/sky/coral, cincin elips dekoratif; hero kini memanjang ke bawah header (header transparan sebelum scroll).
+- Section bergantian: titik pola + blob (Kenapa, Direktori), blob kiri (Event), mint + titik (Cara kerja), **hijau gelap + grid** (Dalam angka).
+- Kartu kaca di atas foto dibuat hampir opak (93% putih, blur 20px, bayangan lebih dalam) agar "Event terbit" dll. terbaca.
+- Tombol sekunder bukan putih lagi: mint `brand-100` + ring hijau.
+- Overlay foto UMKM/bento lebih pekat + text-shadow halus; chip status event lebih kontras.
+- Baris event di bento ditumpuk di mobile (tidak terpotong).
+- Footer bergradasi putih → mint, wordmark lebih terlihat.

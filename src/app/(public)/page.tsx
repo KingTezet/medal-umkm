@@ -1,5 +1,5 @@
 import { LandingHero } from "@/components/landing/hero";
-import { Bento, EventTile, FinalCta, Heading, Marquee, StatsBand, Steps, UmkmTiles, type LandingEvent } from "@/components/landing/sections";
+import { Bento, EventTile, FinalCta, Heading, Marquee, SectionBg, StatsBand, Steps, UmkmTiles, type LandingEvent } from "@/components/landing/sections";
 import { PillLink, Rise, RiseGroup, RiseItem, ScrollProgress } from "@/components/landing/kit";
 import { Notice } from "@/components/ui/misc";
 import { getCategories, getPublicSettings, getPublicStats, listFeaturedEvents, listPublicUmkm } from "@/lib/queries";
@@ -53,7 +53,8 @@ export default async function HomePage() {
       <Marquee items={[...cats.map((c) => c.name), ...SUMEDANG_DISTRICTS.slice(0, 8)]} />
 
       {/* Kenapa MEDAL */}
-      <section aria-labelledby="kenapa" className="bg-white py-20 sm:py-28">
+      <section aria-labelledby="kenapa" className="relative isolate py-20 sm:py-28">
+        <SectionBg variant="dots-right" />
         <div className="container-page">
           <Heading kicker="Kenapa MEDAL" title={<span id="kenapa">Lebih mudah tampil,<br className="hidden sm:block" /> lebih jelas prosesnya.</span>} sub="Dirancang untuk pelaku UMKM, penyelenggara, dan Disperindag dalam satu alur yang transparan." />
           <Bento rows={tiles.slice(0, 3).map((t) => ({ title: t.title, state: t.stateLabel, open: t.open }))} confirmed={top?.confirmed_count ?? 0} capacity={top?.stand_capacity ?? 0} />
@@ -61,15 +62,17 @@ export default async function HomePage() {
       </section>
 
       {/* Angka */}
-      <section aria-labelledby="angka" className="bg-canvas py-20 sm:py-24">
+      <section aria-labelledby="angka" className="relative isolate overflow-hidden py-20 sm:py-24">
+        <SectionBg variant="dark" />
         <div className="container-page">
-          <Heading kicker="Dalam angka" title={<span id="angka">Tumbuh bersama, tercatat transparan.</span>} sub="Langsung dari database MEDAL — bukan angka karangan." />
-          <div className="mt-14"><StatsBand stats={stats} /></div>
+          <Heading dark kicker="Dalam angka" title={<span id="angka">Tumbuh bersama, tercatat transparan.</span>} sub="Langsung dari database MEDAL — bukan angka karangan." />
+          <div className="mt-14"><StatsBand stats={stats} dark /></div>
         </div>
       </section>
 
       {/* Event */}
-      <section aria-labelledby="event" className="bg-white py-20 sm:py-28">
+      <section aria-labelledby="event" className="relative isolate py-20 sm:py-28">
+        <SectionBg variant="blob-left" />
         <div className="container-page">
           <Heading kicker="Event pilihan" title={<span id="event">Sedang membuka pendaftaran</span>} sub="Disetujui Disperindag. Sisa stand dihitung dari stand yang sudah dikonfirmasi." action={<PillLink href="/events" tone="light">Semua event</PillLink>} />
           {tiles.length ? (
@@ -81,13 +84,14 @@ export default async function HomePage() {
               ))}
             </RiseGroup>
           ) : (
-            <Rise className="mt-12 rounded-[28px] bg-canvas p-10 text-center text-[#4c5c54]">Belum ada event yang membuka pendaftaran. Event baru tampil setelah disetujui Disperindag.</Rise>
+            <Rise className="mt-12 rounded-[28px] bg-brand-50 p-10 text-center text-[#4c5c54]">Belum ada event yang membuka pendaftaran. Event baru tampil setelah disetujui Disperindag.</Rise>
           )}
         </div>
       </section>
 
       {/* Cara kerja */}
-      <section aria-labelledby="alur" className="bg-canvas py-20 sm:py-28">
+      <section aria-labelledby="alur" className="relative isolate overflow-hidden py-20 sm:py-28">
+        <SectionBg variant="mint" />
         <div className="container-page">
           <Heading kicker="Cara kerja" title={<span id="alur">Empat langkah ke lapak final.</span>} />
           <Steps />
@@ -96,7 +100,8 @@ export default async function HomePage() {
 
       {/* UMKM */}
       {umkm.items.length > 0 && (
-        <section aria-labelledby="umkm" className="bg-white py-20 sm:py-28">
+        <section aria-labelledby="umkm" className="relative isolate py-20 sm:py-28">
+          <SectionBg variant="dots-right" />
           <div className="container-page">
             <Heading kicker="Direktori UMKM" title={<span id="umkm">Kenali produk lokal Sumedang.</span>} sub="Hanya usaha terverifikasi yang setuju dipublikasikan." action={<PillLink href="/umkm" tone="light">Buka direktori</PillLink>} />
             <div className="mt-12">

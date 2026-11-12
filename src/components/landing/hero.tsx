@@ -29,9 +29,16 @@ const LINKS = [
 function Blobs() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div className="absolute -left-32 -top-40 size-[34rem] rounded-full bg-brand-100 blur-[90px]" />
-      <div className="absolute -right-24 top-10 size-[26rem] rounded-full bg-sky-tint blur-[90px]" />
-      <div className="absolute left-1/3 top-[55%] size-[22rem] rounded-full bg-brand-300/30 blur-[100px]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-100/80 via-brand-50/40 to-white" />
+      <div className="bg-grid fade-mask absolute inset-0" />
+      <div className="absolute -left-40 -top-48 size-[38rem] rounded-full bg-brand-300/50 blur-[110px]" />
+      <div className="absolute -right-32 top-0 size-[30rem] rounded-full bg-sky-200/70 blur-[100px]" />
+      <div className="absolute right-[18%] top-[42%] size-40 rounded-full bg-coral/15 blur-[60px]" />
+      <svg className="absolute left-1/2 top-[8%] hidden w-[1100px] -translate-x-1/2 text-brand-500/15 md:block" viewBox="0 0 1100 600" fill="none">
+        <ellipse cx="550" cy="300" rx="540" ry="290" stroke="currentColor" />
+        <ellipse cx="550" cy="300" rx="420" ry="220" stroke="currentColor" strokeDasharray="4 8" />
+        <ellipse cx="550" cy="300" rx="300" ry="150" stroke="currentColor" />
+      </svg>
     </div>
   );
 }
@@ -40,8 +47,7 @@ function Blobs() {
 function MobileHero({ stats }: { stats: HeroStats }) {
   const reduce = useReducedMotion();
   return (
-    <div className="relative isolate px-5 pb-12 pt-8 md:hidden">
-      <Blobs />
+    <div className="relative px-5 pb-12 pt-8 md:hidden">
       <div className="flex flex-col items-center text-center">
         <motion.div initial={reduce ? false : { scale: 0.7, opacity: 0, filter: "blur(10px)" }} animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.9, ease: EASE }} className="relative">
           <div className="absolute -inset-1.5 rounded-[28px] bg-brand-300/40 blur-md" aria-hidden />
@@ -118,8 +124,7 @@ function DesktopHero({ headline, subheadline, stats, thumbs }: { headline: strin
   });
 
   return (
-    <div ref={ref} className="relative isolate hidden pb-24 pt-14 md:block lg:pt-20">
-      <Blobs />
+    <div ref={ref} className="relative hidden pb-24 pt-14 md:block lg:pt-20">
       <div className="container-page text-center">
         <motion.p {...pop(0)} className="mx-auto inline-flex items-center gap-2 rounded-full bg-white/80 py-1.5 pl-1.5 pr-4 text-[13px] font-medium text-brand-900 ring-1 ring-black/[0.06] backdrop-blur">
           <span className="rounded-full bg-brand-900 px-2.5 py-0.5 text-[11px] font-semibold text-white">Resmi</span>
@@ -160,7 +165,7 @@ function DesktopHero({ headline, subheadline, stats, thumbs }: { headline: strin
         <motion.div style={{ y: cardL }} className="absolute -left-2 top-10 hidden w-60 lg:block xl:left-4">
           <motion.div {...pop(0.9)} className="glass rounded-3xl p-5 text-left">
             <div className="flex items-center justify-between">
-              <p className="text-[13px] text-[#4c5c54]">Event terbit</p>
+              <p className="text-[13px] font-medium text-brand-900">Event terbit</p>
               <span className="flex items-center gap-1 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] font-medium text-brand-800">
                 <span className="size-1.5 animate-pulse rounded-full bg-brand-500" /> Live
               </span>
@@ -169,11 +174,11 @@ function DesktopHero({ headline, subheadline, stats, thumbs }: { headline: strin
             <div className="mt-4 grid grid-cols-2 gap-2 border-t border-black/[0.06] pt-3">
               <div>
                 <Counter value={stats.stands} className="display block text-[20px] font-semibold text-brand-950" />
-                <p className="text-[11px] text-[#5b6b63]">Stand dikonfirmasi</p>
+                <p className="text-[11px] text-[#45544c]">Stand dikonfirmasi</p>
               </div>
               <div>
                 <Counter value={stats.organizers} className="display block text-[20px] font-semibold text-brand-950" />
-                <p className="text-[11px] text-[#5b6b63]">Penyelenggara</p>
+                <p className="text-[11px] text-[#45544c]">Penyelenggara</p>
               </div>
             </div>
           </motion.div>
@@ -223,7 +228,8 @@ function DesktopHero({ headline, subheadline, stats, thumbs }: { headline: strin
 
 export function LandingHero(props: { headline: string; subheadline: string; stats: HeroStats; thumbs: string[] }) {
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative isolate -mt-[68px] overflow-hidden pt-[68px] sm:-mt-[76px] sm:pt-[76px]">
+      <Blobs />
       <MobileHero stats={props.stats} />
       <DesktopHero {...props} />
     </section>

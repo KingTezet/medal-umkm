@@ -14,7 +14,7 @@ export async function SiteFooter() {
   const { contact } = await getPublicSettings();
   const wa = waLink(contact.whatsapp);
   return (
-    <footer className="overflow-hidden border-t border-line bg-white">
+    <footer className="overflow-hidden border-t border-line bg-gradient-to-b from-white to-brand-50">
       <div className="container-page py-12">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div className="max-w-xs">
