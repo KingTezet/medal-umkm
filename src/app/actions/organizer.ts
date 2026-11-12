@@ -28,6 +28,7 @@ export async function saveOrganizerProfileAction(_: ActionState, fd: FormData): 
     .eq("user_id", session.user.id);
   if (error) return fail(friendlyError(error));
   revalidatePath("/dashboard/penyelenggara", "layout");
+  revalidatePath("/", "layout");
   return success("Profil organisasi tersimpan.");
 }
 
@@ -117,6 +118,7 @@ export async function submitEventAction(_: ActionState, fd: FormData): Promise<A
   if (!id.success) return fail("Event tidak valid.");
   const { error } = await session.supabase.rpc("submit_event", { p_event_id: id.data });
   if (error) return fail(friendlyError(error));
+  revalidatePath("/", "layout");
   return success("Event diajukan ke Disperindag untuk ditinjau.");
 }
 
@@ -145,5 +147,6 @@ export async function decideApplicationAction(_: ActionState, fd: FormData): Pro
   });
   if (error) return fail(friendlyError(error));
   const label = { select: "dipilih", waitlist: "dimasukkan daftar tunggu", reject: "ditolak" }[decision.data];
+  revalidatePath("/", "layout");
   return success(`Peserta ${label}.`);
 }

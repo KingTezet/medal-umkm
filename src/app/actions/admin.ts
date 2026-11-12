@@ -36,6 +36,7 @@ export async function verifyApplicationAction(_: ActionState, fd: FormData): Pro
   if (!id.success || !action.success || !note.success) return fail("Permintaan tidak valid.");
   const { error } = await s.supabase.rpc("admin_verify_application", { p_application_id: id.data, p_action: action.data, p_note: note.data ?? undefined });
   if (error) return fail(friendlyError(error));
+  revalidatePath("/", "layout");
   return success({ verify: "Berkas diverifikasi.", revise: "Permintaan revisi dikirim.", reject: "Pendaftaran ditolak." }[action.data]);
 }
 
@@ -86,6 +87,7 @@ export async function setAccountStatusAction(_: ActionState, fd: FormData): Prom
   if (!id.success || !status.success || !note.success) return fail("Permintaan tidak valid.");
   const { error } = await s.supabase.rpc("admin_set_account_status", { p_user_id: id.data, p_status: status.data, p_note: note.data ?? undefined });
   if (error) return fail(friendlyError(error));
+  revalidatePath("/", "layout");
   return success(status.data === "suspended" ? "Akun ditangguhkan." : "Akun diaktifkan kembali.");
 }
 

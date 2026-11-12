@@ -60,6 +60,7 @@ export async function saveBusinessProfileAction(_: ActionState, fd: FormData): P
     return fail(friendlyError(error));
   }
   revalidatePath("/dashboard/umkm", "layout");
+  revalidatePath("/", "layout");
   return success("Profil usaha tersimpan.");
 }
 
@@ -99,6 +100,7 @@ export async function resubmitApplicationAction(_: ActionState, fd: FormData): P
   });
   if (error) return fail(friendlyError(error));
   revalidatePath(`/dashboard/umkm/pendaftaran/${id.data}`);
+  revalidatePath("/", "layout");
   return success("Revisi terkirim dan kembali ke antrean verifikasi.");
 }
 
@@ -109,5 +111,6 @@ export async function withdrawApplicationAction(_: ActionState, fd: FormData): P
   if (!id.success) return fail("Pendaftaran tidak valid.");
   const { error } = await session.supabase.rpc("withdraw_application", { p_application_id: id.data });
   if (error) return fail(friendlyError(error));
+  revalidatePath("/", "layout");
   return success("Pendaftaran dibatalkan.");
 }
