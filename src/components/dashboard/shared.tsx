@@ -24,7 +24,7 @@ export async function PrivateDocLink({ supabase, bucket, path, label }: { supaba
     );
   }
   return (
-    <a href={data.signedUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-semibold text-emerald hover:border-emerald">
+    <a href={data.signedUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-line bg-white px-3 py-1.5 text-sm font-medium text-primary hover:border-primary-border">
       <FileText className="size-4" aria-hidden /> {label}
       <span className="text-xs font-normal text-muted">(tautan 5 menit)</span>
     </a>
@@ -40,7 +40,7 @@ export function Timeline({ steps }: { steps: TimelineStep[] }) {
             <span
               className={cn(
                 "absolute left-[15px] top-8 h-[calc(100%-2rem)] w-0.5 sm:left-[calc(50%+1.25rem)] sm:top-[15px] sm:h-0.5 sm:w-[calc(100%-2.5rem)]",
-                s.state === "done" ? "bg-emerald" : "bg-line",
+                s.state === "done" ? "bg-primary" : "bg-line",
               )}
               aria-hidden
             />
@@ -48,9 +48,9 @@ export function Timeline({ steps }: { steps: TimelineStep[] }) {
           <span
             className={cn(
               "relative z-10 grid size-8 shrink-0 place-items-center rounded-full",
-              s.state === "done" && "bg-emerald text-ivory",
-              s.state === "current" && "bg-gold text-night ring-4 ring-gold/25",
-              s.state === "upcoming" && "border-2 border-line bg-surface text-muted",
+              s.state === "done" && "bg-primary text-white",
+              s.state === "current" && "border-2 border-primary bg-white text-primary",
+              s.state === "upcoming" && "border border-line bg-white text-muted",
               s.state === "failed" && "bg-danger text-white",
             )}
           >
@@ -84,7 +84,7 @@ export function HistoryList({ items }: { items: { id: number; to_status: Applica
     <ol className="space-y-4">
       {[...items].reverse().map((h) => (
         <li key={h.id} className="flex gap-3">
-          <span className="mt-1.5 size-2.5 shrink-0 rounded-full bg-gold" aria-hidden />
+          <span className="mt-1.5 size-2 shrink-0 rounded-full bg-primary" aria-hidden />
           <div>
             <p className="text-sm font-semibold">
               {APPLICATION_STATUS[h.to_status].label}
@@ -114,14 +114,14 @@ export async function NotificationsView({ supabase, userId }: { supabase: SB; us
         )}
       </div>
       {items.length ? (
-        <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface">
+        <ul className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
           {items.map((n) => (
-            <li key={n.id} className={cn("flex gap-4 p-4 sm:p-5", !n.read_at && "bg-mint/25")}>
-              <span className={cn("grid size-10 shrink-0 place-items-center rounded-full", n.read_at ? "bg-sage text-muted" : "bg-forest text-gold")}>
+            <li key={n.id} className={cn("flex gap-3 p-4 sm:gap-4 sm:p-5", !n.read_at && "bg-primary-soft/40")}>
+              <span className={cn("grid size-10 shrink-0 place-items-center rounded-full", n.read_at ? "bg-surface-muted text-muted" : "bg-primary-soft text-primary")}>
                 <Bell className="size-4" aria-hidden />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="font-semibold">{n.title}</p>
+                <p className="text-sm font-semibold">{n.title}</p>
                 <p className="mt-0.5 text-sm text-ink/80">{n.message}</p>
                 <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted">
                   <span>{relativeTime(n.created_at)}</span>

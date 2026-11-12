@@ -63,7 +63,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
       ) : (
         <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
           <Card>
-            <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-2xl">
+            <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-xl">
               <Image src={eventCover(e.cover_path, e.slug)} alt={e.title} fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
             </div>
             <DefinitionList items={[
@@ -77,7 +77,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
             ]} />
           </Card>
           <Card className="h-fit">
-            <h2 className="font-display text-2xl">Kuota & peserta</h2>
+            <h2 className="font-semibold text-lg">Kuota & peserta</h2>
             <DefinitionList items={[
               { label: "Kapasitas", value: e.stand_capacity },
               { label: "Dikonfirmasi", value: c.confirmed ?? 0 },

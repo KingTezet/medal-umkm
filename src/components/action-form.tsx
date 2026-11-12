@@ -59,18 +59,18 @@ export function ActionDialog({
       </Button>
       <dialog
         ref={ref}
-        className="m-auto w-[min(92vw,30rem)] rounded-3xl border border-line bg-surface p-0 text-ink shadow-2xl backdrop:bg-night/50 backdrop:backdrop-blur-sm"
+        className="m-0 mt-auto w-full max-w-none rounded-t-2xl border border-line bg-white p-0 text-ink shadow-xl backdrop:bg-ink/30 sm:m-auto sm:w-[min(92vw,30rem)] sm:rounded-xl open:animate-[sheet-in_.26s_cubic-bezier(.22,1,.36,1)]"
         aria-labelledby={`dlg-${title}`}
       >
         <form ref={formRef} action={formAction} className="space-y-4 p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 id={`dlg-${title}`} className="font-display text-2xl">
+              <h2 id={`dlg-${title}`} className="text-lg font-semibold">
                 {title}
               </h2>
               {description && <p className="mt-1 text-sm text-muted">{description}</p>}
             </div>
-            <button type="button" onClick={() => ref.current?.close()} className="grid size-9 shrink-0 place-items-center rounded-full hover:bg-sage" aria-label="Tutup">
+            <button type="button" onClick={() => ref.current?.close()} className="grid size-9 shrink-0 place-items-center rounded-lg hover:bg-sage" aria-label="Tutup">
               <X className="size-4" />
             </button>
           </div>
@@ -82,7 +82,7 @@ export function ActionDialog({
             <div className="space-y-1.5">
               <label htmlFor={`note-${title}`} className="text-sm font-semibold">
                 {noteLabel}
-                {noteRequired && <span className="text-terracotta"> *</span>}
+                {noteRequired && <span className="text-danger"> *</span>}
               </label>
               <Textarea id={`note-${title}`} name="note" required={noteRequired} minLength={noteRequired ? 5 : undefined} maxLength={1000} placeholder="Tulis catatan yang jelas dan dapat ditindaklanjuti…" />
             </div>

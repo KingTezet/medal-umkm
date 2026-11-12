@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Download } from "lucide-react";
 import { requireRole } from "@/lib/auth";
@@ -10,7 +9,7 @@ import { Breadcrumb, Card, EmptyState, Notice, PageHeader, StatusBadge } from "@
 import { buttonClass } from "@/components/ui/button";
 import { ActionDialog } from "@/components/action-form";
 import { decideApplicationAction } from "@/app/actions/organizer";
-import { cn } from "@/lib/cn";
+import { StatusTabs } from "@/components/status-tabs";
 
 export const metadata: Metadata = { title: "Kelola Peserta" };
 
@@ -37,7 +36,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
   ]);
   const c = Object.fromEntries((counts ?? []).map((x) => [x.status, Number(x.total)]));
   const pendingVerification = (c.submitted ?? 0) + (c.under_verification ?? 0) + (c.revision_required ?? 0);
-  const tab = TABS.find((t) => t.key === sp.tab) ?? TABS[0];
+  const tab = TABS.find((t) => t.key === (sp.status ?? sp.tab)) ?? TABS[0];
   const list = (apps ?? []).filter((a) => tab.statuses.includes(a.status));
   const confirmed = c.confirmed ?? 0;
   const selected = c.selected_by_organizer ?? 0;
@@ -48,22 +47,13 @@ export default async function Page({ params, searchParams }: { params: Promise<{
       <PageHeader eyebrow="Kelola peserta" title={e.title} action={<a href={`/api/events/${e.id}/export`} className={buttonClass("outline", "sm")}><Download className="size-4" /> Ekspor CSV</a>} />
       <div className="mb-6 grid gap-3 sm:grid-cols-4">
         {[{ l: "Kapasitas", v: e.stand_capacity }, { l: "Dikonfirmasi", v: confirmed }, { l: "Dipilih", v: selected }, { l: "Menunggu verifikasi", v: pendingVerification }].map((x) => (
-          <Card key={x.l} className="p-4 sm:p-4"><p className="text-xs text-muted">{x.l}</p><p className="font-display text-3xl">{x.v}</p></Card>
+          <Card key={x.l} className="p-4 sm:p-4"><p className="text-xs text-muted">{x.l}</p><p className="font-semibold text-[22px]">{x.v}</p></Card>
         ))}
       </div>
       {selected + confirmed > e.stand_capacity && <div className="mb-4"><Notice tone="warning">Jumlah dipilih + dikonfirmasi melebihi kapasitas. Disperindag hanya akan mengesahkan sesuai kuota.</Notice></div>}
       <Notice tone="info">Anda hanya dapat menyeleksi pendaftar yang berkasnya sudah diverifikasi Disperindag. Nomor stand final ditetapkan oleh Disperindag.</Notice>
 
-      <div className="my-6 flex gap-2 overflow-x-auto pb-1" role="tablist">
-        {TABS.map((t) => {
-          const n = t.statuses.reduce((s, st) => s + (c[st] ?? 0), 0);
-          return (
-            <Link key={t.key} href={`?tab=${t.key}`} role="tab" aria-selected={t.key === tab.key} className={cn("whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold", t.key === tab.key ? "border-forest bg-forest text-ivory" : "border-line bg-surface hover:border-emerald")}>
-              {t.label} <span className="ml-1 opacity-70">{n}</span>
-            </Link>
-          );
-        })}
-      </div>
+      <div className="mt-6"><StatusTabs basePath="" active={tab.key} tabs={TABS.map((t) => ({ key: t.key, label: t.label, count: t.statuses.reduce((n, st) => n + (c[st] ?? 0), 0) }))} /></div>
 
       {list.length ? (
         <ul className="grid gap-4">
@@ -75,9 +65,9 @@ export default async function Page({ params, searchParams }: { params: Promise<{
                 <Card className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div className="min-w-0 space-y-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="font-display text-xl">{s.business_name}</p>
+                      <p className="font-semibold text-xl">{s.business_name}</p>
                       <StatusBadge map={APPLICATION_STATUS} status={a.status} />
-                      {a.stand_number && <span className="rounded-lg bg-forest px-2 py-0.5 text-sm font-semibold text-gold">Stand {a.stand_number}</span>}
+                      {a.stand_number && <span className="rounded-lg bg-forest px-2 py-0.5 text-sm font-semibold text-white">Stand {a.stand_number}</span>}
                     </div>
                     <p className="text-sm text-muted">{s.category} · {s.district} · {s.owner_name} · WA {formatPhone(s.whatsapp)}</p>
                     <p className="text-sm"><span className="font-semibold">Produk:</span> {a.products_offered}</p>

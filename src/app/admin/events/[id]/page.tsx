@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       )}
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <Card>
-          <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-2xl"><Image src={eventCover(e.cover_path, e.slug)} alt={e.title} fill sizes="50vw" className="object-cover" /></div>
+          <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-xl"><Image src={eventCover(e.cover_path, e.slug)} alt={e.title} fill sizes="50vw" className="object-cover" /></div>
           <DefinitionList items={[
             { label: "Ringkasan", value: e.summary },
             { label: "Deskripsi", value: <span className="whitespace-pre-line font-normal">{e.description}</span> },
@@ -71,14 +71,14 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <div className="space-y-6">
           {org && (
             <Card>
-              <p className="eyebrow">Penyelenggara</p>
-              <Link href={`/admin/penyelenggara/${org.id}`} className="mt-1 block font-display text-xl hover:text-emerald">{org.organization_name}</Link>
+              <p className="text-[13px] font-medium text-primary">Penyelenggara</p>
+              <Link href={`/admin/penyelenggara/${org.id}`} className="mt-1 block font-semibold text-xl hover:text-emerald">{org.organization_name}</Link>
               <p className="text-sm text-muted">{ORGANIZATION_TYPES[org.organization_type]} · {formatPhone(org.contact_phone)}</p>
               <div className="mt-2"><StatusBadge map={VERIFICATION_STATUS} status={org.verification_status} /></div>
             </Card>
           )}
           <Card>
-            <p className="eyebrow">Peserta</p>
+            <p className="text-[13px] font-medium text-primary">Peserta</p>
             <DefinitionList items={[
               { label: "Menunggu verifikasi", value: (c.submitted ?? 0) + (c.under_verification ?? 0) },
               { label: "Terverifikasi", value: c.verified ?? 0 },
@@ -88,7 +88,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             <Link href={`/admin/pendaftaran?event=${e.id}`} className="mt-3 inline-block text-sm font-semibold text-emerald hover:underline">Lihat pendaftaran event →</Link>
           </Card>
           <Card>
-            <p className="eyebrow mb-3">Riwayat review</p>
+            <p className="text-[13px] font-medium text-primary mb-3">Riwayat review</p>
             {logs?.length ? (
               <ul className="space-y-3 text-sm">
                 {logs.map((l) => <li key={l.id}><span className="font-semibold">{l.action}</span>{l.note && <span className="text-muted"> — {l.note}</span>}<p className="text-xs text-muted">{formatDateTime(l.created_at)}</p></li>)}

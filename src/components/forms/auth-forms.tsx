@@ -46,9 +46,9 @@ export function LoginForm({ next }: { next?: string }) {
 
 function SuccessPanel({ message }: { message: string }) {
   return (
-    <div className="rounded-3xl border border-emerald/20 bg-mint/40 p-8 text-center">
+    <div className="rounded-xl border border-emerald/20 bg-mint/40 p-8 text-center">
       <MailCheck className="mx-auto size-12 text-emerald" aria-hidden />
-      <p className="mt-4 font-display text-2xl">Hampir selesai!</p>
+      <p className="mt-4 font-semibold text-lg">Hampir selesai!</p>
       <p className="mt-2 text-sm text-forest">{message}</p>
       <Link href="/login" className="mt-6 inline-block font-semibold text-emerald hover:underline">Ke halaman masuk</Link>
     </div>
@@ -58,7 +58,7 @@ function SuccessPanel({ message }: { message: string }) {
 function AccountFields({ fe }: { fe: Record<string, string[] | undefined> }) {
   return (
     <fieldset className="space-y-4">
-      <legend className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-gold-deep">Data akun</legend>
+      <legend className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">Data akun</legend>
       <Field label="Nama lengkap penanggung jawab" name="full_name" errors={fe.full_name} required>
         {(p) => <Input {...p} name="full_name" autoComplete="name" required />}
       </Field>
@@ -86,7 +86,7 @@ export function RegisterUmkmForm({ categories, next }: { categories: { id: strin
       <input type="hidden" name="next" value={next ?? ""} />
       <AccountFields fe={fe} />
       <fieldset className="space-y-4">
-        <legend className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-gold-deep">Data usaha</legend>
+        <legend className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">Data usaha</legend>
         <Field label="Nama usaha" name="business_name" errors={fe.business_name} required>
           {(p) => <Input {...p} name="business_name" required />}
         </Field>
@@ -132,7 +132,7 @@ export function RegisterOrganizerForm() {
     <form onSubmit={onSubmit} className="space-y-8" noValidate>
       <AccountFields fe={fe} />
       <fieldset className="space-y-4">
-        <legend className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-gold-deep">Data organisasi</legend>
+        <legend className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">Data organisasi</legend>
         <Field label="Nama organisasi" name="organization_name" errors={fe.organization_name} required>
           {(p) => <Input {...p} name="organization_name" required />}
         </Field>

@@ -25,7 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
       {data?.length ? (
         <DataTable head={["Usaha", "Kecamatan", "Dokumen", "Publik", "Status"]}>
           {data.map((b) => (
-            <tr key={b.id} className="hover:bg-ivory/60">
+            <tr key={b.id} className="hover:bg-white">
               <td className="px-4 py-3"><Link href={`/admin/umkm/${b.id}`} className="font-semibold hover:text-emerald">{b.business_name}</Link><p className="text-xs text-muted">{b.category} · {formatShortDate(b.created_at)}</p></td>
               <td className="px-4 py-3 text-muted">{b.district || "-"}</td>
               <td className="px-4 py-3 text-muted">{b.nib || b.business_license_path ? "Lengkap" : "Belum"}</td>

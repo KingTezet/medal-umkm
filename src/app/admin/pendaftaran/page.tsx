@@ -36,7 +36,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
       {data?.length ? (
         <DataTable head={["Kode", "Usaha", "Event", "Dikirim", "Status"]}>
           {data.map((a) => (
-            <tr key={a.id} className="hover:bg-ivory/60">
+            <tr key={a.id} className="hover:bg-white">
               <td className="px-4 py-3 font-mono text-xs"><Link href={`/admin/pendaftaran/${a.id}`} className="hover:text-emerald">{a.application_code}</Link></td>
               <td className="px-4 py-3"><Link href={`/admin/pendaftaran/${a.id}`} className="font-semibold hover:text-emerald">{(a.business_snapshot as Snap)?.business_name}</Link><p className="text-xs text-muted">{(a.business_snapshot as Snap)?.category}</p></td>
               <td className="px-4 py-3 text-muted">{a.events?.title}</td>

@@ -14,13 +14,13 @@ export function Pagination({ page, total, pageSize, basePath, params }: { page: 
   };
   return (
     <nav aria-label="Halaman" className="mt-12 flex items-center justify-center gap-2">
-      <Link aria-disabled={page <= 1} tabIndex={page <= 1 ? -1 : undefined} href={href(page - 1)} className={cn("grid size-10 place-items-center rounded-full border border-line bg-surface", page <= 1 && "pointer-events-none opacity-40")} aria-label="Sebelumnya">
+      <Link aria-disabled={page <= 1} tabIndex={page <= 1 ? -1 : undefined} href={href(page - 1)} className={cn("grid size-10 place-items-center rounded-lg border border-line bg-white", page <= 1 && "pointer-events-none opacity-40")} aria-label="Sebelumnya">
         <ChevronLeft className="size-4" />
       </Link>
       <span className="px-3 text-sm text-muted">
         Halaman <strong className="text-ink">{page}</strong> dari {pages}
       </span>
-      <Link aria-disabled={page >= pages} tabIndex={page >= pages ? -1 : undefined} href={href(page + 1)} className={cn("grid size-10 place-items-center rounded-full border border-line bg-surface", page >= pages && "pointer-events-none opacity-40")} aria-label="Berikutnya">
+      <Link aria-disabled={page >= pages} tabIndex={page >= pages ? -1 : undefined} href={href(page + 1)} className={cn("grid size-10 place-items-center rounded-lg border border-line bg-white", page >= pages && "pointer-events-none opacity-40")} aria-label="Berikutnya">
         <ChevronRight className="size-4" />
       </Link>
     </nav>

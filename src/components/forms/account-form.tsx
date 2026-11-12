@@ -25,7 +25,7 @@ export function AccountForm({ fullName, phone, email, roleLabel }: { fullName: s
         </form>
       </Card>
       <Card className="h-fit space-y-3">
-        <p className="eyebrow">Keamanan akun</p>
+        <p className="text-[13px] font-medium text-primary">Keamanan akun</p>
         <p className="text-sm text-muted">Peran akun: <strong className="text-ink">{roleLabel}</strong>. Peran tidak dapat diubah oleh pengguna.</p>
         <Link href="/lupa-password" className="inline-block text-sm font-semibold text-emerald hover:underline">Ganti password melalui email →</Link>
       </Card>

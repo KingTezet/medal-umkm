@@ -39,7 +39,7 @@ export default async function UmkmHome() {
       {bp?.verification_status === "revision_required" && (
         <div className="mb-6"><Notice tone="warning" title="Profil usaha perlu revisi">{bp.verification_note} <Link className="font-semibold underline" href="/dashboard/umkm/profil">Perbarui profil</Link></Notice></div>
       )}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
         <StatCard accent label="Pendaftaran aktif" value={active} icon={<ClipboardList className="size-5" />} />
         <StatCard label="Stand dikonfirmasi" value={confirmed} icon={<Ticket className="size-5" />} />
         <StatCard label="Status profil" value={<span className="text-2xl">{bp ? VERIFICATION_STATUS[bp.verification_status].label : "-"}</span>} icon={<Store className="size-5" />} />
@@ -48,7 +48,7 @@ export default async function UmkmHome() {
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
         <Card>
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-2xl">Pendaftaran terbaru</h2>
+            <h2 className="font-semibold text-lg">Pendaftaran terbaru</h2>
             <Link href="/dashboard/umkm/pendaftaran" className="text-sm font-semibold text-emerald hover:underline">Semua</Link>
           </div>
           {list.length ? (
@@ -70,8 +70,8 @@ export default async function UmkmHome() {
           )}
         </Card>
         <Card>
-          <h2 className="font-display text-2xl">Kelengkapan profil</h2>
-          <div className="mt-4 h-2 overflow-hidden rounded-full bg-sage"><div className="h-full rounded-full bg-gradient-to-r from-emerald to-gold" style={{ width: `${pct}%` }} /></div>
+          <h2 className="font-semibold text-lg">Kelengkapan profil</h2>
+          <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-surface-muted"><div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} /></div>
           <p className="mt-2 text-sm text-muted">{pct}% lengkap</p>
           <ul className="mt-4 space-y-2.5">
             {checklist.map((c) => (
@@ -87,7 +87,7 @@ export default async function UmkmHome() {
 
       {events.length > 0 && (
         <section className="mt-10">
-          <h2 className="mb-4 font-display text-2xl">Event yang sedang dibuka</h2>
+          <h2 className="mb-4 font-semibold text-lg">Event yang sedang dibuka</h2>
           <div className="grid gap-5 sm:grid-cols-2">{events.map((e) => <EventCard key={e.id} event={e} />)}</div>
         </section>
       )}

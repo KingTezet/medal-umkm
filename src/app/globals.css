@@ -1,129 +1,120 @@
 @import "tailwindcss";
 
 /*
- * MEDAL design tokens — "ijo mahal":
- * deep emerald + champagne gold on warm ivory, terracotta as a sparing accent.
+ * MEDAL design tokens v2 — white-first, deep green accent.
+ * See docs/DESIGN_SYSTEM_V2.md. No gold, no gradients, no glow.
  */
 :root {
-  --ink: #0a1f17;
-  --night: #062219;
-  --forest: #0e3a2b;
-  --emerald: #17604a;
-  --jade: #2b8a67;
-  --mint: #cfe7da;
-  --sage: #e7efe9;
-  --ivory: #f8f5ee;
+  --primary: #174b3a;
+  --primary-hover: #103b2d;
+  --primary-soft: #eaf2ee;
+  --primary-border: #c9dad1;
+  --page: #ffffff;
   --surface: #ffffff;
-  --sand: #f0e7d7;
-  --gold: #c6a15b;
-  --gold-soft: #ead9b2;
-  --gold-deep: #9c7a36;
-  --terracotta: #c0582a;
-  --muted: #5d6a63;
-  --line: #e4ddcf;
-  --danger: #b4321f;
+  --surface-muted: #f7f9f8;
+  --text: #18231e;
+  --text-muted: #5f6c65;
+  --border: #e5ebe7;
+  --success: #26734d;
+  --warning: #946515;
+  --danger: #b54747;
 }
 
 @theme inline {
-  --color-ink: var(--ink);
-  --color-night: var(--night);
-  --color-forest: var(--forest);
-  --color-emerald: var(--emerald);
-  --color-jade: var(--jade);
-  --color-mint: var(--mint);
-  --color-sage: var(--sage);
-  --color-ivory: var(--ivory);
+  /* semantic names */
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-border: var(--primary-border);
+  --color-page: var(--page);
   --color-surface: var(--surface);
-  --color-sand: var(--sand);
-  --color-gold: var(--gold);
-  --color-gold-soft: var(--gold-soft);
-  --color-gold-deep: var(--gold-deep);
-  --color-terracotta: var(--terracotta);
-  --color-muted: var(--muted);
-  --color-line: var(--line);
+  --color-surface-muted: var(--surface-muted);
+  --color-ink: var(--text);
+  --color-muted: var(--text-muted);
+  --color-line: var(--border);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --color-danger: var(--danger);
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
-  --radius-xl2: 1.25rem;
-  --animate-marquee: marquee 38s linear infinite;
-  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
-}
+  /* legacy aliases kept so older class names resolve to the new palette */
+  --color-emerald: var(--primary);
+  --color-forest: var(--primary-hover);
+  --color-mint: var(--primary-soft);
+  --color-sage: var(--surface-muted);
+  --color-ivory: #ffffff;
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@keyframes shimmer {
-  0% { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --radius-card: 12px;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--ivory);
-  color: var(--ink);
+  background: var(--page);
+  color: var(--text);
   font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--gold-soft);
-  color: var(--night);
+  background: var(--primary-soft);
+  color: var(--primary-hover);
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
   border-radius: 6px;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
 }
 
 @layer components {
   .container-page {
     width: 100%;
-    max-width: 76rem;
+    max-width: 72rem;
     margin-inline: auto;
     padding-inline: 1rem;
   }
   @media (min-width: 640px) {
     .container-page { padding-inline: 1.5rem; }
   }
-  .eyebrow {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold-deep);
+  .section {
+    padding-block: 3.5rem;
   }
-  .text-gold-gradient {
-    background: linear-gradient(100deg, #f3e2b6 0%, #c6a15b 45%, #f0d9a2 70%, #b98f45 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .bg-emerald-mesh {
-    background:
-      radial-gradient(60% 50% at 15% 10%, rgba(43, 138, 103, 0.55) 0%, transparent 60%),
-      radial-gradient(50% 45% at 90% 20%, rgba(198, 161, 91, 0.28) 0%, transparent 65%),
-      radial-gradient(70% 60% at 50% 100%, rgba(23, 96, 74, 0.7) 0%, transparent 70%),
-      var(--night);
-  }
-  .bg-grain {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.08'/></svg>");
+  @media (min-width: 768px) {
+    .section { padding-block: 5rem; }
   }
   .skeleton {
-    background: linear-gradient(90deg, #ece6da 0px, #f6f2ea 120px, #ece6da 240px);
+    background: linear-gradient(90deg, #eef2f0 0px, #f6f8f7 120px, #eef2f0 240px);
     background-size: 800px 100%;
-    animation: var(--animate-shimmer);
+    animation: shimmer 1.6s ease-in-out infinite;
   }
 }
 
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

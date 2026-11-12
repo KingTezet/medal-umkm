@@ -26,7 +26,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
       {data?.length ? (
         <DataTable head={["Event", "Penyelenggara", "Jadwal", "Status"]}>
           {data.map((e) => (
-            <tr key={e.id} className="hover:bg-ivory/60">
+            <tr key={e.id} className="hover:bg-white">
               <td className="px-4 py-3"><Link href={`/admin/events/${e.id}`} className="font-semibold hover:text-emerald">{e.title}</Link></td>
               <td className="px-4 py-3 text-muted">{e.organizer_profiles?.organization_name}</td>
               <td className="px-4 py-3 text-muted">{formatDateRange(e.starts_at, e.ends_at)}</td>

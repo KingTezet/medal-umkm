@@ -1,45 +1,25 @@
-"use client";
-
-import { useId } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 
+/** Solid green medal mark: ribbon + disc + "M". No gradients. */
 export function MedalMark({ className }: { className?: string }) {
-  const uid = useId().replace(/:/g, "");
-  const gold = `mm-gold-${uid}`;
-  const green = `mm-green-${uid}`;
   return (
-    <svg viewBox="0 0 48 48" className={cn("size-9", className)} aria-hidden>
-      <defs>
-        <linearGradient id={gold} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f3e2b6" />
-          <stop offset=".5" stopColor="#c6a15b" />
-          <stop offset="1" stopColor="#9c7a36" />
-        </linearGradient>
-        <linearGradient id={green} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#2b8a67" />
-          <stop offset="1" stopColor="#0e3a2b" />
-        </linearGradient>
-      </defs>
-      <path d="M15 2h7l4 12h-7zM33 2h-7l-4 12h7z" fill={`url(#${green})`} />
-      <circle cx="24" cy="29" r="17" fill={`url(#${gold})`} />
-      <circle cx="24" cy="29" r="13.2" fill={`url(#${green})`} />
-      <path d="M16.8 35.5V22.6l7.2 7.6 7.2-7.6v12.9" fill="none" stroke="#f3e2b6" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg viewBox="0 0 32 32" className={cn("size-8", className)} aria-hidden>
+      <rect width="32" height="32" rx="8" fill="#174B3A" />
+      <path d="M11 5h4l2 6h-4zM21 5h-4l-2 6h4z" fill="#C9DAD1" />
+      <circle cx="16" cy="19" r="8" fill="none" stroke="#fff" strokeWidth="1.6" />
+      <path d="M12.6 22.2v-6.4l3.4 3.6 3.4-3.6v6.4" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-export function Wordmark({ light = false, className, compact = false }: { light?: boolean; className?: string; compact?: boolean }) {
+export function Wordmark({ className, compact = false }: { light?: boolean; className?: string; compact?: boolean }) {
   return (
-    <Link href="/" className={cn("group inline-flex items-center gap-2.5", className)} aria-label="MEDAL — beranda">
-      <MedalMark className="transition-transform duration-500 group-hover:rotate-[8deg]" />
+    <Link href="/" className={cn("inline-flex items-center gap-2.5", className)} aria-label="MEDAL — beranda">
+      <MedalMark />
       <span className="leading-none">
-        <span className={cn("block font-display text-[1.45rem] font-semibold tracking-[0.06em]", light ? "text-ivory" : "text-forest")}>MEDAL</span>
-        {!compact && (
-          <span className={cn("mt-0.5 block text-[0.62rem] font-semibold uppercase tracking-[0.16em]", light ? "text-gold-soft/80" : "text-gold-deep")}>
-            UMKM Sumedang · Disperindag
-          </span>
-        )}
+        <span className="block text-[17px] font-semibold tracking-[-0.01em] text-ink">MEDAL</span>
+        {!compact && <span className="mt-0.5 block text-[11px] text-muted">UMKM Sumedang · Disperindag</span>}
       </span>
     </Link>
   );

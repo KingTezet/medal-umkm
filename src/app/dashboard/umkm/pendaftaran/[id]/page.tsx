@@ -45,15 +45,17 @@ export default async function ApplicationDetailPage({ params, searchParams }: { 
       {sp.submitted && <div className="mb-6"><Notice tone="success" title="Pendaftaran terkirim!">Nomor registrasi Anda <strong>{a.application_code}</strong>. Kami akan memberi notifikasi setiap ada perubahan status.</Notice></div>}
 
       {a.status === "confirmed" && a.stand_number && (
-        <div className="bg-emerald-mesh relative mb-6 overflow-hidden rounded-3xl p-6 text-ivory sm:p-8">
-          <p className="eyebrow !text-gold">Hasil akhir · Disahkan Disperindag</p>
-          <p className="mt-2 font-display text-6xl text-gold-gradient sm:text-7xl">Stand {a.stand_number}</p>
-          <p className="mt-2 text-ivory/75">Dikonfirmasi {formatDateTime(a.confirmed_at)}. Simpan nomor ini untuk hari pelaksanaan.</p>
+        <div className="mb-6 flex flex-col gap-4 rounded-xl border border-primary-border bg-primary-soft p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <div>
+          <p className="text-[13px] font-medium text-primary">Hasil akhir · Disahkan Disperindag</p>
+          <p className="mt-1 text-sm text-primary-hover">Dikonfirmasi {formatDateTime(a.confirmed_at)}. Simpan nomor ini untuk hari pelaksanaan.</p>
+          </div>
+          <p className="shrink-0 rounded-lg bg-primary px-4 py-2.5 text-center text-[22px] font-semibold tabular-nums text-white">Stand {a.stand_number}</p>
         </div>
       )}
 
       <Card className="mb-6">
-        <h2 className="mb-6 font-display text-2xl">Progres pendaftaran</h2>
+        <h2 className="mb-6 font-semibold text-lg">Progres pendaftaran</h2>
         <ApplicationTimeline status={a.status} history={history ?? []} />
       </Card>
 
@@ -67,7 +69,7 @@ export default async function ApplicationDetailPage({ params, searchParams }: { 
 
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         <Card>
-          <h2 className="font-display text-2xl">Data pendaftaran</h2>
+          <h2 className="font-semibold text-lg">Data pendaftaran</h2>
           <DefinitionList items={[
             { label: "Produk yang dijual", value: a.products_offered },
             { label: "Catatan pemohon", value: a.application_note },
@@ -79,7 +81,7 @@ export default async function ApplicationDetailPage({ params, searchParams }: { 
           {a.events?.slug && <Link href={`/events/${a.events.slug}`} className="mt-4 inline-block text-sm font-semibold text-emerald hover:underline">Lihat halaman event →</Link>}
         </Card>
         <Card>
-          <h2 className="mb-4 font-display text-2xl">Riwayat status</h2>
+          <h2 className="mb-4 font-semibold text-lg">Riwayat status</h2>
           <HistoryList items={history ?? []} />
         </Card>
       </div>

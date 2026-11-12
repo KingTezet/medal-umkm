@@ -2,14 +2,14 @@
 
 import { startTransition, useActionState, useEffect, useId, type ComponentProps, type FormEvent, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
-import { Loader2 } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/cn";
 import { Button, type ButtonVariant } from "@/components/ui/button";
 import { initialActionState, type ActionState } from "@/lib/action-result";
 
 const control =
-  "w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/70 transition focus:border-emerald focus:outline-none focus:ring-4 focus:ring-emerald/10 disabled:bg-sage/50 aria-[invalid=true]:border-danger";
+  "w-full rounded-[9px] border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/70 transition-[border-color,box-shadow] duration-150 focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/10 disabled:bg-surface-muted aria-[invalid=true]:border-danger";
 
 export function Field({
   label,
@@ -32,9 +32,9 @@ export function Field({
   const describedBy = errors?.length ? `${id}-error` : hint ? `${id}-hint` : undefined;
   return (
     <div className={cn("space-y-1.5", className)}>
-      <label htmlFor={id} className="block text-sm font-semibold text-ink">
+      <label htmlFor={id} className="block text-[13px] font-medium text-ink">
         {label}
-        {required && <span className="ml-0.5 text-terracotta">*</span>}
+        {required && <span className="ml-0.5 text-danger">*</span>}
       </label>
       {children({ id, "aria-invalid": !!errors?.length, "aria-describedby": describedBy })}
       {errors?.length ? (
@@ -60,16 +60,19 @@ export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
 
 export function Select({ className, children, ...props }: ComponentProps<"select">) {
   return (
-    <select className={cn(control, "h-11 appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%235d6a63%22 stroke-width=%222.5%22><path d=%22m6 9 6 6 6-6%22/></svg>')] bg-[length:14px] bg-[right_14px_center] bg-no-repeat pr-10", className)} {...props}>
-      {children}
-    </select>
+    <div className="relative">
+      <select className={cn(control, "h-11 appearance-none pr-10", className)} {...props}>
+        {children}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden />
+    </div>
   );
 }
 
 export function Checkbox({ label, className, ...props }: ComponentProps<"input"> & { label: ReactNode }) {
   return (
     <label className={cn("flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-ink", className)}>
-      <input type="checkbox" className="mt-0.5 size-5 shrink-0 rounded-md accent-emerald" {...props} />
+      <input type="checkbox" className="mt-0.5 size-[18px] shrink-0 rounded accent-[#174b3a]" {...props} />
       <span>{label}</span>
     </label>
   );
@@ -103,7 +106,7 @@ export function SubmitButton({
 export function FormMessage({ state }: { state: ActionState }) {
   if (!state.message || state.ok) return null;
   return (
-    <div role="alert" className="rounded-xl border border-danger/25 bg-danger/5 px-4 py-3 text-sm font-medium text-danger">
+    <div role="alert" className="rounded-lg border border-danger/25 bg-danger/5 px-4 py-3 text-sm text-danger">
       {state.message}
     </div>
   );

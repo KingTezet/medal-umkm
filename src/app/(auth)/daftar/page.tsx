@@ -18,15 +18,15 @@ export default function RegisterChoicePage() {
       <Stagger className="grid gap-4">
         {OPTIONS.map((o) => (
           <StaggerItem key={o.href}>
-            <Link href={o.href} className="group flex items-stretch overflow-hidden rounded-3xl border border-line bg-surface transition hover:-translate-y-0.5 hover:border-emerald/40 hover:shadow-[0_24px_50px_-30px_rgba(6,34,25,.45)]">
+            <Link href={o.href} className="group flex items-stretch overflow-hidden rounded-xl border border-line bg-surface transition hover:-translate-y-0.5 hover:border-emerald/40">
               <div className="relative w-28 shrink-0 sm:w-36">
                 <Image src={o.img} alt="" fill sizes="144px" className="object-cover transition duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-forest/30" aria-hidden />
-                <span className="absolute left-3 top-3 grid size-10 place-items-center rounded-xl bg-gold text-night"><o.icon className="size-5" aria-hidden /></span>
+                <span className="absolute left-3 top-3 grid size-10 place-items-center rounded-xl bg-primary text-white"><o.icon className="size-5" aria-hidden /></span>
               </div>
               <div className="flex flex-1 items-center gap-3 p-5">
                 <div className="flex-1">
-                  <h2 className="font-display text-xl">{o.title}</h2>
+                  <h2 className="font-semibold text-xl">{o.title}</h2>
                   <p className="mt-1 text-sm text-muted">{o.body}</p>
                 </div>
                 <ArrowRight className="size-5 shrink-0 text-emerald transition group-hover:translate-x-1" aria-hidden />

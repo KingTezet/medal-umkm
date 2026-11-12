@@ -23,15 +23,15 @@ export default async function MyApplicationsPage() {
         <ul className="grid gap-4">
           {list.map((a) => (
             <li key={a.id}>
-              <Link href={`/dashboard/umkm/pendaftaran/${a.id}`} className="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition hover:border-emerald/40 sm:flex-row sm:items-center sm:justify-between">
+              <Link href={`/dashboard/umkm/pendaftaran/${a.id}`} className="flex flex-col gap-4 rounded-xl border border-line bg-surface p-5 transition hover:border-emerald/40 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
                   <p className="font-mono text-xs text-muted">{a.application_code}</p>
-                  <p className="mt-1 font-display text-xl">{a.events?.title}</p>
+                  <p className="mt-1 font-semibold text-xl">{a.events?.title}</p>
                   <p className="mt-1 text-sm text-muted">{a.events ? `${formatDateRange(a.events.starts_at, a.events.ends_at)} · ${a.events.venue_name}` : ""}</p>
                   <p className="mt-1 text-xs text-muted">Dikirim {formatShortDate(a.submitted_at)}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  {a.stand_number && <span className="rounded-xl bg-forest px-3 py-2 font-display text-lg text-gold">Stand {a.stand_number}</span>}
+                  {a.stand_number && <span className="rounded-xl bg-forest px-3 py-2 font-semibold text-lg text-white">Stand {a.stand_number}</span>}
                   <StatusBadge map={APPLICATION_STATUS} status={a.status} />
                 </div>
               </Link>

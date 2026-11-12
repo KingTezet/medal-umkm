@@ -31,9 +31,9 @@ const DEFAULT_SETTINGS: PublicSettings = {
   },
   announcement: { enabled: false, text: "" },
   hero: {
-    headline: "Temukan Event. Perluas Pasar. Tumbuhkan UMKM Sumedang.",
+    headline: "Temukan Event. Kembangkan Usaha.",
     subheadline:
-      "MEDAL menghubungkan pelaku UMKM dengan penyelenggara event — dari pendaftaran stand, verifikasi Disperindag, hingga nomor lapak final.",
+      "MEDAL menghubungkan pelaku UMKM Sumedang dengan penyelenggara event. Pendaftaran stand, verifikasi Disperindag, hingga nomor lapak final — semuanya terpantau dalam satu tempat.",
   },
 };
 

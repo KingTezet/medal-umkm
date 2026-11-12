@@ -37,8 +37,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         <Card>
           <div className="mb-5 flex items-center gap-4">
-            <div className="relative size-20 overflow-hidden rounded-2xl bg-sage"><Image src={umkmImage(b.logo_path ?? b.cover_path, b.slug)} alt="" fill sizes="80px" className="object-cover" /></div>
-            <div><p className="font-display text-xl">{b.business_name}</p><p className="text-sm text-muted">/{b.slug}</p></div>
+            <div className="relative size-20 overflow-hidden rounded-xl bg-sage"><Image src={umkmImage(b.logo_path ?? b.cover_path, b.slug)} alt="" fill sizes="80px" className="object-cover" /></div>
+            <div><p className="font-semibold text-xl">{b.business_name}</p><p className="text-sm text-muted">/{b.slug}</p></div>
           </div>
           <DefinitionList items={[
             { label: "Kategori", value: b.category },
@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         </Card>
         <div className="space-y-6">
           <Card>
-            <h2 className="font-display text-2xl">Legalitas</h2>
+            <h2 className="font-semibold text-lg">Legalitas</h2>
             <DefinitionList items={[
               { label: "NIB", value: b.nib ?? "-" },
               { label: "NIB / SKU", value: <PrivateDocLink supabase={supabase} bucket={BUCKETS.verificationDocs} path={b.business_license_path} label="Buka dokumen" /> },
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             ]} />
           </Card>
           <Card>
-            <h2 className="font-display text-2xl">Akun pemilik</h2>
+            <h2 className="font-semibold text-lg">Akun pemilik</h2>
             <DefinitionList items={[
               { label: "Nama", value: b.profiles?.full_name },
               { label: "Email", value: b.profiles?.email },
@@ -68,7 +68,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             ]} />
           </Card>
           <Card>
-            <h2 className="mb-3 font-display text-2xl">Pendaftaran</h2>
+            <h2 className="mb-3 font-semibold text-lg">Pendaftaran</h2>
             {apps?.length ? <ul className="space-y-2 text-sm">{apps.map((x) => <li key={x.id} className="flex items-center justify-between gap-2"><Link href={`/admin/pendaftaran/${x.id}`} className="truncate hover:text-emerald">{x.events?.title}</Link><StatusBadge map={APPLICATION_STATUS} status={x.status} /></li>)}</ul> : <p className="text-sm text-muted">Belum ada.</p>}
           </Card>
         </div>

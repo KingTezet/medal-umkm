@@ -78,15 +78,15 @@ export function UploadField({
 
   return (
     <div className="space-y-1.5">
-      <p id={`${id}-label`} className="text-sm font-semibold text-ink">
+      <p id={`${id}-label`} className="text-[13px] font-medium text-ink">
         {label}
-        {required && <span className="ml-0.5 text-terracotta">*</span>}
+        {required && <span className="ml-0.5 text-danger">*</span>}
       </p>
       <input type="hidden" name={name} value={path ?? ""} />
       <div
         className={cn(
-          "relative flex items-center gap-4 rounded-2xl border-2 border-dashed bg-surface p-4 transition",
-          error?.length ? "border-danger/50" : "border-line hover:border-emerald/50",
+          "relative flex flex-wrap items-center gap-3 rounded-xl border border-dashed bg-white p-3.5 transition-colors sm:flex-nowrap sm:gap-4",
+          error?.length ? "border-danger/50" : "border-line hover:border-primary-border",
         )}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
@@ -95,7 +95,7 @@ export function UploadField({
           if (f) void onFile(f);
         }}
       >
-        <div className="relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-xl bg-sage text-emerald">
+        <div className="relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-lg bg-surface-muted text-muted">
           {busy ? (
             <Loader2 className="size-6 animate-spin" aria-hidden />
           ) : variant === "image" && preview ? (
@@ -120,7 +120,7 @@ export function UploadField({
                 setPath(null);
                 setLocalPreview(null);
               }}
-              className="grid size-9 place-items-center rounded-full text-muted hover:bg-red-50 hover:text-danger"
+              className="grid size-9 place-items-center rounded-lg text-muted hover:bg-red-50 hover:text-danger"
               aria-label={`Hapus ${label}`}
             >
               <Trash2 className="size-4" />
@@ -130,7 +130,7 @@ export function UploadField({
             type="button"
             disabled={busy}
             onClick={() => inputRef.current?.click()}
-            className="rounded-full border border-line px-3.5 py-2 text-sm font-semibold hover:border-emerald hover:text-emerald"
+            className="h-9 rounded-[9px] border border-line bg-white px-3 text-sm font-medium transition-colors hover:border-primary-border hover:text-primary"
             aria-describedby={`${id}-label`}
           >
             {path ? "Ganti" : "Pilih file"}
@@ -205,15 +205,15 @@ export function GalleryField({
       <input type="hidden" name={name} value={JSON.stringify(paths)} />
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
         {paths.map((p) => (
-          <div key={p} className="group relative aspect-square overflow-hidden rounded-2xl border border-line">
+          <div key={p} className="group relative aspect-square overflow-hidden rounded-xl border border-line">
             <Image src={publicMediaUrl(bucket, p)!} alt="Foto galeri" fill sizes="150px" className="object-cover" />
-            <button type="button" onClick={() => setPaths((x) => x.filter((y) => y !== p))} className="absolute right-1.5 top-1.5 grid size-8 place-items-center rounded-full bg-night/70 text-ivory opacity-90 hover:bg-danger" aria-label="Hapus foto">
+            <button type="button" onClick={() => setPaths((x) => x.filter((y) => y !== p))} className="absolute right-1.5 top-1.5 grid size-8 place-items-center rounded-full bg-ink/40 text-ivory opacity-90 hover:bg-danger" aria-label="Hapus foto">
               <Trash2 className="size-3.5" />
             </button>
           </div>
         ))}
         {paths.length < max && (
-          <button type="button" disabled={busy} onClick={() => inputRef.current?.click()} className="grid aspect-square place-items-center rounded-2xl border-2 border-dashed border-line text-muted hover:border-emerald hover:text-emerald">
+          <button type="button" disabled={busy} onClick={() => inputRef.current?.click()} className="grid aspect-square place-items-center rounded-xl border-2 border-dashed border-line text-muted hover:border-emerald hover:text-emerald">
             {busy ? <Loader2 className="size-6 animate-spin" /> : <span className="flex flex-col items-center gap-1 text-xs font-semibold"><ImagePlus className="size-6" />Tambah</span>}
           </button>
         )}

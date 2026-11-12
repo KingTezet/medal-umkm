@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           ]} />
         </Card>
         <Card>
-          <h2 className="mb-3 font-display text-2xl">Event</h2>
+          <h2 className="mb-3 font-semibold text-lg">Event</h2>
           {events?.length ? <ul className="space-y-2 text-sm">{events.map((e) => <li key={e.id} className="flex items-center justify-between gap-2"><Link href={`/admin/events/${e.id}`} className="truncate hover:text-emerald">{e.title}</Link><StatusBadge map={EVENT_STATUS} status={e.status} /></li>)}</ul> : <p className="text-sm text-muted">Belum ada event.</p>}
         </Card>
       </div>

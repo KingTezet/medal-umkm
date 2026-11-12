@@ -27,3 +27,6 @@ Tanggal: 12 November 2026. Default PRD dipakai bila tidak ada arahan lain.
 | 21 | Admin | Hanya lewat `npm run admin:create` (service role, env lokal). Tidak ada UI promosi admin | PRD §13.2 |
 | 22 | Anggota tim | Placeholder 7 anggota di `src/data/team.ts` — **perlu diganti** dengan nama/NPM/peran asli | Data belum diberikan |
 | 23 | Repo | GitHub **public** `medal-umkm` | Dipilih pemilik (PRD default private) |
+| 24 | Redesign v2 | Ganti total ke white-first + aksen hijau `#174B3A`; hapus emas/gradient/glass/serif; font Geist; dashboard sidebar putih + bottom nav mobile. Detail di `DESIGN_SYSTEM_V2.md`. Ini menggantikan keputusan #2–#4 | Revisi pemilik (`DESIGN_REVISION_MEDAL_UMKM_SUMEDANG.md`) |
+| 25 | Landing mobile | Format link-in-bio diganti hero putih + 3 akses cepat (versi bersih dari permintaan awal) | Addendum §5.1 |
+| 26 | Tim di /tentang | Tetap dipertahankan (permintaan eksplisit pemilik), tampil ringkas | Addendum §5.5 menyarankan dihindari; permintaan pemilik diprioritaskan |

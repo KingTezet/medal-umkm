@@ -56,3 +56,16 @@ Terakhir dijalankan: 12 Nov 2026. ✅ = dijalankan & lulus · 🟡 = sebagian/ma
 - ⬜ Upload file dari perangkat mobile fisik.
 - ⬜ Reset password end-to-end (butuh SMTP kustom; SMTP bawaan Supabase hanya ke anggota tim).
 - ⬜ Uji beban / performa Lighthouse.
+
+## Redesign v2 (12 Nov 2026) — white-first
+
+| Cek | Hasil |
+|---|---|
+| Overflow horizontal di 320/375/430/768/1366/1440 px: `/`, `/events`, `/umkm`, `/tentang`, detail event, `/login` | ✅ 0 px semua |
+| Dashboard admin/UMKM/penyelenggara 375 & 1440 px | ✅ 0 px; tabel jadi kartu di mobile; bottom nav + drawer |
+| `npm run lint`, `typecheck`, `build` | ✅ |
+| `npm test` | ✅ 27/27 |
+| `npm run test:rls` | ✅ 44/44 |
+| E2E UI lokal (daftar → profil → daftar stand → admin verifikasi via dialog → notifikasi) | ✅, 0 JS error |
+| Referensi motion TikTok | ⚠️ tidak bisa dibuka dari environment (placeholder saja) — lihat `DESIGN_SYSTEM_V2.md` §0 |
+| Screenshot before/after | `docs/screenshots/` |

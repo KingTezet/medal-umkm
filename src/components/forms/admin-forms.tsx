@@ -10,8 +10,8 @@ export function ContentForm({ settings }: { settings: PublicSettings }) {
   return (
     <form onSubmit={onSubmit} className="space-y-6" noValidate>
       <Card className="space-y-5">
-        <h2 className="font-display text-2xl">Hero beranda</h2>
-        <Field label="Headline" name="headline" errors={fe.headline} hint="Kalimat kedua akan ditampilkan dengan aksen emas." required>
+        <h2 className="font-semibold text-lg">Hero beranda</h2>
+        <Field label="Headline" name="headline" errors={fe.headline} hint="Singkat dan jelas, maksimal 120 karakter." required>
           {(p) => <Input {...p} name="headline" defaultValue={settings.hero.headline} maxLength={120} required />}
         </Field>
         <Field label="Subheadline" name="subheadline" errors={fe.subheadline} required>
@@ -19,7 +19,7 @@ export function ContentForm({ settings }: { settings: PublicSettings }) {
         </Field>
       </Card>
       <Card className="space-y-5">
-        <h2 className="font-display text-2xl">Pengumuman singkat</h2>
+        <h2 className="font-semibold text-lg">Pengumuman singkat</h2>
         <Checkbox name="announcement_enabled" defaultChecked={settings.announcement.enabled} label="Tampilkan pengumuman di beranda" />
         <Field label="Teks pengumuman" name="announcement_text" errors={fe.text}>
           {(p) => <Input {...p} name="announcement_text" defaultValue={settings.announcement.text} maxLength={240} />}

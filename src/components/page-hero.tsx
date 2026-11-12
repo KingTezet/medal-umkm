@@ -1,17 +1,13 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 
-/** Compact dark hero for inner public pages. */
-export function PageHero({ eyebrow, title, description, image, children }: { eyebrow: string; title: ReactNode; description?: ReactNode; image: string; children?: ReactNode }) {
+/** Simple white page header for inner public pages. */
+export function PageHero({ eyebrow, title, description, children }: { eyebrow: string; title: ReactNode; description?: ReactNode; image?: string; children?: ReactNode }) {
   return (
-    <section className="relative isolate overflow-hidden bg-night pb-14 pt-32 text-ivory sm:pb-20 sm:pt-40">
-      <Image src={image} alt="" fill priority sizes="100vw" className="-z-20 object-cover opacity-30" />
-      <div className="bg-emerald-mesh absolute inset-0 -z-10 opacity-90" aria-hidden />
-      <div className="bg-grain absolute inset-0 -z-10" aria-hidden />
-      <div className="container-page">
-        <p className="eyebrow !text-gold">{eyebrow}</p>
-        <h1 className="mt-3 max-w-3xl font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl">{title}</h1>
-        {description && <p className="mt-4 max-w-2xl text-base leading-relaxed text-ivory/75 sm:text-lg">{description}</p>}
+    <section className="border-b border-line bg-white">
+      <div className="container-page py-10 sm:py-14">
+        <p className="text-sm font-medium text-primary">{eyebrow}</p>
+        <h1 className="mt-2 max-w-3xl text-[30px] font-semibold leading-[1.12] text-ink sm:text-[40px]">{title}</h1>
+        {description && <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted sm:text-base">{description}</p>}
         {children}
       </div>
     </section>

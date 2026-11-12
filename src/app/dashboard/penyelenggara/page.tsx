@@ -31,13 +31,13 @@ export default async function OrganizerHome() {
           </Notice>
         </div>
       )}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
         <StatCard accent label="Total event" value={list.length} icon={<CalendarDays className="size-5" />} />
         <StatCard label="Siap diseleksi" value={toSelect} hint="Pendaftar terverifikasi Disperindag" icon={<ClipboardCheck className="size-5" />} />
         <StatCard label="Peserta dikonfirmasi" value={confirmed} icon={<UsersRound className="size-5" />} />
       </div>
       <Card className="mt-8">
-        <h2 className="font-display text-2xl">Agenda mendatang</h2>
+        <h2 className="font-semibold text-lg">Agenda mendatang</h2>
         {upcoming.length ? (
           <ul className="mt-4 divide-y divide-line">
             {upcoming.map((e) => (

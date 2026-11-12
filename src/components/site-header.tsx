@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { LayoutDashboard, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/brand";
 import { ButtonLink } from "@/components/ui/button";
@@ -13,69 +13,61 @@ const NAV = [
   { href: "/", label: "Beranda" },
   { href: "/events", label: "Event" },
   { href: "/umkm", label: "Direktori UMKM" },
-  { href: "/tentang", label: "Tentang Kami" },
+  { href: "/tentang", label: "Tentang" },
 ];
 
-const OVERLAY_PATHS = ["/", "/tentang"];
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export function SiteHeader({ session }: { session: { name: string; dashboard: string } | null }) {
   const pathname = usePathname();
-  const overlay = OVERLAY_PATHS.includes(pathname);
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
-  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
-  const light = overlay && !scrolled && !open;
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        light ? "bg-transparent" : "border-b border-line/70 bg-ivory/85 backdrop-blur-xl",
-      )}
-    >
-      <div className="container-page flex h-[4.25rem] items-center justify-between gap-4">
-        <Wordmark light={light} />
-        <nav aria-label="Navigasi utama" className="hidden items-center gap-1 lg:flex">
-          {NAV.map((n) => {
-            const active = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
-            return (
-              <Link
-                key={n.href}
-                href={n.href}
-                aria-current={active ? "page" : undefined}
-                className={cn(
-                  "relative rounded-full px-4 py-2 text-sm font-semibold transition",
-                  light ? "text-ivory/85 hover:text-ivory" : "text-ink/75 hover:text-emerald",
-                  active && (light ? "text-ivory" : "text-emerald"),
-                )}
-              >
-                {n.label}
-                {active && <motion.span layoutId="nav-dot" className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-gold" />}
-              </Link>
-            );
-          })}
+    <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-sm">
+      <div className="container-page flex h-16 items-center justify-between gap-4">
+        <Wordmark />
+        <nav aria-label="Navigasi utama" className="hidden items-center gap-1 md:flex">
+          {NAV.map((n) => (
+            <Link
+              key={n.href}
+              href={n.href}
+              aria-current={isActive(n.href) ? "page" : undefined}
+              className={cn(
+                "relative px-3 py-2 text-sm font-medium transition-colors duration-150",
+                isActive(n.href) ? "text-primary" : "text-muted hover:text-ink",
+              )}
+            >
+              {n.label}
+              {isActive(n.href) && (
+                <motion.span layoutId="nav-underline" transition={{ duration: 0.25, ease }} className="absolute inset-x-3 -bottom-[13px] h-0.5 bg-primary" />
+              )}
+            </Link>
+          ))}
         </nav>
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 md:flex">
           {session ? (
-            <ButtonLink href={session.dashboard} variant={light ? "gold" : "primary"} size="sm">
-              <LayoutDashboard className="size-4" /> Dashboard
+            <ButtonLink href={session.dashboard} size="sm">
+              <LayoutDashboard className="size-4" aria-hidden /> Dashboard
             </ButtonLink>
           ) : (
             <>
-              <ButtonLink href="/login" variant={light ? "outline-light" : "ghost"} size="sm">
+              <ButtonLink href="/login" variant="ghost" size="sm">
                 Masuk
               </ButtonLink>
-              <ButtonLink href="/daftar" variant={light ? "gold" : "primary"} size="sm">
-                Daftar Sekarang
+              <ButtonLink href="/daftar" size="sm">
+                Daftar
               </ButtonLink>
             </>
           )}
@@ -86,7 +78,7 @@ export function SiteHeader({ session }: { session: { name: string; dashboard: st
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Tutup menu" : "Buka menu"}
-          className={cn("grid size-11 place-items-center rounded-full lg:hidden", light ? "bg-white/10 text-ivory backdrop-blur" : "bg-sage text-forest")}
+          className="-mr-2 grid size-11 place-items-center rounded-lg text-ink hover:bg-surface-muted md:hidden"
         >
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
@@ -96,21 +88,25 @@ export function SiteHeader({ session }: { session: { name: string; dashboard: st
         {open && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
-            className="h-[calc(100dvh-4.25rem)] overflow-y-auto border-t border-line bg-ivory lg:hidden"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease }}
+            className="absolute inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-white md:hidden"
           >
-            <nav aria-label="Navigasi seluler" className="container-page flex flex-col gap-1 py-6">
-              {NAV.map((n, i) => (
-                <motion.div key={n.href} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 * i }}>
-                  <Link href={n.href} onClick={() => setOpen(false)} className="block rounded-2xl px-4 py-3.5 font-display text-2xl text-ink hover:bg-sage">
-                    {n.label}
-                  </Link>
-                </motion.div>
+            <nav aria-label="Navigasi seluler" className="container-page flex flex-col py-4">
+              {NAV.map((n) => (
+                <Link
+                  key={n.href}
+                  href={n.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={isActive(n.href) ? "page" : undefined}
+                  className={cn("flex h-12 items-center border-b border-line text-base font-medium", isActive(n.href) ? "text-primary" : "text-ink")}
+                >
+                  {n.label}
+                </Link>
               ))}
-              <div className="mt-6 grid gap-3 px-1">
+              <div className="mt-6 grid gap-2">
                 {session ? (
                   <ButtonLink href={session.dashboard} onClick={() => setOpen(false)} size="lg">
                     Buka Dashboard
@@ -118,9 +114,9 @@ export function SiteHeader({ session }: { session: { name: string; dashboard: st
                 ) : (
                   <>
                     <ButtonLink href="/daftar" onClick={() => setOpen(false)} size="lg">
-                      Daftar Sekarang
+                      Daftar
                     </ButtonLink>
-                    <ButtonLink href="/login" onClick={() => setOpen(false)} variant="outline" size="lg">
+                    <ButtonLink href="/login" onClick={() => setOpen(false)} variant="secondary" size="lg">
                       Masuk
                     </ButtonLink>
                   </>

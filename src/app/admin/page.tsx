@@ -9,7 +9,7 @@ function Queue({ title, href, items, icon: Icon, empty }: { title: string; href:
   return (
     <Card>
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="flex items-center gap-2 font-display text-xl"><Icon className="size-5 text-gold-deep" />{title}</h2>
+        <h2 className="flex items-center gap-2 font-semibold text-xl"><Icon className="size-5 text-primary" />{title}</h2>
         <Link href={href} className="text-sm font-semibold text-emerald hover:underline">Semua</Link>
       </div>
       {items.length ? (
@@ -41,7 +41,7 @@ export default async function AdminHome() {
   return (
     <>
       <PageHeader eyebrow="Admin Disperindag" title="Dashboard operasional" description="Seluruh angka berasal langsung dari database MEDAL." />
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
         <StatCard accent label="Event menunggu review" value={s.events_pending ?? 0} icon={<CalendarClock className="size-5" />} />
         <StatCard label="Berkas perlu verifikasi" value={s.applications_to_verify ?? 0} icon={<ClipboardCheck className="size-5" />} />
         <StatCard label="Menunggu pengesahan" value={s.applications_to_confirm ?? 0} icon={<Stamp className="size-5" />} />
@@ -57,7 +57,7 @@ export default async function AdminHome() {
       </div>
 
       <Card className="mt-8">
-        <h2 className="font-display text-xl">Pendaftaran stand per status</h2>
+        <h2 className="font-semibold text-xl">Pendaftaran stand per status</h2>
         <p className="text-xs text-muted">Seluruh periode · total {total}</p>
         <div className="mt-5 space-y-3">
           {(Object.keys(APPLICATION_STATUS) as ApplicationStatus[]).map((k) => {
@@ -66,7 +66,7 @@ export default async function AdminHome() {
             return (
               <div key={k} className="grid grid-cols-[10rem_1fr_3rem] items-center gap-3 text-sm">
                 <span className="text-muted">{APPLICATION_STATUS[k].label}</span>
-                <div className="h-2.5 overflow-hidden rounded-full bg-sage"><div className="h-full rounded-full bg-emerald" style={{ width: `${pct}%` }} /></div>
+                <div className="h-2 overflow-hidden rounded-full bg-surface-muted"><div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} /></div>
                 <span className="text-right font-semibold tabular-nums">{v}</span>
               </div>
             );

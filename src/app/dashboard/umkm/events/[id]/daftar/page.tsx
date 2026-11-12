@@ -54,15 +54,15 @@ export default async function ApplyPage({ params }: { params: Promise<{ id: stri
         <div>{block ?? <ApplicationForm mode="new" eventId={event.id!} userId={user.id} />}</div>
         <aside className="space-y-4">
           <Card className="space-y-3 text-sm">
-            <p className="flex gap-2"><CalendarDays className="size-4 text-gold-deep" />{formatDateRange(event.starts_at, event.ends_at)}</p>
-            <p className="flex gap-2"><MapPin className="size-4 text-gold-deep" />{event.venue_name}</p>
+            <p className="flex gap-2"><CalendarDays className="size-4 text-primary" />{formatDateRange(event.starts_at, event.ends_at)}</p>
+            <p className="flex gap-2"><MapPin className="size-4 text-primary" />{event.venue_name}</p>
             <p>Pendaftaran ditutup <strong>{formatDateTime(event.registration_closes_at)}</strong></p>
             <p>Sisa stand: <strong>{availableStands(event.stand_capacity, event.confirmed_count)}</strong> dari {event.stand_capacity}</p>
             <Link href={`/events/${event.slug}`} className="inline-block font-semibold text-emerald hover:underline" target="_blank">Lihat detail & syarat →</Link>
           </Card>
           {bp && (
             <Card className="space-y-1 text-sm">
-              <p className="eyebrow">Data usaha yang dikirim</p>
+              <p className="text-[13px] font-medium text-primary">Data usaha yang dikirim</p>
               <p className="font-semibold">{bp.business_name}</p>
               <p className="text-muted">{bp.category} · {bp.district}</p>
               <p className="text-muted">WA {bp.whatsapp}</p>
