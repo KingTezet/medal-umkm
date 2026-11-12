@@ -49,3 +49,6 @@ supabase/.branches
 
 # demo videos (large, shared separately)
 demo-videos/
+
+# legal/commercial drafts (internal, never push to public repo)
+docs/legal-medal/
